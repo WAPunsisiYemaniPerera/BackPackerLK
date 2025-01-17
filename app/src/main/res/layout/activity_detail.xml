@@ -9,6 +9,7 @@
     android:background="@color/white"
     tools:context=".Activities.DetailActivity">
 
+    <!-- scroll view -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
