@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Activities.DetailActivity">
+   >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,7 +30,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/safari"
                     android:contentDescription="Image"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    tools:ignore="MissingConstraints" />
 
                 <!-- Back Icon -->
 
