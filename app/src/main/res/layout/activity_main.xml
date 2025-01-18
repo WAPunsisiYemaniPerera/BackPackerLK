@@ -5,91 +5,55 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.Main">
+    android:background="#00798c"
+    tools:context=".Main">
 
-    <ScrollView
-        android:id="@+id/scroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@android:string/fingerprint_icon_content_description"
+    <ImageView
+        android:id="@+id/loadingImg"
+        android:layout_width="301dp"
+        android:layout_height="293dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="-115dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/loading"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.365" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+    <TextView
+        android:id="@+id/logoTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bangers2"
+        android:text="BackPacker.lk"
+        android:textAlignment="center"
+        android:textColor="@color/orange"
+        android:textSize="60sp"
+        app:layout_constraintBottom_toTopOf="@+id/sloganTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loadingImg"
+        app:layout_constraintVertical_bias="0.523" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="504dp"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/swing" />
+    <TextView
+        android:id="@+id/sloganTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="168dp"
+        android:fontFamily="@font/antic"
+        android:text="Your Gateway to Sri Lanka's Wonders!"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoTxt" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/poppinsblack"
-                android:layout_marginTop="16dp"
-                android:text="Let's Enjoy\nBeautiful Sri Lanka"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/poppinsblack"
-                android:text="Unlock unforgettable experiences,\nacross Sri Lanka."
-                android:textAlignment="center"
-                android:textColor="#778899"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/mainBtn"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="55dp"
-                android:layout_marginEnd="32dp"
-                android:background="@drawable/intro">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppinsblack"
-                    android:text="Get Started"
-                    android:textColor="@color/white"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/icon1"
-                    android:layout_width="47dp"
-                    android:layout_height="42dp"
-                    android:layout_margin="16dp"
-                    android:layout_marginEnd="4dp"
-                    android:src="@drawable/icon2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
