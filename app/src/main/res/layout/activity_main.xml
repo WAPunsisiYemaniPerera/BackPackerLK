@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00798c"
+    tools:context=".Main">
+
+    <ImageView
+        android:id="@+id/loadingImg"
+        android:layout_width="301dp"
+        android:layout_height="293dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="-115dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/loading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.365" />
+
+    <TextView
+        android:id="@+id/logoTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bangers2"
+        android:text="BackPacker.lk"
+        android:textAlignment="center"
+        android:textColor="@color/orange"
+        android:textSize="60sp"
+        app:layout_constraintBottom_toTopOf="@+id/sloganTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loadingImg"
+        app:layout_constraintVertical_bias="0.523" />
+
+    <TextView
+        android:id="@+id/sloganTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="168dp"
+        android:fontFamily="@font/antic"
+        android:text="Your Gateway to Sri Lanka's Wonders!"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoTxt" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
