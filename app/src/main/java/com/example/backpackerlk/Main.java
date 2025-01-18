@@ -1,7 +1,9 @@
 package com.example.backpackerlk;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,7 +16,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.backpackerlk.Activities.Home;
+
 public class Main extends AppCompatActivity {
+
+    private static int SPLASH_SCREEN = 5000;
 
     //variables
     Animation topAnim ,bottomAnim;
@@ -41,6 +47,15 @@ public class Main extends AppCompatActivity {
         image.setAnimation(topAnim);
         logo.setAnimation(bottomAnim);
         slogen.setAnimation(bottomAnim);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(Main.this, Home.class);
+                startActivity(intent);
+                finish();
+            }
+        },SPLASH_SCREEN);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
