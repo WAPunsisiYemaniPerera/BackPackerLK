@@ -13,7 +13,7 @@
         android:theme="@style/Theme.BackPackerLK"
         tools:targetApi="31">
         <activity
-            android:name=".Main"
+            android:name=".Activities.Categories"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- Home Activity: Set as Launcher -->
+        <activity
+            android:name=".Main"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- Home Activity: Set as Launcher -->
         <activity
             android:name=".Activities.Home"
             android:exported="true">
@@ -37,6 +45,7 @@
         <activity
             android:name=".Activities.Main"
             android:exported="true" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

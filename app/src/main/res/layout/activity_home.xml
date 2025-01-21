@@ -9,7 +9,7 @@
     android:background="@color/white"
     tools:context=".Activities.Home">
 
-    <!-- Scrollable Content -->
+    <!-- Scrollables Content -->
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
