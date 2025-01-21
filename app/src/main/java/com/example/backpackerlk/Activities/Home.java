@@ -36,7 +36,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Navigate to DetailActivity
-                Intent intent = new Intent(Home.this, DetailActivity.class);
+                Intent intent = new Intent(Home.this, Categories.class);
                 startActivity(intent);
             }
         });
