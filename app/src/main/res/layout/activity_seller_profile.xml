@@ -227,11 +227,20 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
+                    android:id="@+id/updateBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/orange"
                     android:fontFamily="@font/poppinsblack"
                     android:text="Update" />
+
+                <Button
+                    android:id="@+id/gotodashboardBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/orange"
+                    android:fontFamily="@font/poppinsblack"
+                    android:text="Go To Dashboard" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
