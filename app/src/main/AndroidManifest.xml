@@ -23,7 +23,7 @@
 
         <!-- Dashboard Activity -->
         <activity
-            android:name=".Dashboard"
+            android:name=".Main"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,9 +41,8 @@
             </intent-filter>
         </activity>
 
-        <!-- Main Activity -->
         <activity
-            android:name=".Main"
+            android:name=".Activities.Home"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,9 +50,8 @@
             </intent-filter>
         </activity>
 
-        <!-- Home Activity -->
         <activity
-            android:name=".Activities.Home"
+            android:name=".Dashboard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
