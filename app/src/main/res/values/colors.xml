@@ -1,37 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_2001">#FFBB86FC</color>
+    <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
-    <color name="teal_2001">#FF03DAC5</color>
+    <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#FE6900</color>
     <color name="green">#36827F</color>
     <color name="whitehalf">#FFFFFF33</color>
-    <color name="purple_200">#9C27B0</color>
-    <color name="teal_200">#009688</color>
-    <color name="red_200">#F44336</color>
-    <color name="blue_200">#2196F3</color>
-    <!-- Basic Colors -->
-    <color name="black2">#000000</color>
-    <!-- Gradient Card Background Colors -->
-    <color name="purple_2002">#BB86FC</color> <!-- Light purple -->
-    <color name="purple_5002">#6200EE</color> <!-- Darker purple -->
-    <color name="blue_500">#2196F3</color> <!-- Blue -->
-    <color name="green_500">#4CAF50</color> <!-- Green -->
-    <color name="yellow_500">#FFEB3B</color> <!-- Yellow -->
-    <color name="orange_500">#FF5722</color> <!-- Orange -->
-    <color name="gradient_c1_start">#9C27B0</color> <!-- Purple -->
-    <color name="gradient_c1_end">#D1C4E9</color> <!-- Light Purple -->
-
-    <color name="gradient_c2_start">#673AB7</color> <!-- Indigo -->
-    <color name="gradient_c2_end">#B39DDB</color> <!-- Light Indigo -->
-
-    <color name="gradient_c3_start">#3F51B5</color> <!-- Blue -->
-    <color name="gradient_c3_end">#BBDEFB</color> <!-- Light Blue -->
-
-    <color name="gradient_c4_start">#2196F3</color> <!-- Light Blue -->
-    <color name="gradient_c4_end">#BBDEFB</color> <!-- Light Blue -->
 </resources>
