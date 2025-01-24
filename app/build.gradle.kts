@@ -40,6 +40,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+
+
+
+
     // Glide dependencies
     implementation(libs.glide)
 
