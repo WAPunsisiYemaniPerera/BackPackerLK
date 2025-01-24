@@ -1,46 +1,59 @@
 package com.example.backpackerlk.Activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.cardview.widget.CardView;
 
 import com.example.backpackerlk.R;
 
 public class Categories extends AppCompatActivity {
 
-    private Button catBtn;
+    private CardView safariCard, waterCard, airCard;
+    private ImageView backIcon; // Declare the back icon
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_categories);
 
-        catBtn = findViewById(R.id.categoriesBtn);
+        // Initialize the CardViews
+        safariCard = findViewById(R.id.safari);
+        waterCard = findViewById(R.id.cardwater);
+        airCard = findViewById(R.id.cardsky);
 
-        catBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Categories.this, DetailActivity.class);
-            }
-        });
+        // Initialize the back icon
+        backIcon = findViewById(R.id.icback);
 
+        // Set click listeners for each CardView
+        safariCard.setOnClickListener(view -> navigateToDetail("Safari"));
+        waterCard.setOnClickListener(view -> navigateToDetail("Water Activities"));
+        airCard.setOnClickListener(view -> navigateToDetail("Air Sports"));
 
+        // Set click listener for the back icon
+        backIcon.setOnClickListener(view -> navigateToHome());
+    }
 
+    private void navigateToDetail(String categoryName) {
+        Intent intent = new Intent(Categories.this, DetailActivity.class);
+        intent.putExtra("CATEGORY_NAME", categoryName); // Pass the category name to DetailActivity
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Add animation
+    }
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+    private void navigateToHome() {
+        Intent intent = new Intent(Categories.this, Home.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Apply back transition
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        navigateToHome(); // Reuse the navigateToHome method for the physical back button
     }
 }

@@ -1,11 +1,15 @@
 package com.example.backpackerlk.Activities;
 
+import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,30 +22,78 @@ import com.example.backpackerlk.R;
 import java.util.ArrayList;
 
 public class Home extends AppCompatActivity {
+
+    private TextView seeall1;
     private RecyclerView.Adapter adapterPopular, adapterAdventure;
     private RecyclerView recyclerViewPopular, recyclerViewAdventure;
+    private boolean countersAnimated = false; // To prevent multiple animations
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        // Initialize the RecyclerViews and Button
         initRecyclerView();
 
-        // Find the "seeall1" TextView
-        TextView seeAllText = findViewById(R.id.seeall1);
+        // Find and set click listener for the "See All" button
+        seeall1 = findViewById(R.id.seeall1);
+        seeall1.setOnClickListener(view -> {
+            Intent intent = new Intent(Home.this, Categories.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        });
 
-        // Set an OnClickListener for "seeall1"
-        seeAllText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to DetailActivity
-                Intent intent = new Intent(Home.this, Categories.class);
-                startActivity(intent);
+        // Detect when counters are visible and animate them
+        initCounterAnimationOnScroll();
+    }
+
+    /**
+     * Detect when the counters are visible and animate them
+     */
+    private void initCounterAnimationOnScroll() {
+        NestedScrollView scrollView = findViewById(R.id.scrollview); // Ensure your layout uses NestedScrollView or ScrollView
+        TextView visitorsCounter = findViewById(R.id.visitorCount);
+        TextView touristsCounter = findViewById(R.id.touristCount);
+        TextView localsCounter = findViewById(R.id.localCount);
+
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
+            // Get the location of the counters on the screen
+            int[] location = new int[2];
+            visitorsCounter.getLocationOnScreen(location);
+            int yPosition = location[1];
+
+            // Get the screen height
+            int screenHeight = getResources().getDisplayMetrics().heightPixels;
+
+            // Check if the counters are visible on the screen
+            if (yPosition < screenHeight && !countersAnimated) {
+                countersAnimated = true; // Prevent multiple animations
+                animateCounter(visitorsCounter, 0, 1000);  // Visitors: 0 to 1000+
+                animateCounter(touristsCounter, 0, 500);   // Tourists: 0 to 500+
+                animateCounter(localsCounter, 0, 2000);    // Locals: 0 to 2000+
             }
         });
     }
 
+    /**
+     * Animate a counter TextView from a start value to an end value.
+     *
+     * @param textView The TextView to animate
+     * @param start    The starting value of the counter
+     * @param end      The ending value of the counter
+     */
+    private void animateCounter(TextView textView, int start, int end) {
+        ValueAnimator animator = ValueAnimator.ofInt(start, end);
+        animator.setDuration(2000); // Animation duration: 2 seconds
+        animator.addUpdateListener(animation -> {
+            textView.setText(animation.getAnimatedValue().toString() + "+");
+        });
+        animator.start();
+    }
+
+    // Initialize the RecyclerViews for Popular and Adventure lists
     private void initRecyclerView() {
         // Initialize Popular List
         ArrayList<PopularDomain> popularList = new ArrayList<>();

@@ -44,11 +44,11 @@
                     android:layout_margin="16dp"
                     android:layout_marginStart="56dp"
                     android:layout_marginTop="56dp"
-                    android:background="@drawable/icon3"
+                    android:background="@drawable/back"
                     android:padding="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/icon3" />
+                    app:srcCompat="@drawable/back" />
 
                 <ImageView
                     android:id="@+id/imageView9"
