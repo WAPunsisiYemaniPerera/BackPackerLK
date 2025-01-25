@@ -3,14 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+
     tools:context=".Add_Business">
 
     <ScrollView
         android:id="@+id/scrollView"
+
         android:layout_width="410dp"
         android:layout_height="886dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,6 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
+
         tools:ignore="SpeakableTextPresentCheck">
 
         <!-- Wrapping all child elements inside a single LinearLayout -->
@@ -32,8 +36,10 @@
                 android:id="@+id/tv_add_business"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
+
                 android:text="Add Business"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -112,8 +118,10 @@
 
             <EditText
                 android:id="@+id/et_description"
+
                 android:layout_width="359dp"
                 android:layout_height="90dp"
+
                 android:hint="Enter description"
                 android:inputType="textMultiLine" />
 
