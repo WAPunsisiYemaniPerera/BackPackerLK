@@ -63,6 +63,12 @@
         <activity
             android:name=".Activities.Main"
             android:exported="true" />
+
+
+        <activity
+            android:name=".Add_Business"
+            android:exported="true"/>
+
     </application>
 
 </manifest>
