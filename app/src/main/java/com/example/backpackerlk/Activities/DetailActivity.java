@@ -1,32 +1,70 @@
-package com.example.backpackerlk.Activities; // Replace with your actual package name
+package com.example.backpackerlk.Activities;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.backpackerlk.R;
 
 public class DetailActivity extends AppCompatActivity {
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail); // Replace with your actual layout name if different
+        setContentView(R.layout.activity_detail);
 
-        // Initialize your existing functionality (if any)
-        // For example: loading data from Intent or database, setting up UI elements, etc.
+        // Initialize the back icon and set an OnClickListener
+        ImageView backIcon = findViewById(R.id.icback);
+        backIcon.setOnClickListener(view -> navigateToCategories()); // Call navigateToCategories when clicked
 
-        // Find the TextViews for the counters
-        TextView visitorsCounter = findViewById(R.id.visitorCount);
-        TextView touristsCounter = findViewById(R.id.touristCount);
-        TextView localsCounter = findViewById(R.id.localCount);
+        // Retrieve the TextView displaying the phone number
+        TextView phoneNumberTextView = findViewById(R.id.phoneNumberTextView);
 
-        // Start animations for each counter
-        animateCounter(visitorsCounter, 0, 1000);  // Visitors: 0 to 1000+
-        animateCounter(touristsCounter, 0, 500);  // Tourists: 0 to 500+
-        animateCounter(localsCounter, 0, 2000); // Locals: 0 to 1,000,000+
+        // Set the phone number dynamically (if passed via Intent or any other source)
+        String phoneNumber = getIntent().getStringExtra("PHONE_NUMBER");
+        if (phoneNumber != null && !phoneNumber.isEmpty()) {
+            phoneNumberTextView.setText(phoneNumber);
+        }
+
+        // Initialize the Call Now button
+        Button callNowButton = findViewById(R.id.callNowButton);
+
+        // Set OnClickListener for the Call Now button
+        callNowButton.setOnClickListener(view -> {
+            String numberToDial = phoneNumberTextView.getText().toString();
+            if (numberToDial != null && !numberToDial.isEmpty()) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + numberToDial));
+                startActivity(intent);
+            } else {
+                // Handle the case where no phone number is available
+                callNowButton.setEnabled(false);
+                callNowButton.setText("No Phone Number Available");
+            }
+        });
     }
+
+    private void navigateToCategories() {
+        Intent intent = new Intent(DetailActivity.this, Categories.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Apply back transition
+        finish(); // Close the current activity to prevent the user from coming back to it
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed(); // This will handle the system back button if necessary
+        navigateToCategories(); // Trigger the navigation to Categories
+    }
+
 
     /**
      * Animate a counter TextView from a start value to an end value.
