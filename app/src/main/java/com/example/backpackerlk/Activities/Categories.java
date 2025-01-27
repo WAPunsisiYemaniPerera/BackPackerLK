@@ -2,7 +2,6 @@ package com.example.backpackerlk.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +29,7 @@ public class Categories extends AppCompatActivity {
 
         // Set click listeners for each CardView
         safariCard.setOnClickListener(view -> navigateToDetail("Safari"));
-        waterCard.setOnClickListener(view -> navigateToDetail("Water Activities"));
+        waterCard.setOnClickListener(view -> navigateToSellerProfile("Water Activities"));
         airCard.setOnClickListener(view -> navigateToDetail("Air Sports"));
 
         // Set click listener for the back icon
@@ -40,6 +39,13 @@ public class Categories extends AppCompatActivity {
     private void navigateToDetail(String categoryName) {
         Intent intent = new Intent(Categories.this, DetailActivity.class);
         intent.putExtra("CATEGORY_NAME", categoryName); // Pass the category name to DetailActivity
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Add animation
+    }
+
+    private void navigateToSellerProfile(String categoryName) {
+        Intent intent = new Intent(Categories.this, SellerProfile.class);
+
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Add animation
     }
