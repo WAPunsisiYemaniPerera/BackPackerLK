@@ -2,13 +2,14 @@ package com.example.backpackerlk.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.example.backpackerlk.R;
+import com.example.backpackerlk.UserProfile;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Categories extends AppCompatActivity {
 
@@ -20,6 +21,33 @@ public class Categories extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
+        //navigation
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_categories);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(getApplicationContext(), Home.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_categories){
+                startActivity(new Intent(getApplicationContext(), Categories.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_profile) {
+                startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
+            }
+
+            return false;
+        });
+
         // Initialize the CardViews
         safariCard = findViewById(R.id.safari);
         waterCard = findViewById(R.id.cardwater);
@@ -30,7 +58,7 @@ public class Categories extends AppCompatActivity {
 
         // Set click listeners for each CardView
         safariCard.setOnClickListener(view -> navigateToDetail("Safari"));
-        waterCard.setOnClickListener(view -> navigateToDetail("Water Activities"));
+        waterCard.setOnClickListener(view -> navigateToSellerProfile("Water Activities"));
         airCard.setOnClickListener(view -> navigateToDetail("Air Sports"));
 
         // Set click listener for the back icon
@@ -40,6 +68,13 @@ public class Categories extends AppCompatActivity {
     private void navigateToDetail(String categoryName) {
         Intent intent = new Intent(Categories.this, DetailActivity.class);
         intent.putExtra("CATEGORY_NAME", categoryName); // Pass the category name to DetailActivity
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Add animation
+    }
+
+    private void navigateToSellerProfile(String categoryName) {
+        Intent intent = new Intent(Categories.this, SellerProfile.class);
+
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Add animation
     }
