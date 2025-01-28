@@ -1,5 +1,7 @@
 package com.example.backpackerlk.Activities;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -18,6 +20,8 @@ import com.example.backpackerlk.Adapters.PopularAdapter;
 import com.example.backpackerlk.Domains.AdventureDomain;
 import com.example.backpackerlk.Domains.PopularDomain;
 import com.example.backpackerlk.R;
+import com.example.backpackerlk.UserProfile;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
@@ -33,6 +37,31 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        //navigation
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_home) {
+                return true;
+            } else if (itemId == R.id.nav_categories){
+                startActivity(new Intent(getApplicationContext(), Categories.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_profile) {
+                startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
+            }
+
+            return false;
+        });
+
 
         // Initialize the RecyclerViews and Button
         initRecyclerView();

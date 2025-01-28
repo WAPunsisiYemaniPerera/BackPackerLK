@@ -69,6 +69,7 @@
                 android:layout_weight="1"
                 android:hint="Enter your name"
                 android:inputType="textPersonName"
+                android:minHeight="48dp"
                 android:text="Kaveen Pramuditha"
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
@@ -96,11 +97,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_weight="1"
-                android:text="kaviya"
                 android:hint="Enter your username"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:text="kaviya"
                 android:textColor="#4A4A4A"
-                android:textSize="14sp"
-                android:inputType="text" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <!-- Email Card -->
@@ -126,9 +128,10 @@
                 android:layout_marginStart="45dp"
                 android:layout_weight="1"
                 android:hint="Enter your email"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
                 android:textColor="#4A4A4A"
-                android:textSize="14sp"
-                android:inputType="textEmailAddress" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <!-- Password Card -->
@@ -154,10 +157,11 @@
                 android:layout_marginStart="14dp"
                 android:layout_weight="1"
                 android:hint="Enter your password"
-                android:textColor="#4A4A4A"
-                android:textSize="14sp"
+                android:importantForAccessibility="yes"
                 android:inputType="textPassword"
-                android:importantForAccessibility="yes" />
+                android:minHeight="48dp"
+                android:textColor="#4A4A4A"
+                android:textSize="14sp" />
 
             <!-- Toggle View Password Button -->
             <ImageButton
@@ -168,7 +172,8 @@
                 android:layout_marginStart="1dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Toggle password visibility"
-                android:src="@drawable/ic_eye" />
+                android:src="@drawable/ic_eye"
+                tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
     </LinearLayout>
 
