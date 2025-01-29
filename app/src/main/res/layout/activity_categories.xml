@@ -55,9 +55,9 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginEnd="40dp"
-                android:background="@drawable/circular_background"
+                android:background="@drawable/h1"
                 android:padding="2dp"
-                app:srcCompat="@drawable/h1" />
+            />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -110,9 +110,9 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginEnd="40dp"
-                android:background="@drawable/circular_background"
+                android:background="@drawable/h2"
                 android:padding="2dp"
-                app:srcCompat="@drawable/h2" />
+               />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -165,9 +165,9 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginEnd="40dp"
-                android:background="@drawable/circular_background"
+                android:background="@drawable/h3"
                 android:padding="2dp"
-                app:srcCompat="@drawable/h3" />
+                />
 
             <LinearLayout
                 android:layout_width="0dp"
