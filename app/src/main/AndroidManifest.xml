@@ -13,15 +13,16 @@
         android:theme="@style/Theme.BackPackerLK"
         tools:targetApi="31">
         <activity
-            android:name=".Activities.WhoAreYou2"
-            android:exported="true">
-        </activity>
+            android:name=".WaterActivities"
+            android:exported="false" />
         <activity
             android:name=".Activities.WhoAreYou"
             android:exported="true"></activity>
         <activity
             android:name=".Activities.EditSellerProfile"
-            android:exported="true" />
+
+            android:exported="true"></activity>
+
         <activity
             android:name=".Activities.Home"
             android:exported="true" /> <!-- Home Activity -->
@@ -35,12 +36,14 @@
         <activity
             android:name=".Loging"
             android:exported="true" />
+
+
         <activity
             android:name=".Activities.SellerProfile"
-            android:exported="true" /> <!-- Edit Seller Profile Activity -->
-        <activity
-            android:name=".Activities.SellerProfile"
-            android:exported="true" /> <!-- Dashboard Activity -->
+            android:exported="true" />
+
+
+        <!-- Dashboard Activity -->
         <activity
             android:name=".Dashboard"
             android:exported="true" /> <!-- Edit User Activity -->
@@ -58,6 +61,9 @@
         </activity> <!-- User Profile Activity -->
         <activity
             android:name=".UserProfile"
+            android:exported="true" /> <!-- Edit Seller Profile Activity -->
+        <activity
+            android:name=".Activities.SellerProfile"
             android:exported="true" /> <!-- Detail Activity -->
         <activity
             android:name=".Activities.DetailActivity"

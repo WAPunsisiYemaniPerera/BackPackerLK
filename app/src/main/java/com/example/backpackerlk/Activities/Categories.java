@@ -2,6 +2,8 @@ package com.example.backpackerlk.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import androidx.cardview.widget.CardView;
 
 import com.example.backpackerlk.R;
 import com.example.backpackerlk.UserProfile;
+import com.example.backpackerlk.WaterActivities;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Categories extends AppCompatActivity {
@@ -19,6 +22,13 @@ public class Categories extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //hide the name bar
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide(); //This line hides the action bar
+
+
         setContentView(R.layout.activity_categories);
 
         //navigation
@@ -58,7 +68,7 @@ public class Categories extends AppCompatActivity {
 
         // Set click listeners for each CardView
         safariCard.setOnClickListener(view -> navigateToDetail("Safari"));
-        waterCard.setOnClickListener(view -> navigateToSellerProfile("Water Activities"));
+        waterCard.setOnClickListener(view -> navigateToWaterActivities("Water Activities"));
         airCard.setOnClickListener(view -> navigateToDetail("Air Sports"));
 
         // Set click listener for the back icon
@@ -72,8 +82,8 @@ public class Categories extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Add animation
     }
 
-    private void navigateToSellerProfile(String categoryName) {
-        Intent intent = new Intent(Categories.this, SellerProfile.class);
+    private void navigateToWaterActivities(String categoryName) {
+        Intent intent = new Intent(Categories.this, WaterActivities.class);
 
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Add animation
