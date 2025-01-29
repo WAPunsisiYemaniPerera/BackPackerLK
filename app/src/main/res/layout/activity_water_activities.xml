@@ -97,15 +97,15 @@
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:contentDescription="Vehicle Accessibility"
-                        app:srcCompat="@drawable/vehicle" />
+                        android:contentDescription="Surfing"
+                        app:srcCompat="@drawable/wa1" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:text="Vehicle\nAccessibility"
+                        android:text="Surfing"
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -122,15 +122,15 @@
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:contentDescription="Guided Tours"
-                        app:srcCompat="@drawable/guide" />
+                        android:contentDescription="Water Rafting"
+                        app:srcCompat="@drawable/wa2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:text="Guided\nTours"
+                        android:text="Water\nRafting"
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -147,15 +147,15 @@
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:contentDescription="Wildlife Sightings"
-                        app:srcCompat="@drawable/wildlife" />
+                        android:contentDescription="diving"
+                        app:srcCompat="@drawable/wa3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:text="Wildlife\nSightings"
+                        android:text="diving"
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -166,12 +166,13 @@
 
             <TextView
                 android:id="@+id/descriptionTxt"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="16dp"
-                android:text="Sri Lanka, embraced by the Indian Ocean, is a haven for water lovers. From surfing Arugam Bay’s rolling waves to exploring Hikkaduwa’s vibrant coral reefs, its shores offer endless adventures. Kayak through Bentota’s calm waters or sail Trincomalee’s dolphin-filled seas. Here, every ripple tells a story of wonder."
+                android:text="Sri Lanka’s waters offer adventure surf Arugam Bay, dive Hikkaduwa’s reefs, kayak Bentota’s rivers, or sail Trincomalee’s dolphin-filled seas. A paradise for water lovers."
+                android:textAlignment="viewStart"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
