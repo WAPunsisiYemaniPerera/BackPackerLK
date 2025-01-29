@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter your name"
-                android:backgroundTint="@color/gray"
+                android:backgroundTint="@color/bluegreen"
                 android:padding="10dp" />
 
             <TextView
@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter business name"
-                android:backgroundTint="@color/gray"
+                android:backgroundTint="@color/bluegreen"
                 android:padding="10dp" />
 
             <TextView
@@ -86,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
-                android:backgroundTint="@color/gray" />
+                android:backgroundTint="@color/bluegreen" />
 
             <TextView
                 android:id="@+id/tv_business_address"
@@ -103,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter business address"
-                android:backgroundTint="@color/gray"
+                android:backgroundTint="@color/bluegreen"
                 android:padding="10dp" />
 
             <TextView
@@ -121,7 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter telephone number"
-                android:backgroundTint="@color/gray"
+                android:backgroundTint="@color/bluegreen"
                 android:padding="10dp" />
 
             <TextView
@@ -139,7 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter description"
-                android:backgroundTint="@color/gray"
+                android:backgroundTint="@color/bluegreen"
                 android:padding="10dp"
                 android:inputType="textMultiLine"
                 android:gravity="top" />
@@ -165,7 +165,7 @@
                     android:layout_width="107dp"
                     android:layout_height="37dp"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/placeholder_image"
+                    android:background="@drawable/pencil"
                     android:contentDescription="Business Image" />
 
                 <Button
