@@ -13,7 +13,7 @@ import androidx.cardview.widget.CardView;
 import com.example.backpackerlk.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class WhoAreYou extends AppCompatActivity {
+public class WhoAreYou2 extends AppCompatActivity {
 
     private CardView travelerCard, sellerCard;
 
@@ -42,7 +42,7 @@ public class WhoAreYou extends AppCompatActivity {
     }
 
     private void navigateToHome(){
-        Intent intent = new Intent(WhoAreYou.this, Home.class);
+        Intent intent = new Intent(WhoAreYou2.this, Home.class);
         startActivity(intent);
         //overrideActivityTransition(R.anim.slide_in_left);
         finish();

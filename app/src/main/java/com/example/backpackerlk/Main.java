@@ -17,6 +17,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.backpackerlk.Activities.Home;
+import com.example.backpackerlk.Activities.WhoAreYou;
 
 public class Main extends AppCompatActivity {
 
@@ -51,7 +52,7 @@ public class Main extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(Main.this, Home.class);
+                Intent intent = new Intent(Main.this, WhoAreYou.class);
                 startActivity(intent);
                 finish();
             }
