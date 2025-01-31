@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/background2"
-    tools:context=".Activities.Login">
+    tools:context=".Loging">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -82,11 +82,11 @@
             <!-- Footer Text -->
             <TextView
                 android:id="@+id/signupText"
-                android:layout_width="324dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:padding="8dp"
-                android:text="Already haven't an account"
+                android:text="Don't have an account?"
                 android:textAlignment="center"
                 android:textColor="@color/orange"
                 android:textSize="14sp" />
