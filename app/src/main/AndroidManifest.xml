@@ -12,69 +12,76 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BackPackerLK"
         tools:targetApi="31">
-        <activity
-            android:name=".Activities.WhoAreYou"
-            android:exported="true">
-        </activity>
-        <activity
-            android:name=".Activities.EditSellerProfile"
-            android:exported="true"></activity>
 
-        <activity
-            android:name=".Activities.Home"
-            android:exported="true" /> <!-- Home Activity -->
-
-        <activity
-            android:name=".Activities.Categories"
-            android:exported="true" /> <!-- Categories Activity -->
-         <!-- Sign Up Activity -->
-        <activity
-            android:name=".SignUp"
-            android:exported="true" /> <!-- Login Activity -->
-        <activity
-            android:name=".Loging"
-            android:exported="true" />
-
-
-        <activity
-            android:name=".Activities.SellerProfile"
-            android:exported="true" />
-
-
-        <!-- Dashboard Activity -->
-        <activity
-            android:name=".Dashboard"
-            android:exported="true" /> <!-- Edit User Activity -->
-        <activity
-            android:name=".EditUser"
-            android:exported="true" /> <!-- Main Activity (Launcher) -->
+        <!-- Main Activity (Launcher) -->
         <activity
             android:name=".Main"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- User Profile Activity -->
+        </activity>
+
         <activity
-            android:name=".UserProfile"
-            android:exported="true" /> <!-- Edit Seller Profile Activity -->
+            android:name=".WaterActivities"
+            android:exported="true" />
         <activity
-            android:name=".Activities.SellerProfile"
-            android:exported="true"></activity> <!-- Detail Activity -->
-        <activity
-            android:name=".Activities.DetailActivity"
-            android:exported="true" /> <!-- Activities Main Activity -->
-        <activity
-            android:name=".Activities.Main"
+            android:name=".Activities.WhoAreYou"
             android:exported="true" />
 
+        <activity
+            android:name=".Activities.EditSellerProfile"
+            android:exported="true" />
 
         <activity
-            android:name=".Add_Business"
+            android:name=".Activities.Home"
+            android:exported="true" />
+
+        <!-- Home Activity -->
+        <activity
+            android:name=".Activities.Categories"
+            android:exported="true" />
+
+        <!-- Sign Up Activity -->
+        <activity
+            android:name=".SignUp"
             android:exported="true"/>
 
+
+        <!-- Login Activity -->
+        <activity
+            android:name=".Loging"
+            android:exported="true" />
+
+        <activity
+            android:name=".Activities.SellerProfile"
+            android:exported="true" />
+
+        <!-- Dashboard Activity -->
+        <activity
+            android:name=".Dashboard"
+            android:exported="true" />
+
+        <!-- Edit User Activity -->
+        <activity
+            android:name=".EditUser"
+            android:exported="true" />
+
+        <!-- User Profile Activity -->
+        <activity
+            android:name=".UserProfile"
+            android:exported="true" />
+
+        <!-- Detail Activity -->
+        <activity
+            android:name=".Activities.DetailActivity"
+            android:exported="true" />
+
+        <!-- Activities Main Activity -->
+        <activity
+            android:name=".Add_Business"
+            android:exported="true" />
     </application>
 
 </manifest>
