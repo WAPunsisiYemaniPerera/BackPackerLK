@@ -19,7 +19,7 @@ import com.example.backpackerlk.SignUp;
 
 public class Loging extends AppCompatActivity {
 
-    private Button loginButton, signupButton;
+    private Button loginButton, createaccButton;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -35,7 +35,7 @@ public class Loging extends AppCompatActivity {
 
         // Initialize buttons
         loginButton = findViewById(R.id.loginButton);
-        signupButton = findViewById(R.id.signupButton);
+        createaccButton = findViewById(R.id.createButton);
 
         // Handle login button click (Navigate to Home)
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +47,7 @@ public class Loging extends AppCompatActivity {
         });
 
         // Handle sign-up button click (Navigate to SignUpActivity)
-        signupButton.setOnClickListener(new View.OnClickListener() {
+        createaccButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Loging.this, SignUp.class);
