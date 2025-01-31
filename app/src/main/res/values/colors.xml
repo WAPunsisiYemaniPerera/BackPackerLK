@@ -10,8 +10,7 @@
     <color name="orange">#FE6900</color>
     <color name="green">#36827F</color>
     <color name="whitehalf">#FFFFFF33</color>
-    <color name="lightorange">#9B9998</color>
-    <color name="darkorange">#FFA500</color>
-    <color name="glass">#1AFFFFFF</color>
-
+    <color name="lightorange">#FCD299</color>
+    <color name="bluegreen">#00798c</color>
+    <color name="lightorange2">#ff974d</color>
 </resources>
