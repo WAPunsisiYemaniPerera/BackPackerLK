@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.example.backpackerlk.R;
+import com.example.backpackerlk.UserProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class WhoAreYou extends AppCompatActivity {
@@ -36,8 +37,8 @@ public class WhoAreYou extends AppCompatActivity {
         sellerCard = findViewById(R.id.sellerCard);
 
         //set click listners for each card views
-        travelerCard.setOnClickListener(view -> navigateToHome());
-        sellerCard.setOnClickListener(view -> navigateToHome());
+        travelerCard.setOnClickListener(view -> navigateToUser());
+        sellerCard.setOnClickListener(view -> navigateToSeller());
 
         // Find the ImageView by ID
         ImageView imageView = findViewById(R.id.imageView);
@@ -50,8 +51,15 @@ public class WhoAreYou extends AppCompatActivity {
         fadeIn.start();
     }
 
-    private void navigateToHome(){
-        Intent intent = new Intent(WhoAreYou.this, Home.class);
+    private void navigateToUser(){
+        Intent intent = new Intent(WhoAreYou.this, UserProfile.class);
+        startActivity(intent);
+        //overrideActivityTransition(R.anim.slide_in_left);
+        finish();
+    }
+
+    private void navigateToSeller(){
+        Intent intent = new Intent(WhoAreYou.this, SellerProfile.class);
         startActivity(intent);
         //overrideActivityTransition(R.anim.slide_in_left);
         finish();

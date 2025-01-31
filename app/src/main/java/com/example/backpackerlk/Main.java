@@ -60,7 +60,7 @@ public class Main extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(Main.this, WhoAreYou.class);
+                Intent intent = new Intent(Main.this, SignUp.class);
                 startActivity(intent);
                 finish();
             }
