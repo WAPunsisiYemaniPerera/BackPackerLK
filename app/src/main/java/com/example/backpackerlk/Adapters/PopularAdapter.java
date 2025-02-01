@@ -9,61 +9,47 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
-import com.example.backpackerlk.Domains.PopularDomain;
+import com.example.backpackerlk.PopularItem;
 import com.example.backpackerlk.R;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.List;
 
-public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHolder> {
-    ArrayList<PopularDomain> items;
-    DecimalFormat formatter;
+public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularViewHolder> {
+    private List<PopularItem> popularItems;
 
-    public PopularAdapter(ArrayList<PopularDomain> items) {
-        this.items = items;
-        formatter=new DecimalFormat("###,###,###,###");
+    public PopularAdapter(List<PopularItem> popularItems) {
+        this.popularItems = popularItems;
     }
 
     @NonNull
     @Override
-    public PopularAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate= LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_popular,parent,false);
-        return new ViewHolder(inflate);
+    public PopularViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_popular, parent, false);
+        return new PopularViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PopularAdapter.ViewHolder holder, int position) {
-        holder.titleTxt.setText(items.get(position).getTitle());
-        holder.locationTxt.setText(items.get(position).getLocation());
-        holder.scoreTxt.setText(""+items.get(position).getScore());
-        
-        int drawableResId=holder.itemView.getResources().getIdentifier(items.get(position).getPic(),"drawable",holder.itemView.getContext().getPackageName());
-
-        Glide.with(holder.itemView.getContext())
-                .load(drawableResId)
-                .transform(new CenterCrop(),new GranularRoundedCorners(40,40,40,40))
-                .into(holder.pic);
-
+    public void onBindViewHolder(@NonNull PopularViewHolder holder, int position) {
+        PopularItem item = popularItems.get(position);
+        holder.imageView.setImageResource(item.getImage());
+        holder.titleText.setText(item.getTitle());
+        holder.descriptionText.setText(item.getDescription());
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return popularItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTxt,locationTxt,scoreTxt;
-        ImageView pic;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
+    static class PopularViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageView;
+        TextView titleText, descriptionText;
 
-            titleTxt=itemView.findViewById(R.id.poptxt1);
-            locationTxt=itemView.findViewById(R.id.locationtext1);
-            scoreTxt=itemView.findViewById(R.id.scoretext1);
-            pic=itemView.findViewById(R.id.popimage1);
+        public PopularViewHolder(@NonNull View itemView) {
+            super(itemView);
+            imageView = itemView.findViewById(R.id.popularImage);
+            titleText = itemView.findViewById(R.id.popularTitle);
+            descriptionText = itemView.findViewById(R.id.popularDesc);
         }
     }
 }

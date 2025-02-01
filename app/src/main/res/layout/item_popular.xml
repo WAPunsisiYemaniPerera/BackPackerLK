@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@drawable/card_background"
+    android:layout_marginEnd="10dp">
+
+    <ImageView
+        android:id="@+id/popularImage"
+        android:layout_width="150dp"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/h1"/>
+
+    <TextView
+        android:id="@+id/popularTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Event Title"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:paddingTop="5dp"/>
+
+    <TextView
+        android:id="@+id/popularDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Event Description"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:alpha="0.7"/>
+</LinearLayout>
