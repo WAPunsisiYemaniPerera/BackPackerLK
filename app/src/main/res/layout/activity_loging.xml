@@ -10,9 +10,25 @@
     android:background="@drawable/background2"
     tools:context=".Loging">
 
-    <androidx.cardview.widget.CardView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="190dp">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="434dp"
+            android:layout_height="228dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/backpacker" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="365dp"
+        android:layout_height="490dp"
         android:layout_margin="30dp"
         app:cardCornerRadius="30dp"
         app:cardElevation="10dp">
@@ -74,14 +90,14 @@
                 android:id="@+id/signupText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
+                android:gravity="center"
                 android:padding="8dp"
                 android:text="Don't have an account?"
                 android:textAlignment="center"
                 android:textColor="@color/orange"
-                android:textSize="14sp"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal" />
+                android:textSize="14sp" />
 
             <!-- Centering the "Create an account" button -->
             <LinearLayout
