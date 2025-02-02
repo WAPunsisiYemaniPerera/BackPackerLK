@@ -59,9 +59,9 @@ public class Categories extends AppCompatActivity {
         });
 
         // Initialize the CardViews
-        safariCard = findViewById(R.id.safari);
-        waterCard = findViewById(R.id.cardwater);
-        airCard = findViewById(R.id.cardsky);
+        safariCard = findViewById(R.id.card_safari);
+        waterCard = findViewById(R.id.card_water);
+        airCard = findViewById(R.id.card_air);
 
         // Initialize the back icon
         backIcon = findViewById(R.id.icback);
