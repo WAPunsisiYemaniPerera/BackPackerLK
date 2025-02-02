@@ -33,7 +33,7 @@ public class EditSellerProfile extends AppCompatActivity {
 
         //navigation
         @SuppressLint({"MissingInflatedId", "LocalSuppress"}) BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.nav_categories);
+        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
