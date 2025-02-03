@@ -23,27 +23,25 @@ public class EditSellerProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //hide the name bar
+        // Hide the name bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide(); //This line hides the action bar
-
+        getSupportActionBar().hide(); // Hide the action bar
 
         setContentView(R.layout.activity_edit_seller_profile);
 
-        //navigation
+        // Bottom navigation
         @SuppressLint({"MissingInflatedId", "LocalSuppress"}) BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.nav_categories);
+        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-
             if (itemId == R.id.nav_home) {
                 startActivity(new Intent(getApplicationContext(), Home.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
-            } else if (itemId == R.id.nav_categories){
+            } else if (itemId == R.id.nav_categories) {
                 startActivity(new Intent(getApplicationContext(), Categories.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -54,7 +52,6 @@ public class EditSellerProfile extends AppCompatActivity {
                 finish();
                 return true;
             }
-
             return false;
         });
 
@@ -104,5 +101,16 @@ public class EditSellerProfile extends AppCompatActivity {
                 // No action needed
             }
         });
+    }
+
+    // **BACK BUTTON IN PHONE**
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(EditSellerProfile.this, SellerProfile.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish(); // Ensure the current activity is removed from the stack
     }
 }
