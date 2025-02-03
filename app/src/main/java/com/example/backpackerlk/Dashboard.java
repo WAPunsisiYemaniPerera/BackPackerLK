@@ -2,8 +2,11 @@ package com.example.backpackerlk;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ScrollView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +18,12 @@ import com.example.backpackerlk.Activities.Categories;
 import com.example.backpackerlk.Activities.Home;
 import com.example.backpackerlk.Activities.WhoAreYou;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class Dashboard extends AppCompatActivity {
 
+    private FloatingActionButton fabAddEvent;
+    private Button editEvent1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +62,18 @@ public class Dashboard extends AppCompatActivity {
             }
 
             return false;
+        });
+
+        // Set up ScrollView listener to hide/show bottom navigation
+        ScrollView scrollView = findViewById(R.id.main1); // Use the ID of your ScrollView
+        scrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY < oldScrollY) {
+                // Scrolling up - make the bottom navigation invisible
+                bottomNavigationView.animate().alpha(0f).setDuration(200).start();
+            } else if (scrollY > oldScrollY) {
+                // Scrolling down - make the bottom navigation visible
+                bottomNavigationView.animate().alpha(1f).setDuration(200).start();
+            }
         });
 
 

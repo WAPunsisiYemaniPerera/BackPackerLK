@@ -7,6 +7,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -59,6 +60,18 @@ public class SellerProfile extends AppCompatActivity {
             }
 
             return false;
+        });
+
+        // Set up ScrollView listener to hide/show bottom navigation
+        ScrollView scrollView = findViewById(R.id.main1); // Use the ID of your ScrollView
+        scrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY < oldScrollY) {
+                // Scrolling up - make the bottom navigation invisible
+                bottomNavigationView.animate().alpha(0f).setDuration(200).start();
+            } else if (scrollY > oldScrollY) {
+                // Scrolling down - make the bottom navigation visible
+                bottomNavigationView.animate().alpha(1f).setDuration(200).start();
+            }
         });
 
         // Initialize UI components
