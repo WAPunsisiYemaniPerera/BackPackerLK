@@ -110,13 +110,6 @@ public class DetailActivity extends AppCompatActivity {
         finish(); // Close the current activity to prevent the user from coming back to it
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed(); // This will handle the system back button if necessary
-        navigateToCategories(); // Trigger the navigation to Categories
-    }
-
-
     /**
      * Animate a counter TextView from a start value to an end value.
      *
@@ -131,5 +124,12 @@ public class DetailActivity extends AppCompatActivity {
             textView.setText(animation.getAnimatedValue().toString() + "+");
         });
         animator.start();
+    }
+
+    // **BACK BUTTON IN PHONE**
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed(); // Go to the previous activity
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Optional transition
     }
 }

@@ -96,9 +96,10 @@ public class Categories extends AppCompatActivity {
         finish();
     }
 
+    // **BACK BUTTON IN PHONE**
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        navigateToHome(); // Reuse the navigateToHome method for the physical back button
+        super.onBackPressed(); // Go to the previous activity
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Optional transition
     }
 }

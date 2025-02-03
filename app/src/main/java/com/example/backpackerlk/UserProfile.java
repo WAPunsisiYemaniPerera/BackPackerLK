@@ -2,8 +2,9 @@ package com.example.backpackerlk;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Window;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,23 +19,35 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class UserProfile extends AppCompatActivity {
 
+    private Button edituserprofile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
 
-        //hide the name bar
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide(); //This line hides the action bar
-
-
+        // Set content view before accessing UI elements
         setContentView(R.layout.activity_user_profile);
 
-        //navigation
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+        // Hide the action bar
+        getSupportActionBar().hide();
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        // Initialize UI elements
+        edituserprofile = findViewById(R.id.editprofileBtn);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        // Edit user profile button click event
+        edituserprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserProfile.this, EditUser.class);
+                startActivity(intent);
+            }
+        });
+
+        // Navigation bar logic
+        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
@@ -43,13 +56,8 @@ public class UserProfile extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
-            } else if (itemId == R.id.nav_categories){
+            } else if (itemId == R.id.nav_categories) {
                 startActivity(new Intent(getApplicationContext(), Categories.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                return true;
-            } else if (itemId == R.id.nav_profile) {
-                startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
@@ -57,10 +65,23 @@ public class UserProfile extends AppCompatActivity {
 
             return false;
         });
+
+        // Handle window insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    // **BACK BUTTON IN PHONE**
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(UserProfile.this, WhoAreYou.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish(); // Ensure the current activity is removed from the stack
     }
 }
