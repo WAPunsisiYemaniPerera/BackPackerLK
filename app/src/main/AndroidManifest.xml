@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BackPackerLK"
         tools:targetApi="31">
+        <activity
+            android:name=".RopeActivity"
+            android:exported="true"/>
 
         <!-- Main Activity (Launcher) -->
         <activity
@@ -19,66 +22,46 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".WaterActivities"
             android:exported="true" />
         <activity
             android:name=".Activities.WhoAreYou"
             android:exported="true" />
-
         <activity
             android:name=".Activities.EditSellerProfile"
             android:exported="true" />
-
         <activity
             android:name=".Activities.Home"
-            android:exported="true" />
-
-        <!-- Home Activity -->
+            android:exported="true" /> <!-- Home Activity -->
         <activity
             android:name=".Activities.Categories"
-            android:exported="true" />
-
-        <!-- Sign Up Activity -->
+            android:exported="true" /> <!-- Sign Up Activity -->
         <activity
             android:name=".SignUp"
-            android:exported="true"/>
-
-
-        <!-- Login Activity -->
+            android:exported="true" /> <!-- Login Activity -->
         <activity
             android:name=".Loging"
             android:exported="true" />
-
         <activity
             android:name=".Activities.SellerProfile"
-            android:exported="true" />
-
-        <!-- Dashboard Activity -->
+            android:exported="true" /> <!-- Dashboard Activity -->
         <activity
             android:name=".Dashboard"
-            android:exported="true" />
-
-        <!-- Edit User Activity -->
+            android:exported="true" /> <!-- Edit User Activity -->
         <activity
             android:name=".EditUser"
-            android:exported="true" />
-
-        <!-- User Profile Activity -->
+            android:exported="true" /> <!-- User Profile Activity -->
         <activity
             android:name=".UserProfile"
-            android:exported="true" />
-
-        <!-- Detail Activity -->
+            android:exported="true" /> <!-- Detail Activity -->
         <activity
             android:name=".Activities.DetailActivity"
-            android:exported="true" />
-
-        <!-- Activities Main Activity -->
+            android:exported="true" /> <!-- Activities Main Activity -->
         <activity
             android:name=".Add_Business"
             android:exported="true" />

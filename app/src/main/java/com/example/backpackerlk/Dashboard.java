@@ -6,6 +6,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ScrollView;
@@ -16,12 +18,15 @@ import com.example.backpackerlk.Activities.Categories;
 import com.example.backpackerlk.Activities.Home;
 import com.example.backpackerlk.Activities.WhoAreYou;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class Dashboard extends AppCompatActivity {
 
-    private Button addevent;
+    private FloatingActionButton fabAddEvent;
+    private Button editEvent1;
 
+    private Button addevent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
