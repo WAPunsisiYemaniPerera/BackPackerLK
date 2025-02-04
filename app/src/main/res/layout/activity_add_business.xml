@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="40dp">
 
             <TextView
                 android:id="@+id/tv_add_business"
@@ -54,8 +54,8 @@
                 android:id="@+id/et_your_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter your name"
                 android:backgroundTint="@color/bluegreen"
+                android:hint="Enter your name"
                 android:padding="10dp" />
 
             <TextView
@@ -72,8 +72,8 @@
                 android:id="@+id/et_business_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter business name"
                 android:backgroundTint="@color/bluegreen"
+                android:hint="Enter business name"
                 android:padding="10dp" />
 
             <TextView
@@ -90,8 +90,8 @@
                 android:id="@+id/sp_business_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:backgroundTint="@color/bluegreen" />
+                android:backgroundTint="@color/bluegreen"
+                android:minHeight="48dp" />
 
             <TextView
                 android:id="@+id/tv_business_address"
@@ -107,8 +107,8 @@
                 android:id="@+id/et_business_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter business address"
                 android:backgroundTint="@color/bluegreen"
+                android:hint="Enter business address"
                 android:padding="10dp" />
 
             <TextView
@@ -125,8 +125,8 @@
                 android:id="@+id/et_telephone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter telephone number"
                 android:backgroundTint="@color/bluegreen"
+                android:hint="Enter telephone number"
                 android:padding="10dp" />
 
             <TextView
@@ -143,11 +143,11 @@
                 android:id="@+id/et_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter description"
                 android:backgroundTint="@color/bluegreen"
-                android:padding="10dp"
+                android:gravity="top"
+                android:hint="Enter description"
                 android:inputType="textMultiLine"
-                android:gravity="top" />
+                android:padding="10dp" />
 
             <TextView
                 android:id="@+id/tv_business_image"
@@ -187,8 +187,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:backgroundTint="@color/bluegreen"
-                android:textColor="@color/white"
                 android:text="Submit"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>

@@ -167,7 +167,8 @@
                                 android:layout_marginStart="16dp"
                                 android:background="?attr/selectableItemBackgroundBorderless"
                                 android:contentDescription="Delete Event"
-                                android:src="@drawable/baseline_delete_24" />
+                                android:src="@drawable/baseline_delete_24"
+                                tools:ignore="TouchTargetSizeCheck" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -177,7 +178,7 @@
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/h3" />
+                        android:src="@drawable/safari1" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -209,17 +210,17 @@
                             android:id="@+id/eventTitle2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Whale Watching Tour"
+                            android:text="The Marvel"
                             android:textSize="18sp"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/eventLocation2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Location: Mirissa Beach"
-                            android:textSize="14sp"
-                            android:textColor="@color/black"/>
+                            android:text="Location: Lakashapana"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/eventPrice2"
@@ -252,7 +253,8 @@
                                 android:layout_marginStart="16dp"
                                 android:background="?attr/selectableItemBackgroundBorderless"
                                 android:contentDescription="Delete Event"
-                                android:src="@drawable/baseline_delete_24" />
+                                android:src="@drawable/baseline_delete_24"
+                                tools:ignore="TouchTargetSizeCheck" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -262,7 +264,7 @@
                         android:layout_width="109dp"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/h5" />
+                        android:src="@drawable/lakshapana" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
