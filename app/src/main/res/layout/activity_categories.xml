@@ -53,7 +53,7 @@
                 android:layout_marginEnd="40dp"
                 android:background="@drawable/circular_background"
                 android:padding="2dp"
-                app:srcCompat="@drawable/h2" />
+                app:srcCompat="@drawable/yala" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -112,7 +112,7 @@
                 android:layout_marginEnd="40dp"
                 android:background="@drawable/circular_background"
                 android:padding="2dp"
-                app:srcCompat="@drawable/h2" />
+                app:srcCompat="@drawable/p1" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -171,7 +171,7 @@
                 android:layout_marginEnd="40dp"
                 android:background="@drawable/circular_background"
                 android:padding="2dp"
-                app:srcCompat="@drawable/h3" />
+                app:srcCompat="@drawable/para" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -225,12 +225,12 @@
             android:padding="16dp">
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="100dp"
+                android:layout_width="115dp"
+                android:layout_height="213dp"
                 android:layout_marginEnd="40dp"
                 android:background="@drawable/circular_background"
                 android:padding="2dp"
-                app:srcCompat="@drawable/h4" />
+                app:srcCompat="@drawable/lakshapana" />
 
             <LinearLayout
                 android:layout_width="0dp"
