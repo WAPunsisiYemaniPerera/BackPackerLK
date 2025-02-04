@@ -41,19 +41,19 @@
                         android:id="@+id/imageView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/h1" />
+                        app:srcCompat="@drawable/safaricover" />
 
                     <ImageView
                         android:id="@+id/imageView3"
                         android:layout_width="match_parent"
                         android:layout_height="287dp"
-                        app:srcCompat="@drawable/h2" />
+                        app:srcCompat="@drawable/wateractivitesdp1" />
 
                     <ImageView
                         android:id="@+id/imageView4"
                         android:layout_width="match_parent"
                         android:layout_height="287dp"
-                        app:srcCompat="@drawable/h3" />
+                        app:srcCompat="@drawable/ropebanner" />
                 </ViewFlipper>
 
                 <TextView

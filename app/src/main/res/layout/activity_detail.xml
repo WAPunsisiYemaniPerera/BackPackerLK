@@ -35,7 +35,7 @@
                     android:id="@+id/picimg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/safari"
+                    android:background="@drawable/safaricover"
                     android:contentDescription="Image"
                     android:scaleType="centerCrop"
                     tools:ignore="MissingConstraints" />
@@ -214,7 +214,7 @@
                         android:layout_gravity="center_vertical"
                         android:contentDescription="Seller Image"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/safari1" />
+                        app:srcCompat="@drawable/safari" />
 
                     <!-- Details Section -->
                     <LinearLayout
