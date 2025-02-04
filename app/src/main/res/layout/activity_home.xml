@@ -70,18 +70,7 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginTop="224dp"
-                    android:alpha="0.7"
-                    android:padding="10dp"
-                    android:text="Connecting you to \nSri Lanka’s top events and activities."
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+
             </FrameLayout>
 
 
