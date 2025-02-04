@@ -196,6 +196,18 @@
                 android:textSize="16sp"
                 android:layout_gravity="center" />
 
+            <!-- Give Feedback Button -->
+            <Button
+                android:id="@+id/feedbackBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:backgroundTint="@color/bluegreen"
+                android:text="Feedback"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
         </LinearLayout>
     </android.widget.ScrollView>
 
