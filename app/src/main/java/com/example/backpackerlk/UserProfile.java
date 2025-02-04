@@ -22,7 +22,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class UserProfile extends AppCompatActivity {
 
     private Button edituserprofile;
+    private Button feedback;
 
+
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,15 @@ public class UserProfile extends AppCompatActivity {
                 Intent intent = new Intent(UserProfile.this, EditUser.class);
                 startActivity(intent);
             }
+        });
+
+        // Initialize the sign-up button
+        feedback = findViewById(R.id.feedbackBtn);
+
+        feedback.setOnClickListener(view -> {
+            Intent intent = new Intent(UserProfile.this, Feedbacks.class); // Navigate to Login
+            startActivity(intent);
+            finish();
         });
 
         // Navigation bar logic
