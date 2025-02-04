@@ -25,14 +25,20 @@
 
             <TextView
                 android:id="@+id/tv_add_business"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_marginTop="38dp"
                 android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="4"
                 android:text="Add Business"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@color/black" />
+                android:textAlignment="center"
+                android:textColor="@color/orange"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_your_name"

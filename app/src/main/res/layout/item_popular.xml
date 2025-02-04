@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/popularImage"
-        android:layout_width="150dp"
-        android:layout_height="120dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:scaleType="centerCrop"
         android:src="@drawable/h1"/>
 
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:text="Event Title"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:paddingTop="5dp"/>
 
@@ -31,6 +31,6 @@
         android:layout_height="wrap_content"
         android:text="Event Description"
         android:textColor="@color/black"
-        android:textSize="12sp"
+        android:textSize="16sp"
         android:alpha="0.7"/>
 </LinearLayout>

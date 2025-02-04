@@ -3,9 +3,11 @@ package com.example.backpackerlk.Activities;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -58,6 +60,31 @@ public class Home extends AppCompatActivity {
             Intent intent = new Intent(Home.this, Categories.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        });
+
+        // **Social Media Click Listeners**
+        ImageView facebook = findViewById(R.id.facebookIcon);
+        facebook.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/yourpage"));
+            startActivity(browserIntent);
+        });
+
+        ImageView instagram = findViewById(R.id.instagramIcon);
+        instagram.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/yourpage"));
+            startActivity(browserIntent);
+        });
+
+        ImageView twitter = findViewById(R.id.twitterIcon);
+        twitter.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.twitter.com/yourpage"));
+            startActivity(browserIntent);
+        });
+
+        ImageView tiktok = findViewById(R.id.tiktokIcon);
+        tiktok.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.tiktok.com/@yourpage"));
+            startActivity(browserIntent);
         });
 
     }

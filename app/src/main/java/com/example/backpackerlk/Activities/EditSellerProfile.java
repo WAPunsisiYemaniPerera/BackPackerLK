@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -78,6 +79,17 @@ public class EditSellerProfile extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Initialize the back icon and set an OnClickListener
+        ImageView backIcon = findViewById(R.id.icback);
+        backIcon.setOnClickListener(view -> navigateToSellerProfile()); // Call navigateToCategories when clicked
+    }
+
+    private void navigateToSellerProfile() {
+        Intent intent = new Intent(EditSellerProfile.this, SellerProfile.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Apply back transition
+        finish(); // Close the current activity to prevent the user from coming back to it
     }
 
     private void setHintVisibility(EditText editText) {

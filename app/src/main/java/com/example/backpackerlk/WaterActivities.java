@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 
 import androidx.activity.EdgeToEdge;
@@ -75,6 +76,17 @@ public class WaterActivities extends AppCompatActivity {
                 bottomNavigationView.animate().alpha(1f).setDuration(200).start();
             }
         });
+
+        // Initialize the back icon and set an OnClickListener
+        ImageView backIcon = findViewById(R.id.icback);
+        backIcon.setOnClickListener(view -> navigateToCategories()); // Call navigateToCategories when clicked
+    }
+
+    private void navigateToCategories() {
+        Intent intent = new Intent(WaterActivities.this, Categories.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Apply back transition
+        finish(); // Close the current activity to prevent the user from coming back to it
     }
 
     // **BACK BUTTON IN PHONE**
