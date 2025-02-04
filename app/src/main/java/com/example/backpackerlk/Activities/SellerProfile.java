@@ -86,7 +86,19 @@ public class SellerProfile extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // Initialize the back icon and set an OnClickListener
+        ImageView backIcon = findViewById(R.id.icback);
+        backIcon.setOnClickListener(view -> navigateToWhoAreYou()); // Call navigateToCategories when clicked
     }
+
+    private void navigateToWhoAreYou() {
+        Intent intent = new Intent(SellerProfile.this, WhoAreYou.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Apply back transition
+        finish(); // Close the current activity to prevent the user from coming back to it
+    }
+
+
 
     // **BACK BUTTON IN PHONE**
     @Override

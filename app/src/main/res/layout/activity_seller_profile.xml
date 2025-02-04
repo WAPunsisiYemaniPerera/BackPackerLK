@@ -189,7 +189,7 @@
     </android.widget.ScrollView>
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/icback"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
@@ -204,8 +204,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="My Profile"
-        android:textSize="25dp"
+        android:textSize="30dp"
         android:textColor="@color/bluegreen"
+        android:shadowColor="@color/black"
+        android:shadowRadius="4"
+        android:shadowDy="2"
+        android:shadowDx="2"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

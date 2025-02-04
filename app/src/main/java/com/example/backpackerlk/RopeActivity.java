@@ -60,6 +60,7 @@ public class RopeActivity extends AppCompatActivity {
             return false;
         });
 
+
         // Set up ScrollView listener to hide/show bottom navigation
         ScrollView scrollView = findViewById(R.id.main1); // Use the ID of your ScrollView
         scrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
