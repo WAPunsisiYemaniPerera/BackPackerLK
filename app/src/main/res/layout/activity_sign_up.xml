@@ -12,8 +12,8 @@
     <!-- CardView for Form Inputs -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="364dp"
-        android:layout_height="169dp"
+        android:layout_width="203dp"
+        android:layout_height="172dp"
         android:layout_marginBottom="644dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,8 +24,8 @@
 
         <ImageView
             android:id="@+id/imageView11"
-            android:layout_width="466dp"
-            android:layout_height="189dp"
+            android:layout_width="216dp"
+            android:layout_height="181dp"
             android:src="@drawable/backpacker"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,14 +43,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.7">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical"
-            android:padding="24dp"
-            android:background="@color/white">
+            android:padding="24dp">
 
             <!-- Username Input -->
 

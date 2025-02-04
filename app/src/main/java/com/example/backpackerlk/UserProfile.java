@@ -1,10 +1,12 @@
 package com.example.backpackerlk;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +22,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class UserProfile extends AppCompatActivity {
 
     private Button edituserprofile;
+    private Button feedback;
 
+
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +50,15 @@ public class UserProfile extends AppCompatActivity {
                 Intent intent = new Intent(UserProfile.this, EditUser.class);
                 startActivity(intent);
             }
+        });
+
+        // Initialize the sign-up button
+        feedback = findViewById(R.id.feedbackBtn);
+
+        feedback.setOnClickListener(view -> {
+            Intent intent = new Intent(UserProfile.this, Feedbacks.class); // Navigate to Login
+            startActivity(intent);
+            finish();
         });
 
         // Navigation bar logic
@@ -72,6 +87,17 @@ public class UserProfile extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Initialize the back icon and set an OnClickListener
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) ImageView backIcon = findViewById(R.id.icback);
+        backIcon.setOnClickListener(view -> navigateToWhoAreYou()); // Call navigateToCategories when clicked
+    }
+
+    private void navigateToWhoAreYou() {
+        Intent intent = new Intent(UserProfile.this, WhoAreYou.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Apply back transition
+        finish(); // Close the current activity to prevent the user from coming back to it
     }
 
     // **BACK BUTTON IN PHONE**

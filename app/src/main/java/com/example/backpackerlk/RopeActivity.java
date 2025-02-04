@@ -33,6 +33,10 @@ public class RopeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_rope);
 
+        // Initialize the back icon and set an OnClickListener
+        ImageView backIcon = findViewById(R.id.icback);
+        backIcon.setOnClickListener(view -> navigateToCategories()); // Call navigateToCategories when clicked
+
         //navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_categories);
@@ -59,6 +63,7 @@ public class RopeActivity extends AppCompatActivity {
 
             return false;
         });
+
 
         // Set up ScrollView listener to hide/show bottom navigation
         ScrollView scrollView = findViewById(R.id.main1); // Use the ID of your ScrollView
@@ -97,6 +102,13 @@ public class RopeActivity extends AppCompatActivity {
                 callNowButton.setText("No Phone Number Available");
             }
         });
+    }
+
+    private void navigateToCategories() {
+        Intent intent = new Intent(RopeActivity.this, Categories.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Apply back transition
+        finish(); // Close the current activity to prevent the user from coming back to it
     }
 
 }
