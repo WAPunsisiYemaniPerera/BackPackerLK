@@ -8,10 +8,26 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/background2"
-    tools:context=".Activities.Login">
+    tools:context=".Loging">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="190dp">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="434dp"
+            android:layout_height="228dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/backpacker" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="365dp"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         app:cardCornerRadius="30dp"
@@ -56,8 +72,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/loginButton"
@@ -67,29 +83,39 @@
                     android:text="Login"
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/signupButton"
-                    android:layout_width="242dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="20dp"
-                    android:backgroundTint="@color/orange"
-                    android:text="Sign Up"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp" />
             </LinearLayout>
 
             <!-- Footer Text -->
             <TextView
                 android:id="@+id/signupText"
-                android:layout_width="324dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
+                android:gravity="center"
                 android:padding="8dp"
-                android:text="Already haven't an account"
+                android:text="Don't have an account?"
                 android:textAlignment="center"
                 android:textColor="@color/orange"
                 android:textSize="14sp" />
+
+            <!-- Centering the "Create an account" button -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/createButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/orange"
+                    android:text="Create an account"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
