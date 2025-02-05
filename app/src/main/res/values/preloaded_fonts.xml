@@ -2,5 +2,7 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/bangers</item>
+        <item>@font/charmonman</item>
+        <item>@font/damion</item>
     </array>
 </resources>
