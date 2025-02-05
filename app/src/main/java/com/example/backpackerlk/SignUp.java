@@ -50,4 +50,11 @@ public class SignUp extends AppCompatActivity {
             });
         }
     }
+
+    // **BACK BUTTON IN PHONE**
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed(); // Go to the previous activity
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Optional transition
+    }
 }

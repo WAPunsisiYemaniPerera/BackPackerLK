@@ -17,23 +17,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Wrapping all child elements inside a LinearLayout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="40dp">
 
             <TextView
                 android:id="@+id/tv_add_business"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_marginTop="38dp"
                 android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="4"
                 android:text="Add Business"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@color/black" />
+                android:textAlignment="center"
+                android:textColor="@color/orange"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_your_name"
@@ -49,8 +54,8 @@
                 android:id="@+id/et_your_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter your name"
                 android:backgroundTint="@color/bluegreen"
+                android:hint="Enter your name"
                 android:padding="10dp" />
 
             <TextView
@@ -67,8 +72,8 @@
                 android:id="@+id/et_business_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter business name"
                 android:backgroundTint="@color/bluegreen"
+                android:hint="Enter business name"
                 android:padding="10dp" />
 
             <TextView
@@ -85,8 +90,8 @@
                 android:id="@+id/sp_business_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:backgroundTint="@color/bluegreen" />
+                android:backgroundTint="@color/bluegreen"
+                android:minHeight="48dp" />
 
             <TextView
                 android:id="@+id/tv_business_address"
@@ -102,8 +107,8 @@
                 android:id="@+id/et_business_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter business address"
                 android:backgroundTint="@color/bluegreen"
+                android:hint="Enter business address"
                 android:padding="10dp" />
 
             <TextView
@@ -120,8 +125,8 @@
                 android:id="@+id/et_telephone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter telephone number"
                 android:backgroundTint="@color/bluegreen"
+                android:hint="Enter telephone number"
                 android:padding="10dp" />
 
             <TextView
@@ -138,11 +143,11 @@
                 android:id="@+id/et_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter description"
                 android:backgroundTint="@color/bluegreen"
-                android:padding="10dp"
+                android:gravity="top"
+                android:hint="Enter description"
                 android:inputType="textMultiLine"
-                android:gravity="top" />
+                android:padding="10dp" />
 
             <TextView
                 android:id="@+id/tv_business_image"
@@ -162,15 +167,15 @@
 
                 <ImageView
                     android:id="@+id/iv_business_image"
-                    android:layout_width="107dp"
-                    android:layout_height="37dp"
+                    android:layout_width="53dp"
+                    android:layout_height="51dp"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/pencil"
+                    android:background="@drawable/image"
                     android:contentDescription="Business Image" />
 
                 <Button
                     android:id="@+id/btn_choose_image"
-                    android:layout_width="wrap_content"
+                    android:layout_width="208dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Choose Image" />
@@ -182,13 +187,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:backgroundTint="@color/bluegreen"
-                android:textColor="@color/white"
                 android:text="Submit"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -202,6 +206,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

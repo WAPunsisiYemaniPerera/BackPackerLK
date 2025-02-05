@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ScrollView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Add_Business extends AppCompatActivity {
 
-    @SuppressLint("MissingInflatedId")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +61,29 @@ public class Add_Business extends AppCompatActivity {
             return false;
         });
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        // Set up ScrollView listener to hide/show bottom navigation
+        ScrollView scrollView = findViewById(R.id.scrollView); // Use the ID of your ScrollView
+        scrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY < oldScrollY) {
+                // Scrolling up - make the bottom navigation invisible
+                bottomNavigationView.animate().alpha(0f).setDuration(200).start();
+            } else if (scrollY > oldScrollY) {
+                // Scrolling down - make the bottom navigation visible
+                bottomNavigationView.animate().alpha(1f).setDuration(200).start();
+            }
+        });
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.scrollView), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    // **BACK BUTTON IN PHONE**
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed(); // Go to the previous activity
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Optional transition
     }
 }

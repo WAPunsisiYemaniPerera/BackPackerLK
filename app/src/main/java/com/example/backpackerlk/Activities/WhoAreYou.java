@@ -64,4 +64,15 @@ public class WhoAreYou extends AppCompatActivity {
         //overrideActivityTransition(R.anim.slide_in_left);
         finish();
     }
+
+    // **BACK BUTTON IN PHONE**
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(WhoAreYou.this, Home.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish(); // Ensure the current activity is removed from the stack
+    }
 }
