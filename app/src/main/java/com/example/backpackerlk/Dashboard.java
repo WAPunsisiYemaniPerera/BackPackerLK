@@ -22,9 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class Dashboard extends AppCompatActivity {
-
-    private FloatingActionButton fabAddEvent;
-    private Button editEvent1;
+    private Button editEvent;
 
     private Button addevent;
 
@@ -37,6 +35,17 @@ public class Dashboard extends AppCompatActivity {
         addevent = findViewById(R.id.addEventButton);
 
         addevent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dashboard.this, Add_Business.class);
+                startActivity(intent);
+            }
+        });
+
+        //edit event button
+        editEvent = findViewById(id.editEvent1);
+
+        editEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Dashboard.this, Add_Business.class);
