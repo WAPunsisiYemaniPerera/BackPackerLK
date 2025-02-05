@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.example.backpackerlk.Air_activity;
 import com.example.backpackerlk.R;
 import com.example.backpackerlk.RopeActivity;
-import com.example.backpackerlk.UserProfile;
 import com.example.backpackerlk.WaterActivities;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -73,7 +73,7 @@ public class Categories extends AppCompatActivity {
         // Set click listeners for each CardView
         safariCard.setOnClickListener(view -> navigateToDetail("Safari"));
         waterCard.setOnClickListener(view -> navigateToWaterActivities("Water Activities"));
-        airCard.setOnClickListener(view -> navigateToDetail("Air Sports"));
+        airCard.setOnClickListener(view -> navigateToAir("Air Sports"));
         ropeCard.setOnClickListener(view -> navigateToRopeActivity("Rope Activities"));
 
         // Set click listener for the back icon
@@ -102,6 +102,13 @@ public class Categories extends AppCompatActivity {
 
     private void navigateToHome() {
         Intent intent = new Intent(Categories.this, Home.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Apply back transition
+        finish();
+    }
+
+    private void navigateToAir(String airSports) {
+        Intent intent = new Intent(Categories.this, Air_activity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Apply back transition
         finish();
