@@ -1,5 +1,6 @@
 package com.example.backpackerlk.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
@@ -9,16 +10,18 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.example.backpackerlk.Air_activity;
 import com.example.backpackerlk.R;
-import com.example.backpackerlk.UserProfile;
+import com.example.backpackerlk.RopeActivity;
 import com.example.backpackerlk.WaterActivities;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Categories extends AppCompatActivity {
 
-    private CardView safariCard, waterCard, airCard;
+    private CardView safariCard, waterCard, airCard, ropeCard;
     private ImageView backIcon; // Declare the back icon
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,9 +62,10 @@ public class Categories extends AppCompatActivity {
         });
 
         // Initialize the CardViews
-        safariCard = findViewById(R.id.safari);
-        waterCard = findViewById(R.id.cardwater);
-        airCard = findViewById(R.id.cardsky);
+        safariCard = findViewById(R.id.card_safari);
+        waterCard = findViewById(R.id.card_water);
+        airCard = findViewById(R.id.card_air);
+        ropeCard = findViewById(R.id.rope_card);
 
         // Initialize the back icon
         backIcon = findViewById(R.id.icback);
@@ -69,10 +73,17 @@ public class Categories extends AppCompatActivity {
         // Set click listeners for each CardView
         safariCard.setOnClickListener(view -> navigateToDetail("Safari"));
         waterCard.setOnClickListener(view -> navigateToWaterActivities("Water Activities"));
-        airCard.setOnClickListener(view -> navigateToDetail("Air Sports"));
+        airCard.setOnClickListener(view -> navigateToAir("Air Sports"));
+        ropeCard.setOnClickListener(view -> navigateToRopeActivity("Rope Activities"));
 
         // Set click listener for the back icon
         backIcon.setOnClickListener(view -> navigateToHome());
+    }
+
+    private void navigateToRopeActivity(String ropeActivities) {
+        Intent intent = new Intent(Categories.this, RopeActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Add animation
     }
 
     private void navigateToDetail(String categoryName) {
@@ -96,9 +107,17 @@ public class Categories extends AppCompatActivity {
         finish();
     }
 
+    private void navigateToAir(String airSports) {
+        Intent intent = new Intent(Categories.this, Air_activity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Apply back transition
+        finish();
+    }
+
+    // **BACK BUTTON IN PHONE**
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        navigateToHome(); // Reuse the navigateToHome method for the physical back button
+        super.onBackPressed(); // Go to the previous activity
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Optional transition
     }
 }
