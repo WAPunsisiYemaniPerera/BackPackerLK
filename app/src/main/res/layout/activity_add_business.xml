@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -92,14 +92,6 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/sp_business_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/bluegreen"
-                android:minHeight="48dp" />
-
             <TextView
                 android:id="@+id/tv_business_address"
                 android:layout_width="match_parent"
@@ -200,4 +192,4 @@
         </LinearLayout>
     </ScrollView>
 
-   </androidx.constraintlayout.widget.ConstraintLayout>
+   </androidx.coordinatorlayout.widget.CoordinatorLayout>
