@@ -152,11 +152,11 @@ public class Home extends AppCompatActivity {
         popularRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         popularItemList = new ArrayList<>();
-        popularItemList.add(new PopularItem(R.drawable.h1, "Water Rafting", "Thrilling adventure"));
-        popularItemList.add(new PopularItem(R.drawable.h2, "Safari Tour", "Explore the wildlife"));
-        popularItemList.add(new PopularItem(R.drawable.h1, "Camping Night", "Stay under the stars"));
-        popularItemList.add(new PopularItem(R.drawable.h1, "Beach Party", "Live music & dance"));
-        popularItemList.add(new PopularItem(R.drawable.h2, "Mountain Hiking", "Breathtaking views"));
+        popularItemList.add(new PopularItem(R.drawable.adventure, "Water Rafting", "Thrilling adventure"));
+        popularItemList.add(new PopularItem(R.drawable.safari, "Safari Tour", "Explore the wildlife"));
+        popularItemList.add(new PopularItem(R.drawable.kithulgala, "Day out", "enjoy with activities"));
+        popularItemList.add(new PopularItem(R.drawable.h1, "Serfin", "step into sea"));
+        popularItemList.add(new PopularItem(R.drawable.para, "Paramotoring", "Breathtaking views "));
 
         popularRecyclerView.setAdapter(new PopularAdapter(popularItemList));
     }
