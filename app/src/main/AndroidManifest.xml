@@ -32,6 +32,9 @@
             android:name=".WaterActivities"
             android:exported="true" />
         <activity
+            android:name=".Feedbacks"
+            android:exported="true" />
+        <activity
             android:name=".Activities.WhoAreYou"
             android:exported="true" />
         <activity
