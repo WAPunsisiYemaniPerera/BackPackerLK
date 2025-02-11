@@ -13,29 +13,26 @@
         android:id="@+id/profile_picture"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="80dp"
         android:background="@drawable/ic_avatar"
         android:src="@drawable/ic_avatar"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="80dp"/>
 
     <!-- Profile Name -->
-
-    <!-- Editable Profile Information -->
     <TextView
         android:id="@+id/profile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Thilina Subash"
+        android:text="Username"
         android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_picture" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_picture"/>
 
     <LinearLayout
         android:id="@+id/info_container"
@@ -44,10 +41,10 @@
         android:orientation="vertical"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:paddingBottom="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_name">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_name"
+        app:layout_constraintBottom_toTopOf="@id/save_button">
 
         <!-- Name Card -->
         <LinearLayout
@@ -57,25 +54,23 @@
             android:background="@drawable/card_background"
             android:orientation="horizontal"
             android:padding="8dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
-
             <EditText
                 android:id="@+id/edit_name"
-                android:layout_width="10dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
                 android:layout_weight="1"
                 android:hint="Enter your name"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="Thilina Subash"
-                android:textColor="#4A4A4A"
+                android:textColor="#888888"
+                android:textColorHint="#888888"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -87,14 +82,12 @@
             android:background="@drawable/card_background"
             android:orientation="horizontal"
             android:padding="8dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username"
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
-
             <EditText
                 android:id="@+id/edit_username"
                 android:layout_width="0dp"
@@ -103,8 +96,8 @@
                 android:layout_weight="1"
                 android:hint="Enter your username"
                 android:inputType="text"
+                android:textColorHint="#888888"
                 android:minHeight="48dp"
-                android:text="thilina"
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -117,14 +110,12 @@
             android:background="@drawable/card_background"
             android:orientation="horizontal"
             android:padding="8dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email"
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
-
             <EditText
                 android:id="@+id/edit_email"
                 android:layout_width="0dp"
@@ -134,13 +125,13 @@
                 android:autofillHints=""
                 android:hint="Enter your email"
                 android:inputType="textEmailAddress"
+                android:textColorHint="#888888"
                 android:textColor="#4A4A4A"
                 android:textSize="14sp"
                 tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
 
         <!-- Location Card -->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -148,28 +139,25 @@
             android:background="@drawable/card_background"
             android:orientation="horizontal"
             android:padding="8dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Location"
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
-
             <EditText
                 android:id="@+id/edit_location"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="23dp"
                 android:layout_weight="1"
                 android:hint="Enter your Location"
                 android:importantForAccessibility="yes"
+                android:textColorHint="#888888"
                 android:inputType="textPassword"
                 android:minHeight="48dp"
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
-
-
         </LinearLayout>
 
         <!-- Password Card -->
@@ -180,14 +168,12 @@
             android:background="@drawable/card_background"
             android:orientation="horizontal"
             android:padding="8dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Password"
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
-
             <EditText
                 android:id="@+id/edit_password"
                 android:layout_width="0dp"
@@ -197,6 +183,7 @@
                 android:hint="Enter your password"
                 android:importantForAccessibility="yes"
                 android:inputType="textPassword"
+                android:textColorHint="#888888"
                 android:minHeight="48dp"
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
@@ -214,10 +201,49 @@
                 tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
 
+        <!-- confirm Password Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/card_background"
+            android:orientation="horizontal"
+            android:padding="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirm Password"
+                android:textColor="#4A4A4A"
+                android:textSize="14sp" />
+            <EditText
+                android:id="@+id/confirm_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:hint="Confirm your password"
+                android:importantForAccessibility="yes"
+                android:inputType="textPassword"
+                android:textColorHint="#888888"
+                android:minHeight="48dp"
+                android:textColor="#4A4A4A"
+                android:textSize="14sp" />
+
+            <!-- Toggle View Password Button -->
+            <ImageButton
+                android:id="@+id/btn_toggle_password2"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="1dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Toggle password visibility"
+                android:src="@drawable/ic_eye"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Save Button -->
-
     <Button
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
@@ -227,11 +253,11 @@
         android:text="Save Changes"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/info_container" />
 
+    <!-- Back Button -->
     <ImageView
         android:id="@+id/icback"
         android:layout_width="40dp"
@@ -242,21 +268,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Edit Profile Text -->
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="Edit My Profile"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textColor="@color/orange"
         android:shadowColor="@color/black"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="4"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Bottom Navigation -->

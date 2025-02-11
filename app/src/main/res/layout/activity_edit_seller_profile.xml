@@ -70,7 +70,7 @@
                 android:hint="Enter your name"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="Kaveen Pramuditha"
+                android:textColorHint="#888888"
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -100,7 +100,7 @@
                 android:hint="Enter your username"
                 android:inputType="text"
                 android:minHeight="48dp"
-                android:text="kaviya"
+                android:textColorHint="#888888"
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -128,6 +128,7 @@
                 android:layout_marginStart="45dp"
                 android:layout_weight="1"
                 android:hint="Enter your email"
+                android:textColorHint="#888888"
                 android:inputType="textEmailAddress"
                 android:minHeight="48dp"
                 android:textColor="#4A4A4A"
@@ -159,6 +160,7 @@
                 android:hint="Enter your password"
                 android:importantForAccessibility="yes"
                 android:inputType="textPassword"
+                android:textColorHint="#888888"
                 android:minHeight="48dp"
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
@@ -166,6 +168,49 @@
             <!-- Toggle View Password Button -->
             <ImageButton
                 android:id="@+id/btn_toggle_password"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="1dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Toggle password visibility"
+                android:src="@drawable/ic_eye"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
+
+        <!-- Password Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/card_background"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirm Password"
+                android:textColor="#4A4A4A"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/confirm_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:hint="Re-enter your password"
+                android:importantForAccessibility="yes"
+                android:inputType="textPassword"
+                android:textColorHint="#888888"
+                android:minHeight="48dp"
+                android:textColor="#4A4A4A"
+                android:textSize="14sp" />
+
+            <!-- Toggle View Password Button -->
+            <ImageButton
+                android:id="@+id/btn_toggle_password2"
                 android:layout_width="40dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
