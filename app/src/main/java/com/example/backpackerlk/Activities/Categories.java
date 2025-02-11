@@ -83,34 +83,34 @@ public class Categories extends AppCompatActivity {
     private void navigateToRopeActivity(String ropeActivities) {
         Intent intent = new Intent(Categories.this, RopeActivity.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Add animation
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void navigateToDetail(String categoryName) {
         Intent intent = new Intent(Categories.this, DetailActivity.class);
         intent.putExtra("CATEGORY_NAME", categoryName); // Pass the category name to DetailActivity
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Add animation
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void navigateToWaterActivities(String categoryName) {
         Intent intent = new Intent(Categories.this, WaterActivities.class);
 
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Add animation
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void navigateToHome() {
         Intent intent = new Intent(Categories.this, Home.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Apply back transition
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         finish();
     }
 
     private void navigateToAir(String airSports) {
         Intent intent = new Intent(Categories.this, Air_activity.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Apply back transition
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
     }
 
