@@ -68,7 +68,7 @@
                     android:fontFamily="@font/poppinsblack"
                     android:text="Safari"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     android:lineSpacingMultiplier="1.2"
                     android:letterSpacing="0.02"/>
@@ -186,7 +186,7 @@
                     android:fontFamily="@font/poppinsblack"
                     android:text="Air Sports"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     android:lineSpacingMultiplier="1.2"
                     android:letterSpacing="0.02"/>
@@ -247,7 +247,7 @@
                     android:lineSpacingMultiplier="1.2"
                     android:text="Rope Activities"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
