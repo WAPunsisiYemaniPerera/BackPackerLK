@@ -7,11 +7,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.backpackerlk.Activities.Categories;
 import com.example.backpackerlk.Activities.Home;
@@ -23,22 +19,15 @@ public class WaterActivities extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
 
-        //hide the name bar
+        // Hide the name bar (Action Bar) and make the activity fullscreen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide(); //This line hides the action bar
+        getSupportActionBar().hide(); // Hides the action bar
 
-        
         setContentView(R.layout.activity_water_activities);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        //navigation
+        // Set up Bottom Navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_categories);
 
@@ -50,7 +39,7 @@ public class WaterActivities extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
-            } else if (itemId == R.id.nav_categories){
+            } else if (itemId == R.id.nav_categories) {
                 startActivity(new Intent(getApplicationContext(), Categories.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -66,13 +55,13 @@ public class WaterActivities extends AppCompatActivity {
         });
 
         // Set up ScrollView listener to hide/show bottom navigation
-        ScrollView scrollView = findViewById(R.id.main1); // Use the ID of your ScrollView
+        ScrollView scrollView = findViewById(R.id.main1); // Make sure the ID is correct for your ScrollView
         scrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY < oldScrollY) {
-                // Scrolling up - make the bottom navigation invisible
+                // Scrolling up - hide bottom navigation
                 bottomNavigationView.animate().alpha(0f).setDuration(200).start();
             } else if (scrollY > oldScrollY) {
-                // Scrolling down - make the bottom navigation visible
+                // Scrolling down - show bottom navigation
                 bottomNavigationView.animate().alpha(1f).setDuration(200).start();
             }
         });

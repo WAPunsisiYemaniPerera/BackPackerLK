@@ -30,9 +30,6 @@
                 android:layout_height="200dp"
                 android:layout_marginBottom="16dp">
 
-                <!-- Detail Image-->
-
-                <!-- Back Icon -->
 
                 <ImageView
                     android:id="@+id/picimg"
@@ -71,7 +68,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="left"
-                android:text="Safari"
+                android:text="Air Adventures"
                 android:textColor="@color/black"
                 android:textSize="35sp"
                 android:textStyle="bold" />
@@ -151,7 +148,7 @@
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:contentDescription="Wildlife Sightings"
+                        android:contentDescription="Good Weather"
                         app:srcCompat="@drawable/weather" />
 
                     <TextView
@@ -159,7 +156,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:text="good \nweather"
+                        android:text="Good\nWeather"
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -180,13 +177,13 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/findyoursafariTxt"
+                android:id="@+id/findyourairactivityTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Find Your Safari"
+                android:text="Find Your Air Activity"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -231,7 +228,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="paramotor benthota"
+                            android:text="Paramotor Benthota"
                             android:textColor="@color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -273,7 +270,7 @@
 
                             <ImageView
                                 android:layout_width="20dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="20dp"
                                 android:contentDescription="Star"
                                 app:srcCompat="@drawable/star" />
 
@@ -368,7 +365,7 @@
 
                             <!-- Star Ratings -->
                             <ImageView
-                                android:layout_width="18dp"
+                                android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:contentDescription="Star"
                                 app:srcCompat="@drawable/star" />
