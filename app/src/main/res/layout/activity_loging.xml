@@ -27,7 +27,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="365dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         app:cardCornerRadius="30dp"
@@ -49,6 +49,7 @@
                 android:backgroundTint="@color/black"
                 android:drawablePadding="8dp"
                 android:hint="Username"
+                android:textSize="16sp"
                 android:padding="8dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/cardview_dark_background" />
@@ -62,6 +63,7 @@
                 android:backgroundTint="@color/black"
                 android:drawablePadding="8dp"
                 android:hint="Password"
+                android:textSize="16sp"
                 android:inputType="textPassword"
                 android:padding="8dp"
                 android:textColor="@color/black"
@@ -82,7 +84,7 @@
                     android:backgroundTint="@color/orange"
                     android:text="Login"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp" />
+                    android:textSize="17sp" />
             </LinearLayout>
 
             <!-- Footer Text -->
@@ -97,7 +99,7 @@
                 android:text="Don't have an account?"
                 android:textAlignment="center"
                 android:textColor="@color/orange"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
             <!-- Centering the "Create an account" button -->
             <LinearLayout
