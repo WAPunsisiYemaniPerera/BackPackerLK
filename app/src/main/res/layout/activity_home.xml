@@ -75,10 +75,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="24sp"
                     android:textStyle="bold" />
-
-
             </FrameLayout>
-
 
             <!-- Popular Section -->
             <LinearLayout

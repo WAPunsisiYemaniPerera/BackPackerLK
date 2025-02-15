@@ -48,7 +48,7 @@ public class Add_Business extends AppCompatActivity {
         }
 
         // Set up the adapter for the dropdown
-        adapterItems = new ArrayAdapter<>(this, R.layout.list_items, item);
+        adapterItems = new ArrayAdapter<>(this, R.layout.list_item, item);
         autoCompleteTextView.setAdapter(adapterItems);
 
         // Set the listener for item selection in the dropdown
