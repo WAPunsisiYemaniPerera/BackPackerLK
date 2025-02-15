@@ -15,7 +15,6 @@
         <activity
             android:name=".Air_activity"
             android:exported="true"/>
-                >
         <activity
             android:name=".RopeActivity"
             android:exported="true" /> <!-- Main Activity (Launcher) -->
