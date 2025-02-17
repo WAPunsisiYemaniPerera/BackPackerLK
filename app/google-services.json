@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1047399651077",
+    "project_id": "backpackerlk-4b607",
+    "storage_bucket": "backpackerlk-4b607.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047399651077:android:33f66a5943be275f92c96c",
+        "android_client_info": {
+          "package_name": "com.example.backpackerlk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaP2WZLdfF-j3ScDamFSpApB2RJ_NKAYQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
