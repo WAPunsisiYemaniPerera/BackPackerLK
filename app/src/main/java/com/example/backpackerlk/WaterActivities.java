@@ -8,13 +8,24 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.backpackerlk.Activities.Categories;
 import com.example.backpackerlk.Activities.Home;
 import com.example.backpackerlk.Activities.WhoAreYou;
+import com.example.backpackerlk.Adapters.SellerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WaterActivities extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private SellerAdapter sellerAdapter;
+    private List<Sellers> sellerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +37,25 @@ public class WaterActivities extends AppCompatActivity {
         getSupportActionBar().hide(); // Hides the action bar
 
         setContentView(R.layout.activity_water_activities);
+
+        // Initialize RecyclerView
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Populate seller list
+        sellerList = new ArrayList<>();
+        sellerList.add(new Sellers("River Adventure", "Aluthgama Bentota, Sri Lanka", "0775769769", R.drawable.wateractivite1));
+        sellerList.add(new Sellers("Sun Diving - Unawatuna", "Unawatuna, Sri Lanka", "0758657380", R.drawable.wateractivite3));
+        sellerList.add(new Sellers("Amaya Beach", "Pasikudah, Sri Lanka", "0714999801", R.drawable.wateractivitye4));
+        sellerList.add(new Sellers("River Adventure", "Aluthgama Bentota, Sri Lanka", "0775769769", R.drawable.wateractivite1));
+        sellerList.add(new Sellers("Sun Diving - Unawatuna", "Unawatuna, Sri Lanka", "0758657380", R.drawable.wateractivite3));
+        sellerList.add(new Sellers("Amaya Beach", "Pasikudah, Sri Lanka", "0714999801", R.drawable.wateractivitye4));
+
+
+        // Set up adapter
+        sellerAdapter = new SellerAdapter(sellerList);
+        recyclerView.setAdapter(sellerAdapter);
+
 
         // Set up Bottom Navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -54,9 +84,9 @@ public class WaterActivities extends AppCompatActivity {
             return false;
         });
 
-        // Set up ScrollView listener to hide/show bottom navigation
-        ScrollView scrollView = findViewById(R.id.main1); // Make sure the ID is correct for your ScrollView
-        scrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+        // Set up NestedScrollView listener to hide/show bottom navigation
+        NestedScrollView nestedScrollView = findViewById(R.id.main1); // Use the ID of your NestedScrollView
+        nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY < oldScrollY) {
                 // Scrolling up - hide bottom navigation
                 bottomNavigationView.animate().alpha(0f).setDuration(200).start();
@@ -65,6 +95,7 @@ public class WaterActivities extends AppCompatActivity {
                 bottomNavigationView.animate().alpha(1f).setDuration(200).start();
             }
         });
+
 
         // Initialize the back icon and set an OnClickListener
         ImageView backIcon = findViewById(R.id.icback);
