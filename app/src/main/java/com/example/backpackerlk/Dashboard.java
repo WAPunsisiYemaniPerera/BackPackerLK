@@ -61,24 +61,28 @@ public class Dashboard extends AppCompatActivity {
         // Enable full-screen mode
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        // Bottom Navigation
+        // Navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.nav_profile); // Adjust as needed
+        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
             if (itemId == R.id.nav_home) {
                 startActivity(new Intent(getApplicationContext(), Home.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                return true;
             } else if (itemId == R.id.nav_categories) {
                 startActivity(new Intent(getApplicationContext(), Categories.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                return true;
             } else if (itemId == R.id.nav_profile) {
                 startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                return true;
             }
 
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            finish();
-            return true;
+            return false;
         });
 
         // ScrollView hide/show bottom navigation
