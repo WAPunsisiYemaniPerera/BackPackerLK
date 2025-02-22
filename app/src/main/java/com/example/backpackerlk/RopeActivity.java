@@ -111,4 +111,12 @@ public class RopeActivity extends AppCompatActivity {
         finish(); // Close the current activity to prevent the user from coming back to it
     }
 
+    public void onBackPressed() {
+        super.onBackPressed();
+        // Navigate to Categories activity when the mobile back button is pressed
+        Intent intent = new Intent(RopeActivity.this, Categories.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
+    }
 }
