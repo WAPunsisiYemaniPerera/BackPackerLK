@@ -81,14 +81,17 @@ public class DetailActivity extends AppCompatActivity {
         });
 
         // Set up NestedScrollView listener to hide/show bottom navigation
-        NestedScrollView nestedScrollView = findViewById(R.id.main1);
-        nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if (scrollY < oldScrollY) {
-                // Scrolling up - hide bottom navigation
-                bottomNavigationView.animate().alpha(0f).setDuration(200).start();
-            } else if (scrollY > oldScrollY) {
-                // Scrolling down - show bottom navigation
-                bottomNavigationView.animate().alpha(1f).setDuration(200).start();
+        NestedScrollView nestedScrollView = findViewById(R.id.main1); // Use the ID of your NestedScrollView
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > oldScrollY) {
+                    // Scrolling down - hide bottom navigation
+                    bottomNavigationView.animate().alpha(0f).setDuration(200).start();
+                } else if (scrollY < oldScrollY) {
+                    // Scrolling up - show bottom navigation
+                    bottomNavigationView.animate().alpha(1f).setDuration(200).start();
+                }
             }
         });
 

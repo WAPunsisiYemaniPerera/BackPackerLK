@@ -86,13 +86,16 @@ public class Air_activity extends AppCompatActivity {
 
         // Set up NestedScrollView listener to hide/show bottom navigation
         NestedScrollView nestedScrollView = findViewById(R.id.main1); // Use the ID of your NestedScrollView
-        nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if (scrollY < oldScrollY) {
-                // Scrolling up - hide bottom navigation
-                bottomNavigationView.animate().alpha(0f).setDuration(200).start();
-            } else if (scrollY > oldScrollY) {
-                // Scrolling down - show bottom navigation
-                bottomNavigationView.animate().alpha(1f).setDuration(200).start();
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > oldScrollY) {
+                    // Scrolling down - hide bottom navigation
+                    bottomNavigationView.animate().alpha(0f).setDuration(200).start();
+                } else if (scrollY < oldScrollY) {
+                    // Scrolling up - show bottom navigation
+                    bottomNavigationView.animate().alpha(1f).setDuration(200).start();
+                }
             }
         });
 
@@ -103,6 +106,15 @@ public class Air_activity extends AppCompatActivity {
 
     // Navigate back to Categories activity
     private void navigateToCategories() {
+        Intent intent = new Intent(Air_activity.this, Categories.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
+    }
+
+    public void onBackPressed() {
+        super.onBackPressed();
+        // Navigate to Categories activity when the mobile back button is pressed
         Intent intent = new Intent(Air_activity.this, Categories.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
