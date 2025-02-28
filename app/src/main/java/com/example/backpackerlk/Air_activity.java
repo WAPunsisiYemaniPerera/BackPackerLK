@@ -46,12 +46,12 @@ public class Air_activity extends AppCompatActivity {
 
         // Populate seller list
         sellerList = new ArrayList<>();
-        sellerList.add(new Sellers("Paramotor Benthota", "Benthota, Sri Lanka", "0714999801", "$20", R.drawable.paramoter));
-        sellerList.add(new Sellers("Baloons Dambulla", "Dambulla, Sri Lanka", "0710458562", "$19", R.drawable.hot_balloon));
-        sellerList.add(new Sellers("Paramotor Benthota", "Benthota, Sri Lanka", "0714999801", "$17", R.drawable.paramoter));
-        sellerList.add(new Sellers("Paramotor Benthota", "Benthota, Sri Lanka", "0714999801", "$21", R.drawable.paramoter));
-        sellerList.add(new Sellers("Baloons Dambulla", "Dambulla, Sri Lanka", "0710458562", "$22", R.drawable.hot_balloon));
-        sellerList.add(new Sellers("Paramotor Benthota", "Benthota, Sri Lanka", "0714999801", "$20", R.drawable.paramoter));
+        sellerList.add(new Sellers("Paramotor Benthota", "Benthota, Sri Lanka", "0714999801", R.drawable.paramoter));
+        sellerList.add(new Sellers("Baloons Dambulla", "Dambulla, Sri Lanka", "0710458562", R.drawable.hot_balloon));
+        sellerList.add(new Sellers("Paramotor Benthota", "Benthota, Sri Lanka", "0714999801", R.drawable.paramoter));
+        sellerList.add(new Sellers("Paramotor Benthota", "Benthota, Sri Lanka", "0714999801", R.drawable.paramoter));
+        sellerList.add(new Sellers("Baloons Dambulla", "Dambulla, Sri Lanka", "0710458562", R.drawable.hot_balloon));
+        sellerList.add(new Sellers("Paramotor Benthota", "Benthota, Sri Lanka", "0714999801", R.drawable.paramoter));
 
         // Set up adapter
         sellerAdapter = new SellerAdapter(sellerList);
@@ -76,11 +76,6 @@ public class Air_activity extends AppCompatActivity {
                 return true;
             } else if (itemId == R.id.nav_profile) {
                 startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                return true;
-            }else if (itemId == R.id.nav_bookings) {
-                startActivity(new Intent(getApplicationContext(), com.example.backpackerlk.BookingsHistoryActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
