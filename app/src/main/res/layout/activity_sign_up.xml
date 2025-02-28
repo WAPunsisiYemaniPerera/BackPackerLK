@@ -5,12 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".SignUp">
 
     <!-- CardView for Form Inputs -->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="203dp"
         android:layout_height="172dp"
@@ -54,7 +53,6 @@
             android:padding="24dp">
 
             <!-- Username Input -->
-
             <EditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
@@ -133,8 +131,36 @@
                 android:text="Sign Up"
                 android:textColor="@android:color/white"
                 android:textSize="15sp" />
+
+            <!-- "or signup with Google" Text -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="or signup with "
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <!-- Clickable "Google" Text -->
+                <TextView
+                    android:id="@+id/googleSignUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp"
+                    android:text="Google"
+                    android:textColor="@color/orange"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
