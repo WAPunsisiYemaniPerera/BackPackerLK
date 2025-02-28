@@ -81,7 +81,7 @@ public class Dashboard extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
             }else if (itemId == R.id.nav_bookings) {
-                startActivity(new Intent(getApplicationContext(), Booking.class));
+                startActivity(new Intent(getApplicationContext(), com.example.backpackerlk.BookingsHistoryActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;

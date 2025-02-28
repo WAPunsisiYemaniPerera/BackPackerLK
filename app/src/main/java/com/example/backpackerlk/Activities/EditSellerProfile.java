@@ -20,6 +20,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.backpackerlk.Booking;
+import com.example.backpackerlk.BookingsHistoryActivity;
 import com.example.backpackerlk.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -60,7 +61,7 @@ public class EditSellerProfile extends AppCompatActivity {
                 finish();
                 return true;
             }else if (itemId == R.id.nav_bookings) {
-                startActivity(new Intent(getApplicationContext(), Booking.class));
+                startActivity(new Intent(getApplicationContext(), BookingsHistoryActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
