@@ -10,7 +10,6 @@
     android:gravity="center"
     tools:context=".Loging">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="190dp">
@@ -85,6 +84,36 @@
                     android:text="Login"
                     android:textColor="@android:color/white"
                     android:textSize="17sp" />
+            </LinearLayout>
+
+            <!-- "or login with Google" Text -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="or login with "
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <!-- Clickable "Google" Text -->
+                <TextView
+                    android:id="@+id/googleLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp"
+                    android:text="Google"
+                    android:textColor="@color/orange"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 
             <!-- Footer Text -->

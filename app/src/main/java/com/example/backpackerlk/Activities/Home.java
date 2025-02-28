@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.backpackerlk.Adapters.PopularAdapter;
 import com.example.backpackerlk.Booking;
+import com.example.backpackerlk.BookingsHistoryActivity;
 import com.example.backpackerlk.Domains.PopularDomain;
 import com.example.backpackerlk.PopularItem;
 import com.example.backpackerlk.R;
@@ -110,7 +111,7 @@ public class Home extends AppCompatActivity {
                 finish();
                 return true;
             }else if (itemId == R.id.nav_bookings) {
-                startActivity(new Intent(getApplicationContext(), Booking.class));
+                startActivity(new Intent(getApplicationContext(), BookingsHistoryActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;

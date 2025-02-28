@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.backpackerlk.Adapters.SellerAdapter;
+import com.example.backpackerlk.BookingsHistoryActivity;
 import com.example.backpackerlk.R;
 import com.example.backpackerlk.Sellers;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -72,6 +73,11 @@ public class DetailActivity extends AppCompatActivity {
                 return true;
             } else if (itemId == R.id.nav_profile) {
                 startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
+            }else if (itemId == R.id.nav_bookings) {
+                startActivity(new Intent(getApplicationContext(), BookingsHistoryActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;

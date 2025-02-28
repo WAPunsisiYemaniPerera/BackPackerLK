@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 
 import com.example.backpackerlk.Air_activity;
 import com.example.backpackerlk.Booking;
+import com.example.backpackerlk.BookingsHistoryActivity;
 import com.example.backpackerlk.R;
 import com.example.backpackerlk.RopeActivity;
 import com.example.backpackerlk.WaterActivities;
@@ -58,7 +59,7 @@ public class Categories extends AppCompatActivity {
                 finish();
                 return true;
             }else if (itemId == R.id.nav_bookings) {
-                startActivity(new Intent(getApplicationContext(), Booking.class));
+                startActivity(new Intent(getApplicationContext(), BookingsHistoryActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
