@@ -75,6 +75,11 @@ public class UserProfile extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
+            }else if (itemId == R.id.nav_bookings) {
+                startActivity(new Intent(getApplicationContext(), Booking.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
             }
 
             return false;

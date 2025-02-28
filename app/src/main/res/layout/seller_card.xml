@@ -56,7 +56,15 @@
                 android:id="@+id/sellerPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0711234567"
+                android:text="Telephone"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/sellerPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$12"
                 android:textColor="@android:color/black"
                 android:textSize="14sp" />
 
@@ -99,14 +107,14 @@
                     app:srcCompat="@drawable/star_half" />
             </LinearLayout>
 
-            <!-- Call Now Button -->
+            <!-- Book Now Button -->
             <Button
                 android:id="@+id/callNowButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/orange"
-                android:text="Call Now" />
+                android:text="Book Now" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

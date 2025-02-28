@@ -47,12 +47,12 @@ public class RopeActivity extends AppCompatActivity {
 
         // Populate seller list
         sellerList = new ArrayList<>();
-        sellerList.add(new Sellers("Flying Rawana", "Ella, Sri Lanka", "0771246987", R.drawable.rawana));
-        sellerList.add(new Sellers("Sun Diving - Unawatuna", "Unawatuna, Sri Lanka", "0758657380", R.drawable.wateractivite3));
-        sellerList.add(new Sellers("Amaya Beach", "Pasikudah, Sri Lanka", "0714999801", R.drawable.wateractivitye4));
-        sellerList.add(new Sellers("River Adventure", "Aluthgama Bentota, Sri Lanka", "0775769769", R.drawable.wateractivite1));
-        sellerList.add(new Sellers("Sun Diving - Unawatuna", "Unawatuna, Sri Lanka", "0758657380", R.drawable.wateractivite3));
-        sellerList.add(new Sellers("Amaya Beach", "Pasikudah, Sri Lanka", "0714999801", R.drawable.wateractivitye4));
+        sellerList.add(new Sellers("Flying Rawana", "Ella, Sri Lanka", "0771246987","$20", R.drawable.rawana));
+        sellerList.add(new Sellers("Sun Diving - Unawatuna", "Unawatuna, Sri Lanka", "0758657380","$19", R.drawable.wateractivite3));
+        sellerList.add(new Sellers("Amaya Beach", "Pasikudah, Sri Lanka", "0714999801","$18", R.drawable.wateractivitye4));
+        sellerList.add(new Sellers("River Adventure", "Aluthgama Bentota, Sri Lanka", "0775769769","$16", R.drawable.wateractivite1));
+        sellerList.add(new Sellers("Sun Diving - Unawatuna", "Unawatuna, Sri Lanka", "0758657380","$20", R.drawable.wateractivite3));
+        sellerList.add(new Sellers("Amaya Beach", "Pasikudah, Sri Lanka", "0714999801","$10", R.drawable.wateractivitye4));
 
         // Set up adapter
         sellerAdapter = new SellerAdapter(sellerList);
@@ -77,6 +77,11 @@ public class RopeActivity extends AppCompatActivity {
                 return true;
             } else if (itemId == R.id.nav_profile) {
                 startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
+            }else if (itemId == R.id.nav_bookings) {
+                startActivity(new Intent(getApplicationContext(), Booking.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;

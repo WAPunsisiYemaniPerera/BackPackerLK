@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.example.backpackerlk.Air_activity;
+import com.example.backpackerlk.Booking;
 import com.example.backpackerlk.R;
 import com.example.backpackerlk.RopeActivity;
 import com.example.backpackerlk.WaterActivities;
@@ -53,6 +54,11 @@ public class Categories extends AppCompatActivity {
                 return true;
             } else if (itemId == R.id.nav_profile) {
                 startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
+            }else if (itemId == R.id.nav_bookings) {
+                startActivity(new Intent(getApplicationContext(), Booking.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
@@ -117,7 +123,10 @@ public class Categories extends AppCompatActivity {
     // **BACK BUTTON IN PHONE**
     @Override
     public void onBackPressed() {
-        super.onBackPressed(); // Go to the previous activity
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Optional transition
+        super.onBackPressed();
+        Intent intent = new Intent(Categories.this, Home.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
     }
 }
