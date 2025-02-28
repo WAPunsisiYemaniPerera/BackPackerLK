@@ -19,6 +19,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.backpackerlk.Booking;
 import com.example.backpackerlk.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -55,6 +56,11 @@ public class EditSellerProfile extends AppCompatActivity {
                 return true;
             } else if (itemId == R.id.nav_profile) {
                 startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
+            }else if (itemId == R.id.nav_bookings) {
+                startActivity(new Intent(getApplicationContext(), Booking.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
