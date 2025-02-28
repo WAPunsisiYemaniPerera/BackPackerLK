@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.backpackerlk.Adapters.PopularAdapter;
+import com.example.backpackerlk.Booking;
 import com.example.backpackerlk.Domains.PopularDomain;
 import com.example.backpackerlk.PopularItem;
 import com.example.backpackerlk.R;
@@ -108,6 +109,11 @@ public class Home extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
+            }else if (itemId == R.id.nav_bookings) {
+                startActivity(new Intent(getApplicationContext(), Booking.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
             }
 
             return false;
@@ -164,7 +170,15 @@ public class Home extends AppCompatActivity {
     // **BACK BUTTON IN PHONE**
     @Override
     public void onBackPressed() {
-        super.onBackPressed(); // Go to the previous activity
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Optional transition
+        // Check if the current activity is Home
+        if (this instanceof Home) {
+            // Exit the app
+            finishAffinity(); // Close all activities in the task
+            System.exit(0); // Exit the app completely
+        } else {
+            // Default behavior for other activities
+            super.onBackPressed();
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        }
     }
 }

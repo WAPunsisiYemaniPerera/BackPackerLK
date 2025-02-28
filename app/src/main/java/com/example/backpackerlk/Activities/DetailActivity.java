@@ -42,11 +42,11 @@ public class DetailActivity extends AppCompatActivity {
 
         // Populate seller list with multiple items
         sellerList = new ArrayList<>();
-        sellerList.add(new Sellers("Wilpattu Safaris", "Wilpattu, Sri Lanka", "0714999801", R.drawable.safari));
-        sellerList.add(new Sellers("Yala Safari Tours", "Yala, Sri Lanka", "0714123456", R.drawable.safari1));
-        sellerList.add(new Sellers("Minneriya Jeep Tours", "Minneriya, Sri Lanka", "0717654321", R.drawable.safari1));
-        sellerList.add(new Sellers("Wilpattu Safaris", "Wilpattu, Sri Lanka", "0714999801", R.drawable.safari));
-        sellerList.add(new Sellers("Wilpattu Safaris", "Wilpattu, Sri Lanka", "0714999801", R.drawable.safari));
+        sellerList.add(new Sellers("Yala Safari Tours", "Yala, Sri Lanka", "0714123456", "$12",R.drawable.safari1));
+        sellerList.add(new Sellers("Yala Safari Tours", "Yala, Sri Lanka", "0714123456", "$13",R.drawable.safari1));
+        sellerList.add(new Sellers("Minneriya Jeep Tours", "Minneriya, Sri Lanka", "0717654321", "$15",R.drawable.safari1));
+        sellerList.add(new Sellers("Wilpattu Safaris", "Wilpattu, Sri Lanka", "0714999801", "$16", R.drawable.safari));
+        sellerList.add(new Sellers("Wilpattu Safaris", "Wilpattu, Sri Lanka", "0714999801", "$16", R.drawable.safari));
 
 
         // Set up adapter

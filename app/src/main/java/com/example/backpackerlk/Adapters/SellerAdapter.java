@@ -1,14 +1,17 @@
 package com.example.backpackerlk.Adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.backpackerlk.Booking;
 import com.example.backpackerlk.R;
 import com.example.backpackerlk.Sellers;
 
@@ -34,7 +37,23 @@ public class SellerAdapter extends RecyclerView.Adapter<SellerAdapter.SellerView
         holder.name.setText(seller.getName());
         holder.location.setText(seller.getLocation());
         holder.phoneNumber.setText(seller.getPhoneNumber());
+        holder.price.setText(seller.getPrice());
         holder.image.setImageResource(seller.getImageResId());
+
+        // Set click listener for the "Book Now" button
+        holder.bookNowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to the Booking activity
+                Intent intent = new Intent(v.getContext(), Booking.class);
+
+                // Pass seller details to the Booking activity (optional)
+                intent.putExtra("SELLER_NAME", seller.getName());
+                intent.putExtra("SELLER_PRICE", seller.getPrice());
+
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -43,15 +62,18 @@ public class SellerAdapter extends RecyclerView.Adapter<SellerAdapter.SellerView
     }
 
     static class SellerViewHolder extends RecyclerView.ViewHolder {
-        TextView name, location, phoneNumber;
+        TextView name, location, phoneNumber, price;
         ImageView image;
+        Button bookNowButton; // Add this line
 
         public SellerViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.sellerName);
             location = itemView.findViewById(R.id.sellerLocation);
             phoneNumber = itemView.findViewById(R.id.sellerPhone);
+            price = itemView.findViewById(R.id.sellerPrice);
             image = itemView.findViewById(R.id.sellerImage);
+            bookNowButton = itemView.findViewById(R.id.callNowButton); // Initialize the Book Now button
         }
     }
 }
