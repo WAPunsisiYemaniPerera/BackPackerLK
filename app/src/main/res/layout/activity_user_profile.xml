@@ -23,44 +23,15 @@
 
             <!-- Profile Picture -->
             <ImageView
-                android:id="@+id/icback"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/back"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Profile Name -->
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:shadowColor="@color/black"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="4"
-                android:text="My Profile"
-                android:textColor="@color/orange"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
                 android:id="@+id/profile_picture"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="80dp"
                 android:background="@drawable/ic_avatar"
-                android:src="@drawable/ic_avatar" />
+                android:src="@drawable/ic_avatar"
+                android:layout_gravity="center"/>
 
+            <!-- Profile Name -->
             <TextView
                 android:id="@+id/profile_name"
                 android:layout_width="wrap_content"
@@ -77,7 +48,7 @@
                 android:id="@+id/profile_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="thilinasubash.com"
+                android:text="thilinasubash@gmail.com"
                 android:textColor="#444444"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -91,7 +62,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Username Card -->
+                <!-- username Card -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -114,7 +85,7 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <!-- Email Card -->
+                <!-- email Card -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -132,12 +103,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
-                        android:text="thilinasubash@gmail.com"
+                        android:text="kaveenpramuditha@gmail.com"
                         android:textColor="#4A4A4A"
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <!-- Telephone Card -->
+                <!-- telephone Card -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -155,12 +126,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
-                        android:text="0714572757"
+                        android:text="0714999801"
                         android:textColor="#4A4A4A"
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <!-- Location Card -->
+                <!-- location Card -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -184,32 +155,66 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Edit Profile Button -->
-            <Button
-                android:id="@+id/editprofileBtn"
-                android:layout_width="wrap_content"
+            <!-- Options Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:backgroundTint="@color/bluegreen"
-                android:text="Edit Profile"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:layout_gravity="center" />
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <!-- Give Feedback Button -->
-            <Button
-                android:id="@+id/feedbackBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:backgroundTint="@color/bluegreen"
-                android:text="Feedback"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                <!-- Edit Profile -->
+                <Button
+                    android:id="@+id/editprofileBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/bluegreen"
+                    android:text="Edit Profile"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp" />
 
+                <!-- Give Feedback Button -->
+                <Button
+                    android:id="@+id/feedbackBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="@color/bluegreen"
+                    android:text="Feedback"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
         </LinearLayout>
     </android.widget.ScrollView>
+
+    <ImageView
+        android:id="@+id/icback"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="My Profile"
+        android:textSize="30dp"
+        android:textColor="@color/bluegreen"
+        android:shadowColor="@color/black"
+        android:shadowRadius="4"
+        android:shadowDy="2"
+        android:shadowDx="2"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -225,5 +230,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

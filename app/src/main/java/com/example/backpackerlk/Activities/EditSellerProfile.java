@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,10 +19,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.backpackerlk.Booking;
+import com.example.backpackerlk.BookingsHistoryActivity;
 import com.example.backpackerlk.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class EditSellerProfile extends AppCompatActivity {
+
+    private boolean isPasswordVisible = false; // Track password visibility state
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +60,11 @@ public class EditSellerProfile extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
+            }else if (itemId == R.id.nav_bookings) {
+                startActivity(new Intent(getApplicationContext(), BookingsHistoryActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
             }
             return false;
         });
@@ -82,7 +95,21 @@ public class EditSellerProfile extends AppCompatActivity {
 
         // Initialize the back icon and set an OnClickListener
         ImageView backIcon = findViewById(R.id.icback);
-        backIcon.setOnClickListener(view -> navigateToSellerProfile()); // Call navigateToCategories when clicked
+        backIcon.setOnClickListener(view -> navigateToSellerProfile());
+
+        // Toggle Password Visibility
+        ImageButton btnTogglePassword = findViewById(R.id.btn_toggle_password);
+        btnTogglePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                togglePasswordVisibility(editPassword, btnTogglePassword);
+            }
+        });
+
+        // Ensure hint is hidden if EditText is pre-filled
+        if (!editPassword.getText().toString().isEmpty()) {
+            editPassword.setHint("");
+        }
     }
 
     private void navigateToSellerProfile() {
@@ -113,6 +140,20 @@ public class EditSellerProfile extends AppCompatActivity {
                 // No action needed
             }
         });
+    }
+
+    private void togglePasswordVisibility(EditText editPassword, ImageButton btnTogglePassword) {
+        if (isPasswordVisible) {
+            // Hide password
+            editPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            btnTogglePassword.setImageResource(R.drawable.ic_eye_off); // Set icon to "eye-off" (hidden)
+        } else {
+            // Show password
+            editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            btnTogglePassword.setImageResource(R.drawable.ic_eye); // Set icon to "eye" (visible)
+        }
+        isPasswordVisible = !isPasswordVisible; // Toggle the state
+        editPassword.setSelection(editPassword.getText().length()); // Move cursor to the end
     }
 
     // **BACK BUTTON IN PHONE**

@@ -11,6 +11,8 @@ import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.backpackerlk.Booking;
+import com.example.backpackerlk.BookingsHistoryActivity;
 import com.example.backpackerlk.Dashboard;
 import com.example.backpackerlk.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -51,6 +53,11 @@ public class SellerProfile extends AppCompatActivity {
             } else if (itemId == R.id.nav_profile) {
                 startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                return true;
+            }else if (itemId == R.id.nav_bookings) {
+                startActivity(new Intent(getApplicationContext(), BookingsHistoryActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
                 return true;
             }
 

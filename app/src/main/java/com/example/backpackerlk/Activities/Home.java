@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.backpackerlk.Adapters.PopularAdapter;
+import com.example.backpackerlk.Booking;
+import com.example.backpackerlk.BookingsHistoryActivity;
 import com.example.backpackerlk.Domains.PopularDomain;
 import com.example.backpackerlk.PopularItem;
 import com.example.backpackerlk.R;
@@ -108,6 +110,11 @@ public class Home extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
+            }else if (itemId == R.id.nav_bookings) {
+                startActivity(new Intent(getApplicationContext(), BookingsHistoryActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
             }
 
             return false;
@@ -152,11 +159,11 @@ public class Home extends AppCompatActivity {
         popularRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         popularItemList = new ArrayList<>();
-        popularItemList.add(new PopularItem(R.drawable.h1, "Water Rafting", "Thrilling adventure"));
-        popularItemList.add(new PopularItem(R.drawable.h2, "Safari Tour", "Explore the wildlife"));
-        popularItemList.add(new PopularItem(R.drawable.h1, "Camping Night", "Stay under the stars"));
-        popularItemList.add(new PopularItem(R.drawable.h1, "Beach Party", "Live music & dance"));
-        popularItemList.add(new PopularItem(R.drawable.h2, "Mountain Hiking", "Breathtaking views"));
+        popularItemList.add(new PopularItem(R.drawable.adventure, "Water Rafting", "Thrilling adventure"));
+        popularItemList.add(new PopularItem(R.drawable.safari, "Safari Tour", "Explore the wildlife"));
+        popularItemList.add(new PopularItem(R.drawable.kithulgala, "Day out", "enjoy with activities"));
+        popularItemList.add(new PopularItem(R.drawable.h1, "Serfin", "step into sea"));
+        popularItemList.add(new PopularItem(R.drawable.para, "Paramotoring", "Breathtaking views "));
 
         popularRecyclerView.setAdapter(new PopularAdapter(popularItemList));
     }
@@ -164,7 +171,15 @@ public class Home extends AppCompatActivity {
     // **BACK BUTTON IN PHONE**
     @Override
     public void onBackPressed() {
-        super.onBackPressed(); // Go to the previous activity
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Optional transition
+        // Check if the current activity is Home
+        if (this instanceof Home) {
+            // Exit the app
+            finishAffinity(); // Close all activities in the task
+            System.exit(0); // Exit the app completely
+        } else {
+            // Default behavior for other activities
+            super.onBackPressed();
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        }
     }
 }

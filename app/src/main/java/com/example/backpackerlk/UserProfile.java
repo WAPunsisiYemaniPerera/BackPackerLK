@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,8 +25,6 @@ public class UserProfile extends AppCompatActivity {
     private Button edituserprofile;
     private Button feedback;
 
-
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,7 @@ public class UserProfile extends AppCompatActivity {
         // Set content view before accessing UI elements
         setContentView(R.layout.activity_user_profile);
 
-        // Hide the action bar
+        // Hide the action bar and make the activity full screen
         getSupportActionBar().hide();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -76,14 +75,32 @@ public class UserProfile extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
+            }else if (itemId == R.id.nav_bookings) {
+                startActivity(new Intent(getApplicationContext(), com.example.backpackerlk.BookingsHistoryActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
             }
 
             return false;
         });
 
-        // Handle window insets
+        // Set up ScrollView listener to hide/show bottom navigation
+        ScrollView scrollView = findViewById(R.id.main1); // Use the ID of your ScrollView
+        scrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY < oldScrollY) {
+                // Scrolling up - make the bottom navigation invisible
+                bottomNavigationView.animate().alpha(0f).setDuration(200).start();
+            } else if (scrollY > oldScrollY) {
+                // Scrolling down - make the bottom navigation visible
+                bottomNavigationView.animate().alpha(1f).setDuration(200).start();
+            }
+        });
+
+        // Handle window insets to avoid gaps at the top
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            // Set padding to avoid any gap at the top or bottom
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });

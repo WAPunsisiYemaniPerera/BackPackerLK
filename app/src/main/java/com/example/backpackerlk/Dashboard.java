@@ -22,9 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class Dashboard extends AppCompatActivity {
-
-    private FloatingActionButton fabAddEvent;
-    private Button editEvent1;
+    private Button editEvent;
 
     private Button addevent;
 
@@ -44,6 +42,17 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
+        //edit event button
+        editEvent = findViewById(id.editEvent1);
+
+        editEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dashboard.this, Add_Business.class);
+                startActivity(intent);
+            }
+        });
+
         // Hide the action bar
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -52,24 +61,33 @@ public class Dashboard extends AppCompatActivity {
         // Enable full-screen mode
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        // Bottom Navigation
+        // Navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.nav_profile); // Adjust as needed
+        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
             if (itemId == R.id.nav_home) {
                 startActivity(new Intent(getApplicationContext(), Home.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                return true;
             } else if (itemId == R.id.nav_categories) {
                 startActivity(new Intent(getApplicationContext(), Categories.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                return true;
             } else if (itemId == R.id.nav_profile) {
                 startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                return true;
+            }else if (itemId == R.id.nav_bookings) {
+                startActivity(new Intent(getApplicationContext(), com.example.backpackerlk.BookingsHistoryActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
             }
 
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            finish();
-            return true;
+            return false;
         });
 
         // ScrollView hide/show bottom navigation
