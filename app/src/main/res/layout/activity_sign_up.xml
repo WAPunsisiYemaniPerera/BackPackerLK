@@ -52,9 +52,22 @@
             android:orientation="vertical"
             android:padding="24dp">
 
+            <!-- name Input -->
+            <EditText
+                android:id="@+id/signup_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/black"
+                android:hint="Name"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+
             <!-- Username Input -->
             <EditText
-                android:id="@+id/username"
+                android:id="@+id/signup_username"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -67,7 +80,7 @@
 
             <!-- Email Input -->
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/signup_email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -81,7 +94,7 @@
 
             <!-- Telephone Number Input -->
             <EditText
-                android:id="@+id/telephone"
+                android:id="@+id/signup_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -95,26 +108,12 @@
 
             <!-- Password Input -->
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/signup_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/black"
                 android:hint="Password"
-                android:textSize="16sp"
-                android:inputType="textPassword"
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black" />
-
-            <!-- Confirm Password Input -->
-            <EditText
-                android:id="@+id/confirm_password"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:backgroundTint="@color/black"
-                android:hint="Confirm Password"
                 android:textSize="16sp"
                 android:inputType="textPassword"
                 android:padding="8dp"
@@ -152,13 +151,43 @@
                     android:id="@+id/googleSignUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="4dp"
                     android:text="Google"
                     android:textColor="@color/orange"
                     android:textSize="14sp"
                     android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+
+            <!-- "Already have an account? Login" Text -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Already have an account? "
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <!-- Clickable "Login" Text -->
+                <TextView
+                    android:id="@+id/loginText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Login"
+                    android:textColor="@color/orange"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp"
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
         </LinearLayout>
