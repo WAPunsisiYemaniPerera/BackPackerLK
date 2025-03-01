@@ -1,27 +1,30 @@
 package com.example.backpackerlk;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.backpackerlk.Activities.Home;
-import com.example.backpackerlk.SignUp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class Loging extends AppCompatActivity {
 
-    private Button loginButton, createaccButton;
+    EditText login_username, login_password;
+    Button loginButton, createAccountButton;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,42 +34,91 @@ public class Loging extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        setContentView(R.layout.activity_loging); // Set the correct layout
+        setContentView(R.layout.activity_loging);
 
-        // Initialize buttons
+        // Initialize views
+        login_username = findViewById(R.id.login_username);
+        login_password = findViewById(R.id.login_password);
         loginButton = findViewById(R.id.loginButton);
-        createaccButton = findViewById(R.id.createButton);
+        createAccountButton = findViewById(R.id.createAccountButton);
 
-        // Handle login button click (Navigate to Home)
+        // Handle login button click
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Loging.this, Home.class);
-                startActivity(intent);
+                if (!validateUsername() || !validatePassword()) {
+                    return;
+                } else {
+                    checkUser();
+                }
             }
         });
 
-        // Handle sign-up button click (Navigate to SignUpActivity)
-        createaccButton.setOnClickListener(new View.OnClickListener() {
+        // Handle sign-up button click
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Loging.this, SignUp.class);
                 startActivity(intent);
             }
         });
-
-        // Handle system insets (Optional UI improvement)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
     }
 
-    // **BACK BUTTON IN PHONE**
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed(); // Go to the previous activity
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Optional transition
+    public Boolean validateUsername() {
+        String val = login_username.getText().toString();
+        if (val.isEmpty()) {
+            login_username.setError("Username cannot be empty");
+            return false;
+        } else {
+            login_username.setError(null);
+            return true;
+        }
+    }
+
+    public Boolean validatePassword() {
+        String val = login_password.getText().toString();
+        if (val.isEmpty()) {
+            login_password.setError("Password cannot be empty");
+            return false;
+        } else {
+            login_password.setError(null);
+            return true;
+        }
+    }
+
+    public void checkUser() {
+        String userUsername = login_username.getText().toString().trim();
+        String userPassword = login_password.getText().toString().trim();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+        Query checkUserDatabase = reference.orderByChild("username").equalTo(userUsername);
+
+        checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    login_username.setError(null);
+                    String passwordFromDB = snapshot.child(userUsername).child("password").getValue(String.class);
+
+                    if (passwordFromDB != null && passwordFromDB.equals(userPassword)) {
+                        login_username.setError(null);
+                        Intent intent = new Intent(Loging.this, Home.class);
+                        startActivity(intent);
+                        finish(); // Close the Loging activity
+                    } else {
+                        login_password.setError("Invalid Credentials");
+                        login_password.requestFocus();
+                    }
+                } else {
+                    login_username.setError("User does not exist");
+                    login_username.requestFocus();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Loging.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
