@@ -1,6 +1,9 @@
 plugins {
+
     id("com.google.gms.google-services")
     alias(libs.plugins.android.application)
+
+
 
 }
 
@@ -35,7 +38,10 @@ android {
 
 dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-database")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -45,6 +51,9 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("androidx.cardview:cardview:1.0.0")
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 
 
 
