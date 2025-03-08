@@ -6,9 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Activities.WhoAreYou">
+    tools:context=".Activities.WhoAreYou"
+    tools:ignore="ExtraText">
+
+    <!-- Back Button -->
+    <!-- Replace with your back icon drawable -->
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Top Image -->
+    <ImageView
+        android:id="@+id/icback"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="Back Button"
+        android:src="@drawable/back"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="339dp"
@@ -17,7 +37,7 @@
         android:src="@drawable/who"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/icback"
         app:layout_constraintBottom_toTopOf="@id/questionText"
         android:layout_marginBottom="16dp" />
 
