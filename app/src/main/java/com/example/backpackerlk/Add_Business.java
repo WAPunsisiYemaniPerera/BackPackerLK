@@ -17,6 +17,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -26,6 +27,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class Add_Business extends AppCompatActivity {
@@ -41,6 +44,9 @@ public class Add_Business extends AppCompatActivity {
     private Button chooseImageButton;
     private Uri imageUri;
 
+    // Form fields
+    private TextInputEditText etYourName, etBusinessName, etBusinessAddress, etTelephone, etPricePerPerson, etDescription;
+
     // Activity Result Launcher for picking image
     private final ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -52,7 +58,6 @@ public class Add_Business extends AppCompatActivity {
             }
     );
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +77,13 @@ public class Add_Business extends AppCompatActivity {
         autoCompleteTextView = findViewById(R.id.auto_complete_textview);
         businessImageView = findViewById(R.id.iv_business_image);
         chooseImageButton = findViewById(R.id.btn_choose_image);
+        etYourName = findViewById(R.id.et_your_name);
+        etBusinessName = findViewById(R.id.et_business_name);
+        etBusinessAddress = findViewById(R.id.et_business_address);
+        etTelephone = findViewById(R.id.et_telephone);
+        etPricePerPerson = findViewById(R.id.et_price_per_person); // New field
+        etDescription = findViewById(R.id.et_description);
+        Button submitButton = findViewById(R.id.btn_submit);
 
         // Dropdown setup
         adapterItems = new ArrayAdapter<>(this, R.layout.list_item, item);
@@ -93,6 +105,25 @@ public class Add_Business extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        // Submit button setup
+        submitButton.setOnClickListener(v -> {
+            // Save or update the event
+            String yourName = etYourName.getText().toString();
+            String businessName = etBusinessName.getText().toString();
+            String businessAddress = etBusinessAddress.getText().toString();
+            String telephone = etTelephone.getText().toString();
+            String pricePerPerson = etPricePerPerson.getText().toString(); // New field
+            String description = etDescription.getText().toString();
+
+            if (yourName.isEmpty() || businessName.isEmpty() || businessAddress.isEmpty() || telephone.isEmpty() || pricePerPerson.isEmpty() || description.isEmpty()) {
+                Toast.makeText(this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
+            } else {
+                // Save or update logic here
+                Toast.makeText(this, "Event saved!", Toast.LENGTH_SHORT).show();
+                navigateToDashboard();
+            }
         });
     }
 
@@ -138,6 +169,7 @@ public class Add_Business extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
+    // Navigate back to Dashboard
     private void navigateToDashboard() {
         Intent intent = new Intent(Add_Business.this, Dashboard.class);
         startActivity(intent);

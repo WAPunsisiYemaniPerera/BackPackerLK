@@ -19,26 +19,30 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class WhoAreYou extends AppCompatActivity {
 
     private CardView travelerCard, sellerCard;
+    private ImageView backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //hide the name bar
+        // Hide the name bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide(); //This line hides the action bar
-
+        getSupportActionBar().hide(); // This line hides the action bar
 
         setContentView(R.layout.activity_who_are_you); // Use your layout XML
 
-        //initialize the card views
+        // Initialize the card views
         travelerCard = findViewById(R.id.travelerCard);
         sellerCard = findViewById(R.id.sellerCard);
 
-        //set click listners for each card views
+        // Set click listeners for each card view
         travelerCard.setOnClickListener(view -> navigateToUser());
         sellerCard.setOnClickListener(view -> navigateToSeller());
+
+        // Initialize the back button
+        backButton = findViewById(R.id.icback);
+        backButton.setOnClickListener(view -> navigateToHome());
 
         // Find the ImageView by ID
         ImageView imageView = findViewById(R.id.imageView);
@@ -51,17 +55,22 @@ public class WhoAreYou extends AppCompatActivity {
         fadeIn.start();
     }
 
-    private void navigateToUser(){
+    private void navigateToUser() {
         Intent intent = new Intent(WhoAreYou.this, UserProfile.class);
         startActivity(intent);
-        //overrideActivityTransition(R.anim.slide_in_left);
         finish();
     }
 
-    private void navigateToSeller(){
+    private void navigateToSeller() {
         Intent intent = new Intent(WhoAreYou.this, SellerProfile.class);
         startActivity(intent);
-        //overrideActivityTransition(R.anim.slide_in_left);
+        finish();
+    }
+
+    private void navigateToHome() {
+        Intent intent = new Intent(WhoAreYou.this, Home.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         finish();
     }
 

@@ -184,6 +184,34 @@
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Price per Person -->
+            <TextView
+                android:id="@+id/tv_price_per_person"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Price per Person"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/bluegreen">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_price_per_person"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter price per person"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <!-- Description -->
             <TextView
                 android:id="@+id/tv_description"
