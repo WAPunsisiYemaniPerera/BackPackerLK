@@ -14,15 +14,14 @@
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_marginTop="80dp"
-        android:background="@drawable/ic_avatar"
-        android:src="@drawable/ic_avatar"
+        android:src="@drawable/edituser"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Profile Name -->
     <TextView
-        android:id="@+id/profile_name"
+        android:id="@+id/sellereditprofile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -41,7 +40,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/profile_name"
+        app:layout_constraintTop_toBottomOf="@id/sellereditprofile_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -62,7 +61,7 @@
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/edit_name"
+                android:id="@+id/selleredit_name"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
@@ -92,7 +91,7 @@
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/edit_username"
+                android:id="@+id/selleredit_username"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -122,7 +121,7 @@
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/edit_email"
+                android:id="@+id/selleredit_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
@@ -152,7 +151,7 @@
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/edit_password"
+                android:id="@+id/selleredit_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
@@ -195,7 +194,7 @@
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/confirm_password"
+                android:id="@+id/sellereditconfirm_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
@@ -210,7 +209,7 @@
 
             <!-- Toggle View Password Button -->
             <ImageButton
-                android:id="@+id/btn_toggle_password2"
+                android:id="@+id/sellerbtn_toggle_password2"
                 android:layout_width="40dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
@@ -224,7 +223,7 @@
 
     <!-- Save Button -->
     <Button
-        android:id="@+id/save_button"
+        android:id="@+id/sellersave_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save Changes"

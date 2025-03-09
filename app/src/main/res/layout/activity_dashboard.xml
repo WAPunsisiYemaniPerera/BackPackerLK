@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="Hi! Kaveen..."
+            android:text="Hi!"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -84,7 +84,7 @@
 
         <!-- Add Event Button -->
         <Button
-            android:id="@+id/addEventButton"
+            android:id="@+id/dashboardaddEventButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/bluegreen"

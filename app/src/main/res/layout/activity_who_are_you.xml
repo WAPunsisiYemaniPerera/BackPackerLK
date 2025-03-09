@@ -77,7 +77,7 @@
 
         <!-- Traveler Card -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/travelerCard"
+            android:id="@+id/who_travelerCard"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_columnWeight="1"
@@ -112,7 +112,7 @@
 
         <!-- Seller Card -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/sellerCard"
+            android:id="@+id/who_sellerCard"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_columnWeight="1"

@@ -103,7 +103,7 @@
 
                 <!-- Clickable "Google" Text -->
                 <TextView
-                    android:id="@+id/googleLogin"
+                    android:id="@+id/loginGoogle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
