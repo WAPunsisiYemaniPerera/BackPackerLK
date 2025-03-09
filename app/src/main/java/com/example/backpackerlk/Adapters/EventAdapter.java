@@ -67,8 +67,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             eventPrice = itemView.findViewById(R.id.eventPrice);
             eventTelephone = itemView.findViewById(R.id.eventtelephone);
             eventImage = itemView.findViewById(R.id.eventImage);
-            editEvent = itemView.findViewById(R.id.editEvent);
-            deleteEvent = itemView.findViewById(R.id.deleteEvent);
+            editEvent = itemView.findViewById(R.id.itemevent_editEvent);
+            deleteEvent = itemView.findViewById(R.id.itemevent_deleteEvent);
         }
     }
 }

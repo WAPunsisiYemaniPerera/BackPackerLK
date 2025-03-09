@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUp extends AppCompatActivity {
 
-    EditText signup_name, signup_username, signup_email, signup_mobile, signup_password;
+    EditText signup_name, signup_username, signup_email, signup_mobile, signup_password, signup_location;
     Button signupButton;
     TextView loginText;
 
@@ -40,6 +40,7 @@ public class SignUp extends AppCompatActivity {
         signup_name = findViewById(R.id.signup_name);
         signup_username = findViewById(R.id.signup_username);
         signup_email = findViewById(R.id.signup_email);
+        signup_location = findViewById(R.id.signup_location);
         signup_mobile = findViewById(R.id.signup_mobile);
         signup_password = findViewById(R.id.signup_password);
         signupButton = findViewById(R.id.signupButton);
@@ -55,17 +56,18 @@ public class SignUp extends AppCompatActivity {
                 String name = signup_name.getText().toString();
                 String username = signup_username.getText().toString();
                 String email = signup_email.getText().toString();
+                String location = signup_location.getText().toString();
                 String mobile = signup_mobile.getText().toString();
                 String password = signup_password.getText().toString();
 
                 // Validate inputs
-                if (name.isEmpty() || username.isEmpty() || email.isEmpty() || mobile.isEmpty() || password.isEmpty()) {
+                if (name.isEmpty() || username.isEmpty() || email.isEmpty() || location.isEmpty() || mobile.isEmpty() || password.isEmpty()) {
                     Toast.makeText(SignUp.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // Create a HelperClass object
-                HelperClass helperClass = new HelperClass(name, username, email, mobile, password);
+                HelperClass helperClass = new HelperClass(name, username, email, location, mobile, password);
 
                 // Save user data to Firebase
                 reference.child(username).setValue(helperClass).addOnCompleteListener(task -> {

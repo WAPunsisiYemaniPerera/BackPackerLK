@@ -51,7 +51,7 @@ public class Dashboard extends AppCompatActivity {
         recyclerView.setAdapter(eventAdapter);
 
         // Add Event Button
-        addEventButton = findViewById(R.id.addEventButton);
+        addEventButton = findViewById(R.id.dashboardaddEventButton);
         addEventButton.setOnClickListener(v -> {
             Intent intent = new Intent(Dashboard.this, Add_Business.class);
             startActivity(intent);

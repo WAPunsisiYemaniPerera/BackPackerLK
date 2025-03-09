@@ -68,12 +68,12 @@ public class SellerAdapter extends RecyclerView.Adapter<SellerAdapter.SellerView
 
         public SellerViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.sellerName);
-            location = itemView.findViewById(R.id.sellerLocation);
-            phoneNumber = itemView.findViewById(R.id.sellerPhone);
-            price = itemView.findViewById(R.id.sellerPrice);
+            name = itemView.findViewById(R.id.sellercard_sellerName);
+            location = itemView.findViewById(R.id.sellercard_sellerLocation);
+            phoneNumber = itemView.findViewById(R.id.sellercard_sellerPhone);
+            price = itemView.findViewById(R.id.sellercard_sellerPrice);
             image = itemView.findViewById(R.id.sellerImage);
-            bookNowButton = itemView.findViewById(R.id.callNowButton); // Initialize the Book Now button
+            bookNowButton = itemView.findViewById(R.id.sellercard_bookNowButton); // Initialize the Book Now button
         }
     }
 }

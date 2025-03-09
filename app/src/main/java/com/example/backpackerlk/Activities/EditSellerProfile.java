@@ -69,10 +69,10 @@ public class EditSellerProfile extends AppCompatActivity {
             return false;
         });
 
-        EditText editName = findViewById(R.id.edit_name);
-        EditText editUsername = findViewById(R.id.edit_username);
-        EditText editEmail = findViewById(R.id.edit_email);
-        EditText editPassword = findViewById(R.id.edit_password);
+        EditText editName = findViewById(R.id.selleredit_name);
+        EditText editUsername = findViewById(R.id.selleredit_username);
+        EditText editEmail = findViewById(R.id.selleredit_email);
+        EditText editPassword = findViewById(R.id.selleredit_password);
 
         // Store original hint values in tags
         editName.setTag(editName.getHint());

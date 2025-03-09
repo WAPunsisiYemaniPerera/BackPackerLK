@@ -71,8 +71,8 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
             bookingDate = itemView.findViewById(R.id.bookingDate);
             totalAmount = itemView.findViewById(R.id.totalAmount);
             bookingStatus = itemView.findViewById(R.id.bookingStatus);
-            updateButton = itemView.findViewById(R.id.updateButton);
-            deleteButton = itemView.findViewById(R.id.deleteButton);
+            updateButton = itemView.findViewById(R.id.bookingitem_updateButton);
+            deleteButton = itemView.findViewById(R.id.bookingitem_deleteButton);
         }
     }
 
