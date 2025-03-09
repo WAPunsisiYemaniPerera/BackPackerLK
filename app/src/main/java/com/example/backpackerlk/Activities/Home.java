@@ -3,6 +3,7 @@ package com.example.backpackerlk.Activities;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Window;
@@ -10,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,7 @@ import com.example.backpackerlk.Adapters.PopularAdapter;
 import com.example.backpackerlk.Booking;
 import com.example.backpackerlk.BookingsHistoryActivity;
 import com.example.backpackerlk.Domains.PopularDomain;
+import com.example.backpackerlk.Loging;
 import com.example.backpackerlk.PopularItem;
 import com.example.backpackerlk.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -57,7 +60,7 @@ public class Home extends AppCompatActivity {
         setupPopularItems();
 
         // Find and set click listener for the "See All" button
-        seeall1 = findViewById(R.id.seeall1);
+        seeall1 = findViewById(R.id.home_seeall);
         seeall1.setOnClickListener(view -> {
             Intent intent = new Intent(Home.this, Categories.class);
             startActivity(intent);
@@ -98,20 +101,38 @@ public class Home extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
+            // Retrieve username from SharedPreferences
+            SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+            String username = sharedPreferences.getString("username", null);
+
+            if (username == null) {
+                Toast.makeText(Home.this, "User not identified", Toast.LENGTH_SHORT).show();
+                Intent loginIntent = new Intent(Home.this, Loging.class);
+                startActivity(loginIntent);
+                finish();
+                return false;
+            }
+
             if (itemId == R.id.nav_home) {
                 return true;
             } else if (itemId == R.id.nav_categories) {
-                startActivity(new Intent(getApplicationContext(), Categories.class));
+                Intent intent = new Intent(Home.this, Categories.class);
+                intent.putExtra("username", username); // Pass the username
+                startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
             } else if (itemId == R.id.nav_profile) {
-                startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
+                Intent intent = new Intent(Home.this, WhoAreYou.class);
+                intent.putExtra("username", username); // Pass the username
+                startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
-            }else if (itemId == R.id.nav_bookings) {
-                startActivity(new Intent(getApplicationContext(), BookingsHistoryActivity.class));
+            } else if (itemId == R.id.nav_bookings) {
+                Intent intent = new Intent(Home.this, BookingsHistoryActivity.class);
+                intent.putExtra("username", username); // Pass the username
+                startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
@@ -119,8 +140,6 @@ public class Home extends AppCompatActivity {
 
             return false;
         });
-
-
     }
 
     private void initCounterAnimationOnScroll() {

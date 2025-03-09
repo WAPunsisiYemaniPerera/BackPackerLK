@@ -52,13 +52,13 @@ public class Booking extends AppCompatActivity {
         }
 
         // Initialize views
-        nameEditText = findViewById(R.id.nameEditText);
-        quantityTextView = findViewById(R.id.quantityTextView);
-        arrivalDateEditText = findViewById(R.id.arrivalDateEditText);
-        totalAmountTextView = findViewById(R.id.totalAmountTextView);
+        nameEditText = findViewById(R.id.booking_activityname);
+        quantityTextView = findViewById(R.id.booking_quantity);
+        arrivalDateEditText = findViewById(R.id.booking_arrivaldate);
+        totalAmountTextView = findViewById(R.id.booking_totalamount);
         decreaseQuantityButton = findViewById(R.id.decreaseQuantityButton);
         increaseQuantityButton = findViewById(R.id.increaseQuantityButton);
-        bookNowButton = findViewById(R.id.bookNowButton);
+        bookNowButton = findViewById(R.id.booking_bookNowButton);
         backButton = findViewById(R.id.icback);
 
         // Set initial quantity and total amount

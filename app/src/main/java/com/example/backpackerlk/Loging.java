@@ -1,6 +1,7 @@
 package com.example.backpackerlk;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -29,7 +30,7 @@ public class Loging extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Hide the title bar
+        // Hide the title bar and make the activity fullscreen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
@@ -102,6 +103,14 @@ public class Loging extends AppCompatActivity {
 
                     if (passwordFromDB != null && passwordFromDB.equals(userPassword)) {
                         login_username.setError(null);
+
+                        // Save username in SharedPreferences
+                        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username", userUsername); // Save the username
+                        editor.apply();
+
+                        // Navigate to Home
                         Intent intent = new Intent(Loging.this, Home.class);
                         startActivity(intent);
                         finish(); // Close the Loging activity

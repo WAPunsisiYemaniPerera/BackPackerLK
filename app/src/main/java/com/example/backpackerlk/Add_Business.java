@@ -73,17 +73,17 @@ public class Add_Business extends AppCompatActivity {
         setContentView(R.layout.activity_add_business);
 
         // Initialize views
-        TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
-        autoCompleteTextView = findViewById(R.id.auto_complete_textview);
-        businessImageView = findViewById(R.id.iv_business_image);
-        chooseImageButton = findViewById(R.id.btn_choose_image);
-        etYourName = findViewById(R.id.et_your_name);
-        etBusinessName = findViewById(R.id.et_business_name);
-        etBusinessAddress = findViewById(R.id.et_business_address);
-        etTelephone = findViewById(R.id.et_telephone);
-        etPricePerPerson = findViewById(R.id.et_price_per_person); // New field
-        etDescription = findViewById(R.id.et_description);
-        Button submitButton = findViewById(R.id.btn_submit);
+        TextInputLayout textInputLayout = findViewById(R.id.addbusiness_category);
+        autoCompleteTextView = findViewById(R.id.addbusiness_category_autocomplete);
+        businessImageView = findViewById(R.id.addbusiness_business_image);
+        chooseImageButton = findViewById(R.id.addbusiness_choose_image);
+        etYourName = findViewById(R.id.addbusiness_yourname);
+        etBusinessName = findViewById(R.id.addbusiness_business_name);
+        etBusinessAddress = findViewById(R.id.addbusiness_business_address);
+        etTelephone = findViewById(R.id.addbusiness_telephone);
+        etPricePerPerson = findViewById(R.id.addbusiness_price_per_person); // New field
+        etDescription = findViewById(R.id.addbusiness_description);
+        Button submitButton = findViewById(R.id.addbusiness_btn_submit);
 
         // Dropdown setup
         adapterItems = new ArrayAdapter<>(this, R.layout.list_item, item);

@@ -47,9 +47,9 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularV
 
         public PopularViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.popularImage);
-            titleText = itemView.findViewById(R.id.popularTitle);
-            descriptionText = itemView.findViewById(R.id.popularDesc);
+            imageView = itemView.findViewById(R.id.itempopular_popularImage);
+            titleText = itemView.findViewById(R.id.itempopular_popularTitle);
+            descriptionText = itemView.findViewById(R.id.itempopular_popularDesc);
         }
     }
 }

@@ -37,9 +37,9 @@ public class Feedbacks extends AppCompatActivity {
         }
 
         // Initialize views
-        ratingBar = findViewById(R.id.ratingBar);
-        etFeedback = findViewById(R.id.et_feedback);
-        btnSubmitFeedback = findViewById(R.id.btn_submit_feedback);
+        ratingBar = findViewById(R.id.feedback_ratingBar);
+        etFeedback = findViewById(R.id.feedback_feedback);
+        btnSubmitFeedback = findViewById(R.id.feedback_btn_submit_feedback);
 
         // Initialize the back icon
         backIcon = findViewById(R.id.icback);

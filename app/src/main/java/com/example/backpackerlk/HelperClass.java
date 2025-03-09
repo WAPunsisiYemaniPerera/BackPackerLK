@@ -5,6 +5,7 @@ public class HelperClass {
     private String name;
     private String username;
     private String email;
+    private String location;
     private String mobile;
     private String password;
 
@@ -13,10 +14,11 @@ public class HelperClass {
     }
 
     // Parameterized constructor
-    public HelperClass(String name, String username, String email, String mobile, String password) {
+    public HelperClass(String name, String username, String email, String location, String mobile, String password) {
         this.name = name;
         this.username = username;
         this.email = email;
+        this.location = location; // Correctly assign the location
         this.mobile = mobile;
         this.password = password;
     }
@@ -44,6 +46,14 @@ public class HelperClass {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getMobile() {
