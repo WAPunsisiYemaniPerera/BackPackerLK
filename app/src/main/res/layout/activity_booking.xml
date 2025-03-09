@@ -58,7 +58,7 @@
                 android:layout_marginBottom="8dp"/>
 
             <EditText
-                android:id="@+id/nameEditText"
+                android:id="@+id/booking_activityname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Your Activity"
@@ -97,7 +97,7 @@
                     android:elevation="0dp"/>
 
                 <TextView
-                    android:id="@+id/quantityTextView"
+                    android:id="@+id/booking_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1"
@@ -129,7 +129,7 @@
                 android:layout_marginBottom="8dp"/>
 
             <EditText
-                android:id="@+id/arrivalDateEditText"
+                android:id="@+id/booking_arrivaldate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Select arrival date"
@@ -152,7 +152,7 @@
                 android:layout_marginBottom="8dp"/>
 
             <TextView
-                android:id="@+id/totalAmountTextView"
+                android:id="@+id/booking_totalamount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="LKR 0.00"
@@ -163,7 +163,7 @@
 
             <!-- Book Now Button -->
             <Button
-                android:id="@+id/bookNowButton"
+                android:id="@+id/booking_bookNowButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Book Now"

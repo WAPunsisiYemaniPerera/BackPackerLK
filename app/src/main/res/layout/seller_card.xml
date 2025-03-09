@@ -33,7 +33,7 @@
 
             <!-- Business Name -->
             <TextView
-                android:id="@+id/sellerName"
+                android:id="@+id/sellercard_sellerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Safari Name"
@@ -43,7 +43,7 @@
 
             <!-- Location -->
             <TextView
-                android:id="@+id/sellerLocation"
+                android:id="@+id/sellercard_sellerLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -53,7 +53,7 @@
 
             <!-- Phone Number -->
             <TextView
-                android:id="@+id/sellerPhone"
+                android:id="@+id/sellercard_sellerPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Telephone"
@@ -61,7 +61,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/sellerPrice"
+                android:id="@+id/sellercard_sellerPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$12"
@@ -109,7 +109,7 @@
 
             <!-- Book Now Button -->
             <Button
-                android:id="@+id/callNowButton"
+                android:id="@+id/sellercard_bookNowButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

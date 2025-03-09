@@ -72,7 +72,7 @@
 
             <!-- Update Button -->
             <Button
-                android:id="@+id/updateButton"
+                android:id="@+id/bookingitem_updateButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Update"
@@ -82,7 +82,7 @@
 
             <!-- Delete Button -->
             <Button
-                android:id="@+id/deleteButton"
+                android:id="@+id/bookingitem_deleteButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Delete"

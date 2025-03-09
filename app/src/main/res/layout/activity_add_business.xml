@@ -65,7 +65,7 @@
                 app:boxStrokeColor="@color/bluegreen">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_your_name"
+                    android:id="@+id/addbusiness_yourname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter your name"
@@ -92,7 +92,7 @@
                 app:boxStrokeColor="@color/bluegreen">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_business_name"
+                    android:id="@+id/addbusiness_business_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter business name"
@@ -113,14 +113,14 @@
 
             <!-- Category -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout"
+                android:id="@+id/addbusiness_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                 <AutoCompleteTextView
-                    android:id="@+id/auto_complete_textview"
+                    android:id="@+id/addbusiness_category_autocomplete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Select the Category"
@@ -148,7 +148,7 @@
                 app:boxStrokeColor="@color/bluegreen">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_business_address"
+                    android:id="@+id/addbusiness_business_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter business address"
@@ -176,7 +176,7 @@
                 android:textColorHint="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_telephone"
+                    android:id="@+id/addbusiness_telephone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter telephone number"
@@ -203,7 +203,7 @@
                 app:boxStrokeColor="@color/bluegreen">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_price_per_person"
+                    android:id="@+id/addbusiness_price_per_person"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter price per person"
@@ -231,7 +231,7 @@
                 app:boxStrokeColor="@color/bluegreen">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_description"
+                    android:id="@+id/addbusiness_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter description"
@@ -258,7 +258,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/iv_business_image"
+                    android:id="@+id/addbusiness_business_image"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_weight="1"
@@ -268,7 +268,7 @@
                     android:scaleType="centerCrop" />
 
                 <Button
-                    android:id="@+id/btn_choose_image"
+                    android:id="@+id/addbusiness_choose_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -280,7 +280,7 @@
 
             <!-- Submit Button -->
             <Button
-                android:id="@+id/btn_submit"
+                android:id="@+id/addbusiness_btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"

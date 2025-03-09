@@ -13,8 +13,7 @@
         android:id="@+id/profile_picture"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:background="@drawable/ic_avatar"
-        android:src="@drawable/ic_avatar"
+        android:src="@drawable/edituser"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +21,7 @@
 
     <!-- Profile Name -->
     <TextView
-        android:id="@+id/profile_name"
+        android:id="@+id/usereditprofile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -43,8 +42,8 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_name"
-        app:layout_constraintBottom_toTopOf="@id/save_button">
+        app:layout_constraintTop_toBottomOf="@id/usereditprofile_name"
+        app:layout_constraintBottom_toTopOf="@id/usersave_button">
 
         <!-- Name Card -->
         <LinearLayout
@@ -61,7 +60,7 @@
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
             <EditText
-                android:id="@+id/edit_name"
+                android:id="@+id/useredit_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
@@ -89,7 +88,7 @@
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
             <EditText
-                android:id="@+id/edit_username"
+                android:id="@+id/useredit_username"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -117,7 +116,7 @@
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
             <EditText
-                android:id="@+id/edit_email"
+                android:id="@+id/useredit_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
@@ -146,7 +145,7 @@
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
             <EditText
-                android:id="@+id/edit_location"
+                android:id="@+id/useredit_location"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="23dp"
@@ -175,7 +174,7 @@
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
             <EditText
-                android:id="@+id/edit_password"
+                android:id="@+id/useredit_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
@@ -216,7 +215,7 @@
                 android:textColor="#4A4A4A"
                 android:textSize="14sp" />
             <EditText
-                android:id="@+id/confirm_password"
+                android:id="@+id/userconfirm_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
@@ -245,7 +244,7 @@
 
     <!-- Save Button -->
     <Button
-        android:id="@+id/save_button"
+        android:id="@+id/usersave_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
