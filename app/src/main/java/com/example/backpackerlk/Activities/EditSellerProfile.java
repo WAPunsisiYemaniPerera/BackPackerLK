@@ -2,31 +2,41 @@ package com.example.backpackerlk.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.backpackerlk.Booking;
 import com.example.backpackerlk.BookingsHistoryActivity;
+import com.example.backpackerlk.Dashboard;
+import com.example.backpackerlk.Loging;
 import com.example.backpackerlk.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class EditSellerProfile extends AppCompatActivity {
 
-    private boolean isPasswordVisible = false; // Track password visibility state
+    private EditText editName, editUsername, editEmail, editLocation, editPassword, editConfirmPassword;
+    private Button saveButton;
+    private ImageButton btnTogglePassword, btnToggleConfirmPassword;
+    private boolean isPasswordVisible = false;
+    private String username;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +45,49 @@ public class EditSellerProfile extends AppCompatActivity {
         // Hide the name bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide(); // Hide the action bar
+        getSupportActionBar().hide();
 
         setContentView(R.layout.activity_edit_seller_profile);
 
-        // Bottom navigation
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+        // Retrieve username from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        username = sharedPreferences.getString("username", null);
 
+        if (username == null) {
+            Toast.makeText(this, "User not identified", Toast.LENGTH_SHORT).show();
+            Intent loginIntent = new Intent(EditSellerProfile.this, Loging.class);
+            startActivity(loginIntent);
+            finish();
+            return;
+        }
+
+        // Initialize Firebase Database
+        databaseReference = FirebaseDatabase.getInstance("https://backpackerlk-4b607-default-rtdb.firebaseio.com/").getReference("Users");
+
+        // Initialize UI components
+        editName = findViewById(R.id.selleredit_name);
+        editUsername = findViewById(R.id.selleredit_username);
+        editEmail = findViewById(R.id.selleredit_email);
+        editLocation = findViewById(R.id.selleredit_location);
+        editPassword = findViewById(R.id.selleredit_password);
+        editConfirmPassword = findViewById(R.id.sellereditconfirm_password);
+        saveButton = findViewById(R.id.sellersave_button);
+        btnTogglePassword = findViewById(R.id.btn_toggle_password);
+        btnToggleConfirmPassword = findViewById(R.id.sellerbtn_toggle_password2);
+
+        // Fetch and populate seller data
+        fetchSellerData();
+
+        // Set up password visibility toggle
+        btnTogglePassword.setOnClickListener(v -> togglePasswordVisibility(editPassword, btnTogglePassword));
+        btnToggleConfirmPassword.setOnClickListener(v -> togglePasswordVisibility(editConfirmPassword, btnToggleConfirmPassword));
+
+        // Save changes button click listener
+        saveButton.setOnClickListener(v -> updateSellerData());
+
+        // Bottom navigation
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.nav_home) {
@@ -60,7 +105,7 @@ public class EditSellerProfile extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
-            }else if (itemId == R.id.nav_bookings) {
+            } else if (itemId == R.id.nav_bookings) {
                 startActivity(new Intent(getApplicationContext(), BookingsHistoryActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -69,101 +114,92 @@ public class EditSellerProfile extends AppCompatActivity {
             return false;
         });
 
-        EditText editName = findViewById(R.id.selleredit_name);
-        EditText editUsername = findViewById(R.id.selleredit_username);
-        EditText editEmail = findViewById(R.id.selleredit_email);
-        EditText editPassword = findViewById(R.id.selleredit_password);
-
-        // Store original hint values in tags
-        editName.setTag(editName.getHint());
-        editUsername.setTag(editUsername.getHint());
-        editEmail.setTag(editEmail.getHint());
-        editPassword.setTag(editPassword.getHint());
-
-        // Apply TextWatcher
-        setHintVisibility(editName);
-        setHintVisibility(editUsername);
-        setHintVisibility(editEmail);
-        setHintVisibility(editPassword);
-
-        // Handle edge-to-edge layout
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
         // Initialize the back icon and set an OnClickListener
         ImageView backIcon = findViewById(R.id.icback);
         backIcon.setOnClickListener(view -> navigateToSellerProfile());
+    }
 
-        // Toggle Password Visibility
-        ImageButton btnTogglePassword = findViewById(R.id.btn_toggle_password);
-        btnTogglePassword.setOnClickListener(new View.OnClickListener() {
+    private void fetchSellerData() {
+        databaseReference.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                togglePasswordVisibility(editPassword, btnTogglePassword);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String name = dataSnapshot.child("name").getValue(String.class);
+                    String email = dataSnapshot.child("email").getValue(String.class);
+                    String location = dataSnapshot.child("location").getValue(String.class);
+                    String password = dataSnapshot.child("password").getValue(String.class);
+
+                    // Populate EditText fields with fetched data
+                    editName.setText(name);
+                    editUsername.setText(username);
+                    editEmail.setText(email);
+                    editLocation.setText(location);
+                    editPassword.setText(password);
+                    editConfirmPassword.setText(password);
+                } else {
+                    Toast.makeText(EditSellerProfile.this, "Seller data not found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(EditSellerProfile.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
-        // Ensure hint is hidden if EditText is pre-filled
-        if (!editPassword.getText().toString().isEmpty()) {
-            editPassword.setHint("");
+    private void updateSellerData() {
+        String name = editName.getText().toString();
+        String email = editEmail.getText().toString();
+        String location = editLocation.getText().toString();
+        String password = editPassword.getText().toString();
+        String confirmPassword = editConfirmPassword.getText().toString();
+
+        // Validate inputs
+        if (name.isEmpty() || email.isEmpty() || location.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Update data in Firebase
+        databaseReference.child(username).child("name").setValue(name);
+        databaseReference.child(username).child("email").setValue(email);
+        databaseReference.child(username).child("location").setValue(location);
+        databaseReference.child(username).child("password").setValue(password);
+
+        Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+        navigateToSellerProfile();
+    }
+
+    private void togglePasswordVisibility(EditText editText, ImageButton btnToggle) {
+        if (isPasswordVisible) {
+            // Hide password
+            editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            btnToggle.setImageResource(R.drawable.ic_eye_off);
+        } else {
+            // Show password
+            editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            btnToggle.setImageResource(R.drawable.ic_eye);
+        }
+        isPasswordVisible = !isPasswordVisible;
+        editText.setSelection(editText.getText().length());
     }
 
     private void navigateToSellerProfile() {
         Intent intent = new Intent(EditSellerProfile.this, SellerProfile.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Apply back transition
-        finish(); // Close the current activity to prevent the user from coming back to it
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
     }
 
-    private void setHintVisibility(EditText editText) {
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // No action needed
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().trim().isEmpty()) {
-                    editText.setHint(editText.getTag().toString());
-                } else {
-                    editText.setHint("");
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // No action needed
-            }
-        });
-    }
-
-    private void togglePasswordVisibility(EditText editPassword, ImageButton btnTogglePassword) {
-        if (isPasswordVisible) {
-            // Hide password
-            editPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            btnTogglePassword.setImageResource(R.drawable.ic_eye_off); // Set icon to "eye-off" (hidden)
-        } else {
-            // Show password
-            editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            btnTogglePassword.setImageResource(R.drawable.ic_eye); // Set icon to "eye" (visible)
-        }
-        isPasswordVisible = !isPasswordVisible; // Toggle the state
-        editPassword.setSelection(editPassword.getText().length()); // Move cursor to the end
-    }
-
-    // **BACK BUTTON IN PHONE**
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(EditSellerProfile.this, SellerProfile.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-        finish(); // Ensure the current activity is removed from the stack
+        navigateToSellerProfile();
     }
 }
