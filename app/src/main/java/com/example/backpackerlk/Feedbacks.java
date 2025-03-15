@@ -2,6 +2,7 @@ package com.example.backpackerlk;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,12 +18,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Feedbacks extends AppCompatActivity {
 
     private ImageView backIcon;
     private RatingBar ratingBar;
     private EditText etFeedback;
     private Button btnSubmitFeedback;
+    private DatabaseReference databaseReference;
+    private String username;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -47,6 +53,21 @@ public class Feedbacks extends AppCompatActivity {
         // Set click listener for the back icon
         backIcon.setOnClickListener(view -> navigateToUserProfile());
 
+        // Retrieve username from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        username = sharedPreferences.getString("username", null);
+
+        if (username == null) {
+            Toast.makeText(this, "User not identified", Toast.LENGTH_SHORT).show();
+            Intent loginIntent = new Intent(Feedbacks.this, Loging.class);
+            startActivity(loginIntent);
+            finish();
+            return;
+        }
+
+        // Initialize Firebase Database
+        databaseReference = FirebaseDatabase.getInstance("https://backpackerlk-4b607-default-rtdb.firebaseio.com/").getReference("Users");
+
         // Handle submit button click
         btnSubmitFeedback.setOnClickListener(v -> submitFeedback());
 
@@ -69,7 +90,10 @@ public class Feedbacks extends AppCompatActivity {
             return;
         }
 
-        // TODO: Send feedback to your server or save it locally
+        // Save feedback to Firebase under the user's node
+        databaseReference.child(username).child("feedback").setValue(feedback);
+        databaseReference.child(username).child("rating").setValue(rating);
+
         Toast.makeText(this, "Thank you for your feedback!", Toast.LENGTH_SHORT).show();
 
         // Clear input fields
@@ -86,7 +110,6 @@ public class Feedbacks extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Apply back transition
         finish();
-
     }
 
     private void navigateToUserProfile() {

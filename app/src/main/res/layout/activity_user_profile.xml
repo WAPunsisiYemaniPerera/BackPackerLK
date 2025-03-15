@@ -181,8 +181,6 @@
                     android:text="Feedback"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
-
-
             </LinearLayout>
         </LinearLayout>
     </android.widget.ScrollView>
