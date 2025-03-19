@@ -1,7 +1,6 @@
 package com.example.backpackerlk;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -14,17 +13,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.backpackerlk.Activities.Home;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.example.backpackerlk.Activities.WhoAreYou;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 public class Loging extends AppCompatActivity {
 
     EditText login_username, login_password;
     Button loginButton, createAccountButton;
+
+    FirebaseAuth auth;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +39,13 @@ public class Loging extends AppCompatActivity {
 
         setContentView(R.layout.activity_loging);
 
+        // Initialize Firebase
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         // Initialize views
-        login_username = findViewById(R.id.login_username);
-        login_password = findViewById(R.id.login_password);
+        login_username = findViewById(R.id.login_username); // Username input
+        login_password = findViewById(R.id.login_password); // Password input
         loginButton = findViewById(R.id.loginButton);
         createAccountButton = findViewById(R.id.createAccountButton);
 
@@ -47,11 +53,53 @@ public class Loging extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!validateUsername() || !validatePassword()) {
+                String username = login_username.getText().toString().trim();
+                String password = login_password.getText().toString().trim();
+
+                // Validate inputs
+                if (username.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(Loging.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                     return;
-                } else {
-                    checkUser();
                 }
+
+                // Fetch user data from Firestore using the username
+                db.collection("users")
+                        .whereEqualTo("username", username) // Query Firestore for the username
+                        .get()
+                        .addOnSuccessListener(queryDocumentSnapshots -> {
+                            if (!queryDocumentSnapshots.isEmpty()) {
+                                // Get the first document (username should be unique)
+                                DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
+                                String email = document.getString("email"); // Fetch the email
+                                String role = document.getString("role"); // Fetch the role
+
+                                // Authenticate the user using the fetched email and password
+                                auth.signInWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(task -> {
+                                            if (task.isSuccessful()) {
+                                                FirebaseUser user = auth.getCurrentUser();
+                                                if (user != null) {
+                                                    // Redirect based on role
+                                                    Intent intent;
+                                                    if ("Seller".equals(role)) {
+                                                        intent = new Intent(Loging.this, Dashboard.class);
+                                                    } else {
+                                                        intent = new Intent(Loging.this, Home.class);
+                                                    }
+                                                    startActivity(intent);
+                                                    finish(); // Close the Loging activity
+                                                }
+                                            } else {
+                                                Toast.makeText(Loging.this, "Login Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            } else {
+                                Toast.makeText(Loging.this, "Username not found", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(Loging.this, "Failed to fetch user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
             }
         });
 
@@ -61,72 +109,6 @@ public class Loging extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Loging.this, SignUp.class);
                 startActivity(intent);
-            }
-        });
-    }
-
-    public Boolean validateUsername() {
-        String val = login_username.getText().toString();
-        if (val.isEmpty()) {
-            login_username.setError("Username cannot be empty");
-            return false;
-        } else {
-            login_username.setError(null);
-            return true;
-        }
-    }
-
-    public Boolean validatePassword() {
-        String val = login_password.getText().toString();
-        if (val.isEmpty()) {
-            login_password.setError("Password cannot be empty");
-            return false;
-        } else {
-            login_password.setError(null);
-            return true;
-        }
-    }
-
-    public void checkUser() {
-        String userUsername = login_username.getText().toString().trim();
-        String userPassword = login_password.getText().toString().trim();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-        Query checkUserDatabase = reference.orderByChild("username").equalTo(userUsername);
-
-        checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    login_username.setError(null);
-                    String passwordFromDB = snapshot.child(userUsername).child("password").getValue(String.class);
-
-                    if (passwordFromDB != null && passwordFromDB.equals(userPassword)) {
-                        login_username.setError(null);
-
-                        // Save username in SharedPreferences
-                        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("username", userUsername); // Save the username
-                        editor.apply();
-
-                        // Navigate to Home
-                        Intent intent = new Intent(Loging.this, Home.class);
-                        startActivity(intent);
-                        finish(); // Close the Loging activity
-                    } else {
-                        login_password.setError("Invalid Credentials");
-                        login_password.requestFocus();
-                    }
-                } else {
-                    login_username.setError("User does not exist");
-                    login_username.requestFocus();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Loging.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

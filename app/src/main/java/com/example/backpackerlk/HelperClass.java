@@ -8,6 +8,7 @@ public class HelperClass {
     private String location;
     private String mobile;
     private String password;
+    private String role;
 
     // Default constructor (required for Firebase)
     public HelperClass() {
@@ -18,9 +19,10 @@ public class HelperClass {
         this.name = name;
         this.username = username;
         this.email = email;
-        this.location = location; // Correctly assign the location
+        this.location = location;
         this.mobile = mobile;
         this.password = password;
+        this.role = "None"; // Default role
     }
 
     // Getters and Setters
@@ -70,5 +72,13 @@ public class HelperClass {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
