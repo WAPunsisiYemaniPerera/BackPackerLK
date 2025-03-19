@@ -12,8 +12,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignUp extends AppCompatActivity {
 
@@ -21,8 +22,8 @@ public class SignUp extends AppCompatActivity {
     Button signupButton;
     TextView loginText;
 
-    FirebaseDatabase database;
-    DatabaseReference reference;
+    FirebaseAuth auth;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +34,11 @@ public class SignUp extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        // Set the content view
         setContentView(R.layout.activity_sign_up);
+
+        // Initialize Firebase
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         // Initialize views
         signup_name = findViewById(R.id.signup_name);
@@ -50,9 +54,6 @@ public class SignUp extends AppCompatActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                database = FirebaseDatabase.getInstance();
-                reference = database.getReference("Users");
-
                 String name = signup_name.getText().toString();
                 String username = signup_username.getText().toString();
                 String email = signup_email.getText().toString();
@@ -66,20 +67,31 @@ public class SignUp extends AppCompatActivity {
                     return;
                 }
 
-                // Create a HelperClass object
-                HelperClass helperClass = new HelperClass(name, username, email, location, mobile, password);
+                // Create user with Firebase Authentication
+                auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = auth.getCurrentUser();
+                                if (user != null) {
+                                    // Save additional user details in Firestore
+                                    HelperClass helperClass = new HelperClass(name, username, email, location, mobile, password);
 
-                // Save user data to Firebase
-                reference.child(username).setValue(helperClass).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(SignUp.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(SignUp.this, Loging.class);
-                        startActivity(intent);
-                        finish(); // Close the SignUp activity
-                    } else {
-                        Toast.makeText(SignUp.this, "Sign Up Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                                    db.collection("users").document(user.getUid())
+                                            .set(helperClass)
+                                            .addOnSuccessListener(aVoid -> {
+                                                Toast.makeText(SignUp.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(SignUp.this, Loging.class);
+                                                startActivity(intent);
+                                                finish(); // Close the SignUp activity
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                Toast.makeText(SignUp.this, "Failed to save user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            });
+                                }
+                            } else {
+                                Toast.makeText(SignUp.this, "Sign Up Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
 
@@ -87,7 +99,6 @@ public class SignUp extends AppCompatActivity {
         loginText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to the Login activity
                 Intent intent = new Intent(SignUp.this, Loging.class);
                 startActivity(intent);
                 finish(); // Close the SignUp activity
