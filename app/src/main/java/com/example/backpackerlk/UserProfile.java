@@ -23,11 +23,10 @@ import com.example.backpackerlk.Activities.Categories;
 import com.example.backpackerlk.Activities.Home;
 import com.example.backpackerlk.Activities.WhoAreYou;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class UserProfile extends AppCompatActivity {
 
@@ -35,7 +34,8 @@ public class UserProfile extends AppCompatActivity {
     private Button feedback;
     private TextView userProfileName1, userProfileEmail1, userProfileName2, userProfileEmail2, userProfileTelephone, userProfileLocation;
     private String username;
-    private DatabaseReference databaseReference;
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -50,6 +50,10 @@ public class UserProfile extends AppCompatActivity {
         getSupportActionBar().hide();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        // Initialize Firebase
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         // Retrieve username from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         username = sharedPreferences.getString("username", null);
@@ -61,9 +65,6 @@ public class UserProfile extends AppCompatActivity {
             finish();
             return;
         }
-
-        // Initialize Firebase Database
-        databaseReference = FirebaseDatabase.getInstance("https://backpackerlk-4b607-default-rtdb.firebaseio.com/").getReference("Users");
 
         // Initialize UI elements
         edituserprofile = findViewById(R.id.usereditprofileBtn);
@@ -143,40 +144,42 @@ public class UserProfile extends AppCompatActivity {
     }
 
     private void fetchUserData() {
-        databaseReference.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        String name = snapshot.child("name").getValue(String.class);
-                        String email = snapshot.child("email").getValue(String.class);
-                        String phone = snapshot.child("mobile").getValue(String.class);
-                        String location = snapshot.child("location").getValue(String.class);
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
 
-                        // Log fetched data for debugging
-                        Log.d("UserProfile", "Name: " + name);
-                        Log.d("UserProfile", "Email: " + email);
-                        Log.d("UserProfile", "Phone: " + phone);
-                        Log.d("UserProfile", "Location: " + location);
+            db.collection("users").document(userId)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            String name = documentSnapshot.getString("name");
+                            String email = documentSnapshot.getString("email");
+                            String phone = documentSnapshot.getString("mobile");
+                            String location = documentSnapshot.getString("location");
 
-                        // Update UI with fetched data
-                        userProfileName1.setText(name);
-                        userProfileEmail1.setText(email);
-                        userProfileName2.setText(name);
-                        userProfileEmail2.setText(email);
-                        userProfileTelephone.setText(phone);
-                        userProfileLocation.setText(location);
-                    }
-                } else {
-                    Toast.makeText(UserProfile.this, "User data not found", Toast.LENGTH_SHORT).show();
-                }
-            }
+                            // Log fetched data for debugging
+                            Log.d("UserProfile", "Name: " + name);
+                            Log.d("UserProfile", "Email: " + email);
+                            Log.d("UserProfile", "Phone: " + phone);
+                            Log.d("UserProfile", "Location: " + location);
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(UserProfile.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                            // Update UI with fetched data
+                            userProfileName1.setText(name);
+                            userProfileEmail1.setText(email);
+                            userProfileName2.setText(name);
+                            userProfileEmail2.setText(email);
+                            userProfileTelephone.setText(phone);
+                            userProfileLocation.setText(location);
+                        } else {
+                            Toast.makeText(UserProfile.this, "User data not found", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(UserProfile.this, "Failed to fetch user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void navigateToWhoAreYou() {
