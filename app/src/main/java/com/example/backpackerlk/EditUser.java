@@ -24,11 +24,10 @@ import com.example.backpackerlk.Activities.Categories;
 import com.example.backpackerlk.Activities.Home;
 import com.example.backpackerlk.Activities.WhoAreYou;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class EditUser extends AppCompatActivity {
 
@@ -36,8 +35,8 @@ public class EditUser extends AppCompatActivity {
     private Button saveButton;
     private ImageButton btnTogglePassword, btnToggleConfirmPassword;
     private boolean isPasswordVisible = false;
-    private String username;
-    private DatabaseReference databaseReference;
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,20 +50,9 @@ public class EditUser extends AppCompatActivity {
         getSupportActionBar().hide();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        // Retrieve username from SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        username = sharedPreferences.getString("username", null);
-
-        if (username == null) {
-            Toast.makeText(this, "User not identified", Toast.LENGTH_SHORT).show();
-            Intent loginIntent = new Intent(EditUser.this, Loging.class);
-            startActivity(loginIntent);
-            finish();
-            return;
-        }
-
-        // Initialize Firebase Database
-        databaseReference = FirebaseDatabase.getInstance("https://backpackerlk-4b607-default-rtdb.firebaseio.com/").getReference("Users");
+        // Initialize Firebase
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         // Initialize UI components
         editName = findViewById(R.id.useredit_name);
@@ -117,43 +105,49 @@ public class EditUser extends AppCompatActivity {
     }
 
     private void fetchUserData() {
-        databaseReference.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String name = dataSnapshot.child("name").getValue(String.class);
-                    String email = dataSnapshot.child("email").getValue(String.class);
-                    String location = dataSnapshot.child("location").getValue(String.class);
-                    String password = dataSnapshot.child("password").getValue(String.class);
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
 
-                    // Populate EditText fields with fetched data
-                    editName.setText(name);
-                    editUsername.setText(username);
-                    editEmail.setText(email);
-                    editLocation.setText(location);
-                    editPassword.setText(password);
-                    editConfirmPassword.setText(password);
-                } else {
-                    Toast.makeText(EditUser.this, "User data not found", Toast.LENGTH_SHORT).show();
-                }
-            }
+            db.collection("users").document(userId)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            String name = documentSnapshot.getString("name");
+                            String username = documentSnapshot.getString("username");
+                            String email = documentSnapshot.getString("email");
+                            String location = documentSnapshot.getString("location");
+                            String password = documentSnapshot.getString("password");
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(EditUser.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                            // Populate EditText fields with fetched data
+                            editName.setText(name);
+                            editUsername.setText(username);
+                            editEmail.setText(email);
+                            editLocation.setText(location);
+                            editPassword.setText(password);
+                            editConfirmPassword.setText(password);
+                        } else {
+                            Toast.makeText(EditUser.this, "User data not found", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(EditUser.this, "Failed to fetch user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void updateUserData() {
         String name = editName.getText().toString();
+        String username = editUsername.getText().toString();
         String email = editEmail.getText().toString();
         String location = editLocation.getText().toString();
         String password = editPassword.getText().toString();
         String confirmPassword = editConfirmPassword.getText().toString();
 
         // Validate inputs
-        if (name.isEmpty() || email.isEmpty() || location.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+        if (name.isEmpty() || username.isEmpty() || email.isEmpty() || location.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -163,14 +157,29 @@ public class EditUser extends AppCompatActivity {
             return;
         }
 
-        // Update data in Firebase
-        databaseReference.child(username).child("name").setValue(name);
-        databaseReference.child(username).child("email").setValue(email);
-        databaseReference.child(username).child("location").setValue(location);
-        databaseReference.child(username).child("password").setValue(password);
+        // Update data in Firestore
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
 
-        Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
-        navigateToUserProfile();
+            db.collection("users").document(userId)
+                    .update(
+                            "name", name,
+                            "username", username,
+                            "email", email,
+                            "location", location,
+                            "password", password
+                    )
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                        navigateToUserProfile();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Failed to update profile: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void togglePasswordVisibility(EditText editText, ImageButton btnToggle) {
