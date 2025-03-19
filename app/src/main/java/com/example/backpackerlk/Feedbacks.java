@@ -2,7 +2,6 @@ package com.example.backpackerlk;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,8 +17,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Feedbacks extends AppCompatActivity {
 
@@ -27,8 +30,8 @@ public class Feedbacks extends AppCompatActivity {
     private RatingBar ratingBar;
     private EditText etFeedback;
     private Button btnSubmitFeedback;
-    private DatabaseReference databaseReference;
-    private String username;
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,6 +45,10 @@ public class Feedbacks extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
+        // Initialize Firebase
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         // Initialize views
         ratingBar = findViewById(R.id.feedback_ratingBar);
         etFeedback = findViewById(R.id.feedback_feedback);
@@ -52,21 +59,6 @@ public class Feedbacks extends AppCompatActivity {
 
         // Set click listener for the back icon
         backIcon.setOnClickListener(view -> navigateToUserProfile());
-
-        // Retrieve username from SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        username = sharedPreferences.getString("username", null);
-
-        if (username == null) {
-            Toast.makeText(this, "User not identified", Toast.LENGTH_SHORT).show();
-            Intent loginIntent = new Intent(Feedbacks.this, Loging.class);
-            startActivity(loginIntent);
-            finish();
-            return;
-        }
-
-        // Initialize Firebase Database
-        databaseReference = FirebaseDatabase.getInstance("https://backpackerlk-4b607-default-rtdb.firebaseio.com/").getReference("Users");
 
         // Handle submit button click
         btnSubmitFeedback.setOnClickListener(v -> submitFeedback());
@@ -90,15 +82,47 @@ public class Feedbacks extends AppCompatActivity {
             return;
         }
 
-        // Save feedback to Firebase under the user's node
-        databaseReference.child(username).child("feedback").setValue(feedback);
-        databaseReference.child(username).child("rating").setValue(rating);
+        // Get current user
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            String email = currentUser.getEmail();
 
-        Toast.makeText(this, "Thank you for your feedback!", Toast.LENGTH_SHORT).show();
+            // Fetch username from Firestore
+            db.collection("users").document(userId)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            String username = documentSnapshot.getString("username");
 
-        // Clear input fields
-        ratingBar.setRating(1); // Set to minimum valid rating instead of 0
-        etFeedback.setText("");
+                            // Create a feedback object
+                            Map<String, Object> feedbackData = new HashMap<>();
+                            feedbackData.put("email", email);
+                            feedbackData.put("username", username);
+                            feedbackData.put("rating", rating);
+                            feedbackData.put("feedback", feedback);
+
+                            // Save feedback to Firestore
+                            db.collection("feedbacks").add(feedbackData)
+                                    .addOnSuccessListener(documentReference -> {
+                                        Toast.makeText(this, "Thank you for your feedback!", Toast.LENGTH_SHORT).show();
+                                        // Clear input fields
+                                        ratingBar.setRating(0);
+                                        etFeedback.setText("");
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(this, "Failed to submit feedback: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    });
+                        } else {
+                            Toast.makeText(this, "User data not found", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Failed to fetch user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // **BACK BUTTON IN PHONE**
