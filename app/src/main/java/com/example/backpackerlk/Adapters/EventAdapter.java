@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.backpackerlk.Events;
 import com.example.backpackerlk.R;
 
@@ -35,10 +36,26 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         Events event = eventList.get(position);
         holder.eventTitle.setText(event.getTitle());
-        holder.eventLocation.setText(event.getLocation());
-        holder.eventPrice.setText(event.getPrice());
-        holder.eventTelephone.setText(event.getTelephone());
-        holder.eventImage.setImageResource(event.getImageResId());
+        holder.eventLocation.setText("Location: " + event.getLocation());
+        holder.eventPrice.setText("Price: " + event.getPrice());
+        holder.eventTelephone.setText("Telephone: " + event.getTelephone());
+
+        // Log the image URL
+        String imageUrl = event.getImageUrl();
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            System.out.println("Loading image from URL: " + imageUrl);
+
+            // Load image from Cloudinary URL using Glide
+            Glide.with(holder.itemView.getContext())
+                    .load(imageUrl)
+                    .placeholder(R.drawable.placeholder_image) // Placeholder while loading
+                    .error(R.drawable.error_image) // Error image if loading fails
+                    .into(holder.eventImage);
+        } else {
+            System.out.println("Image URL is empty or null");
+            // Set a placeholder or error image if the URL is empty
+            holder.eventImage.setImageResource(R.drawable.error_image);
+        }
 
         holder.editEvent.setOnClickListener(v -> {
             // Handle edit event button click

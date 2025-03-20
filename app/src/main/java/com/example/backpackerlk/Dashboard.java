@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,9 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.backpackerlk.Activities.Categories;
 import com.example.backpackerlk.Activities.Home;
-import com.example.backpackerlk.Activities.WhoAreYou;
 import com.example.backpackerlk.Adapters.EventAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +29,13 @@ public class Dashboard extends AppCompatActivity {
     private RecyclerView recyclerView;
     private EventAdapter eventAdapter;
     private Button addEventButton;
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         // Hide the title bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -37,18 +43,21 @@ public class Dashboard extends AppCompatActivity {
 
         setContentView(R.layout.activity_dashboard);
 
+        // Initialize Firebase
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+
         // Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Create a list of events
+        // Initialize event list and adapter
         List<Events> eventList = new ArrayList<>();
-        eventList.add(new Events("Safari Adventure", "Yala National Park", "$120 per person", "0714999801", R.drawable.safari1));
-        eventList.add(new Events("The Marvel", "Lakashapana", "$80 per person", "0714999801", R.drawable.lakshapana));
-
-        // Set up the adapter
         eventAdapter = new EventAdapter(eventList);
         recyclerView.setAdapter(eventAdapter);
+
+        // Fetch events from Firestore
+        fetchEvents();
 
         // Add Event Button
         addEventButton = findViewById(R.id.dashboardaddEventButton);
@@ -82,5 +91,41 @@ public class Dashboard extends AppCompatActivity {
             }
             return false;
         });
+    }
+
+    // Fetch events from Firestore
+    private void fetchEvents() {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(this, "User not logged in!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String sellerId = currentUser.getUid();
+
+        db.collection("events")
+                .whereEqualTo("sellerId", sellerId) // Fetch events for the current seller
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    List<Events> eventList = new ArrayList<>();
+                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                        String title = document.getString("businessName");
+                        String location = document.getString("businessAddress");
+                        String price = document.getString("pricePerPerson");
+                        String telephone = document.getString("telephone");
+                        String imageUrl = document.getString("imageUrl");
+
+                        // Create an Events object
+                        Events event = new Events(title, location, price, telephone, imageUrl);
+                        eventList.add(event);
+                    }
+
+                    // Update the adapter with the fetched events
+                    eventAdapter = new EventAdapter(eventList);
+                    recyclerView.setAdapter(eventAdapter);
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Failed to fetch events: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 }
