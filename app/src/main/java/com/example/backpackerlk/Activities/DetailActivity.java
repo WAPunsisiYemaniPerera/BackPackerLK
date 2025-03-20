@@ -15,6 +15,7 @@ import com.example.backpackerlk.Adapters.SellerAdapter;
 import com.example.backpackerlk.BookingsHistoryActivity;
 import com.example.backpackerlk.R;
 import com.example.backpackerlk.Sellers;
+import com.example.backpackerlk.UserProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class DetailActivity extends AppCompatActivity {
                 finish();
                 return true;
             } else if (itemId == R.id.nav_profile) {
-                startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
+                startActivity(new Intent(getApplicationContext(), UserProfile.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
