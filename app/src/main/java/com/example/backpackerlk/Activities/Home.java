@@ -181,8 +181,8 @@ public class Home extends AppCompatActivity {
         popularItemList = new ArrayList<>();
         popularItemList.add(new PopularItem(R.drawable.adventure, "Water Rafting", "Thrilling adventure"));
         popularItemList.add(new PopularItem(R.drawable.safari, "Safari Tour", "Explore the wildlife"));
-        popularItemList.add(new PopularItem(R.drawable.kithulgala, "Day out", "enjoy with activities"));
-        popularItemList.add(new PopularItem(R.drawable.h1, "Serfin", "step into sea"));
+        popularItemList.add(new PopularItem(R.drawable.kithulgala, "Day out", "Enjoy with activities"));
+        popularItemList.add(new PopularItem(R.drawable.h1, "Surfing", "Step into sea"));
         popularItemList.add(new PopularItem(R.drawable.para, "Paramotoring", "Breathtaking views "));
 
         popularRecyclerView.setAdapter(new PopularAdapter(popularItemList));

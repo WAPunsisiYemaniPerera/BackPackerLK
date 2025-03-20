@@ -2,7 +2,6 @@ package com.example.backpackerlk.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,10 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.backpackerlk.Booking;
-import com.example.backpackerlk.BookingsHistoryActivity;
 import com.example.backpackerlk.Dashboard;
-import com.example.backpackerlk.Loging;
 import com.example.backpackerlk.R;
 import com.example.backpackerlk.UserProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,8 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SellerProfile extends AppCompatActivity {
 
-    private Button editProfileButton;
-    private Button goToDashboardButton;
+    private Button editProfileButton, goToDashboardButton;
     private ImageView backIcon;
     private TextView sellerProfileName1, sellerProfileEmail1, sellerProfileName2, sellerProfileEmail2, sellerProfileTelephone, sellerProfileLocation;
     private FirebaseFirestore db;
@@ -77,45 +72,6 @@ public class SellerProfile extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Navigation
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
-
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-
-            if (itemId == R.id.nav_home) {
-                startActivity(new Intent(getApplicationContext(), Home.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                return true;
-            } else if (itemId == R.id.nav_categories) {
-                startActivity(new Intent(getApplicationContext(), Categories.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                return true;
-            } else if (itemId == R.id.nav_profile) {
-                startActivity(new Intent(getApplicationContext(), UserProfile.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                return true;
-            } else if (itemId == R.id.nav_bookings) {
-                startActivity(new Intent(getApplicationContext(), BookingsHistoryActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                return true;
-            }
-
-            return false;
-        });
-
-        // Set up ScrollView listener to hide/show bottom navigation
-        ScrollView scrollView = findViewById(R.id.main1);
-        scrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if (scrollY < oldScrollY) {
-                bottomNavigationView.animate().alpha(0f).setDuration(200).start();
-            } else if (scrollY > oldScrollY) {
-                bottomNavigationView.animate().alpha(1f).setDuration(200).start();
-            }
-        });
-
         // Initialize the back icon and set an OnClickListener
         backIcon.setOnClickListener(view -> navigateToUserProfile());
     }
@@ -133,6 +89,9 @@ public class SellerProfile extends AppCompatActivity {
                             String email = documentSnapshot.getString("email");
                             String phone = documentSnapshot.getString("mobile");
                             String location = documentSnapshot.getString("location");
+                            String username = documentSnapshot.getString("username");
+                            String password = documentSnapshot.getString("password");
+                            String confirmPassword = documentSnapshot.getString("confirmPassword");
 
                             // Update UI with fetched data
                             sellerProfileName1.setText(name);
@@ -141,6 +100,7 @@ public class SellerProfile extends AppCompatActivity {
                             sellerProfileEmail2.setText(email);
                             sellerProfileTelephone.setText(phone);
                             sellerProfileLocation.setText(location);
+
                         } else {
                             Toast.makeText(SellerProfile.this, "Seller data not found", Toast.LENGTH_SHORT).show();
                         }
@@ -163,10 +123,6 @@ public class SellerProfile extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(SellerProfile.this, UserProfile.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-        finish();
+        navigateToUserProfile();
     }
 }
