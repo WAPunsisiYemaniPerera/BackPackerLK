@@ -5,14 +5,14 @@ public class Events {
     private String location;
     private String price;
     private String telephone;
-    private int imageResId;
+    private String imageUrl;
 
-    public Events(String title, String location, String price, String telephone, int imageResId) {
+    public Events(String title, String location, String price, String telephone, String imageUrl) {
         this.title = title;
         this.location = location;
         this.price = price;
         this.telephone = telephone;
-        this.imageResId = imageResId;
+        this.imageUrl = imageUrl;
     }
 
     public String getTitle() {
@@ -31,7 +31,7 @@ public class Events {
         return telephone;
     }
 
-    public int getImageResId() {
-        return imageResId;
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

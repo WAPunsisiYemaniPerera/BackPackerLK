@@ -31,7 +31,6 @@ import com.cloudinary.android.callback.UploadCallback;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -75,7 +74,7 @@ public class Add_Business extends AppCompatActivity {
 
         // Fullscreen setup
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -203,7 +202,8 @@ public class Add_Business extends AppCompatActivity {
                     @Override
                     public void onSuccess(String requestId, Map resultData) {
                         // Upload successful
-                        String imageUrl = (String) resultData.get("url");
+                        String imageUrl = (String) resultData.get("secure_url"); // Use "secure_url" instead of "url"
+                        System.out.println("Image uploaded successfully. URL: " + imageUrl);
                         Toast.makeText(Add_Business.this, "Image uploaded successfully!", Toast.LENGTH_SHORT).show();
 
                         // Save event details to Firestore
@@ -231,7 +231,6 @@ public class Add_Business extends AppCompatActivity {
         event.put("yourName", yourName);
         event.put("businessName", businessName);
         event.put("businessAddress", businessAddress);
-        event.put("category", autoCompleteTextView.getText().toString());
         event.put("telephone", telephone);
         event.put("pricePerPerson", pricePerPerson);
         event.put("description", description);
