@@ -221,6 +221,10 @@ public class UserProfile extends AppCompatActivity {
                             String email = documentSnapshot.getString("email");
                             String phone = documentSnapshot.getString("mobile");
                             String location = documentSnapshot.getString("location");
+                            String username = documentSnapshot.getString("username");
+                            String password = documentSnapshot.getString("password");
+                            String confirmPassword = documentSnapshot.getString("confirmPassword");
+
 
                             // Create a seller object
                             Map<String, Object> sellerData = new HashMap<>();
@@ -228,6 +232,9 @@ public class UserProfile extends AppCompatActivity {
                             sellerData.put("email", email);
                             sellerData.put("mobile", phone);
                             sellerData.put("location", location);
+                            sellerData.put("username", username);
+                            sellerData.put("password", password);
+                            sellerData.put("confirmPassword", confirmPassword);
 
                             // Save seller data to Firestore
                             db.collection("sellers").document(userId)
