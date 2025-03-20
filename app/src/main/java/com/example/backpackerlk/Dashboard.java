@@ -72,7 +72,7 @@ public class Dashboard extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
             } else if (itemId == R.id.nav_profile) {
-                startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
+                startActivity(new Intent(getApplicationContext(), UserProfile.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
             } else if (itemId == R.id.nav_bookings) {

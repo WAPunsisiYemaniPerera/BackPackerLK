@@ -90,7 +90,13 @@ public class EditUser extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
-            } else if (itemId == R.id.nav_bookings) {
+            } else if (itemId == R.id.nav_profile) {
+                startActivity(new Intent(getApplicationContext(), UserProfile.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
+            }
+            else if (itemId == R.id.nav_bookings) {
                 startActivity(new Intent(getApplicationContext(), com.example.backpackerlk.BookingsHistoryActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

@@ -26,6 +26,7 @@ import com.example.backpackerlk.Domains.PopularDomain;
 import com.example.backpackerlk.Loging;
 import com.example.backpackerlk.PopularItem;
 import com.example.backpackerlk.R;
+import com.example.backpackerlk.UserProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -123,7 +124,7 @@ public class Home extends AppCompatActivity {
                 finish();
                 return true;
             } else if (itemId == R.id.nav_profile) {
-                Intent intent = new Intent(Home.this, WhoAreYou.class);
+                Intent intent = new Intent(Home.this, UserProfile.class);
                 intent.putExtra("username", username); // Pass the username
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

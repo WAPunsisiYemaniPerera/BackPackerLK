@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -21,6 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.backpackerlk.Activities.Categories;
 import com.example.backpackerlk.Activities.Home;
+import com.example.backpackerlk.Activities.SellerProfile;
 import com.example.backpackerlk.Activities.WhoAreYou;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,10 +30,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class UserProfile extends AppCompatActivity {
 
     private Button edituserprofile;
     private Button feedback;
+    private Button becomeSellerBtn; // New button
     private TextView userProfileName1, userProfileEmail1, userProfileName2, userProfileEmail2, userProfileTelephone, userProfileLocation;
     private String username;
     private FirebaseFirestore db;
@@ -69,6 +75,7 @@ public class UserProfile extends AppCompatActivity {
         // Initialize UI elements
         edituserprofile = findViewById(R.id.usereditprofileBtn);
         feedback = findViewById(R.id.feedbackBtn);
+        becomeSellerBtn = findViewById(R.id.becomeSellerBtn); // Initialize the "Become a Seller" button
         userProfileName1 = findViewById(R.id.userprofile_name1);
         userProfileEmail1 = findViewById(R.id.userprofile_email1);
         userProfileName2 = findViewById(R.id.userprofile_name2);
@@ -94,6 +101,9 @@ public class UserProfile extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+
+        // "Become a Seller" button click event
+        becomeSellerBtn.setOnClickListener(view -> showBecomeSellerConfirmation());
 
         // Navigation bar logic
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -140,7 +150,7 @@ public class UserProfile extends AppCompatActivity {
 
         // Initialize the back icon and set an OnClickListener
         @SuppressLint({"MissingInflatedId", "LocalSuppress"}) ImageView backIcon = findViewById(R.id.icback);
-        backIcon.setOnClickListener(view -> navigateToWhoAreYou());
+        backIcon.setOnClickListener(view -> navigateToHome());
     }
 
     private void fetchUserData() {
@@ -182,8 +192,70 @@ public class UserProfile extends AppCompatActivity {
         }
     }
 
-    private void navigateToWhoAreYou() {
-        Intent intent = new Intent(UserProfile.this, WhoAreYou.class);
+    private void showBecomeSellerConfirmation() {
+        new AlertDialog.Builder(this)
+                .setTitle("Become a Seller")
+                .setMessage("Do you want to move to a seller account?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    // Save user data to the seller collection and redirect to SellerProfile
+                    saveUserAsSeller();
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    // Stay in the UserProfile activity
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
+    private void saveUserAsSeller() {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+
+            // Fetch user data from Firestore
+            db.collection("users").document(userId)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            String name = documentSnapshot.getString("name");
+                            String email = documentSnapshot.getString("email");
+                            String phone = documentSnapshot.getString("mobile");
+                            String location = documentSnapshot.getString("location");
+
+                            // Create a seller object
+                            Map<String, Object> sellerData = new HashMap<>();
+                            sellerData.put("name", name);
+                            sellerData.put("email", email);
+                            sellerData.put("mobile", phone);
+                            sellerData.put("location", location);
+
+                            // Save seller data to Firestore
+                            db.collection("sellers").document(userId)
+                                    .set(sellerData)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Toast.makeText(this, "You are now a seller!", Toast.LENGTH_SHORT).show();
+                                        // Redirect to SellerProfile
+                                        Intent intent = new Intent(UserProfile.this, SellerProfile.class);
+                                        startActivity(intent);
+                                        finish();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(this, "Failed to save seller data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    });
+                        } else {
+                            Toast.makeText(this, "User data not found", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Failed to fetch user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void navigateToHome() {
+        Intent intent = new Intent(UserProfile.this, Home.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         finish();
@@ -192,7 +264,7 @@ public class UserProfile extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(UserProfile.this, WhoAreYou.class);
+        Intent intent = new Intent(UserProfile.this, Home.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

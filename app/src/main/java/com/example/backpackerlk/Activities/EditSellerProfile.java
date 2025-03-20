@@ -22,6 +22,7 @@ import com.example.backpackerlk.BookingsHistoryActivity;
 import com.example.backpackerlk.Dashboard;
 import com.example.backpackerlk.Loging;
 import com.example.backpackerlk.R;
+import com.example.backpackerlk.UserProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -101,7 +102,7 @@ public class EditSellerProfile extends AppCompatActivity {
                 finish();
                 return true;
             } else if (itemId == R.id.nav_profile) {
-                startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
+                startActivity(new Intent(getApplicationContext(), UserProfile.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;

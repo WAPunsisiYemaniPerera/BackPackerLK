@@ -76,7 +76,7 @@ public class RopeActivity extends AppCompatActivity {
                 finish();
                 return true;
             } else if (itemId == R.id.nav_profile) {
-                startActivity(new Intent(getApplicationContext(), WhoAreYou.class));
+                startActivity(new Intent(getApplicationContext(), UserProfile.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
