@@ -193,9 +193,21 @@ public class Home extends AppCompatActivity {
     public void onBackPressed() {
         // Check if the current activity is Home
         if (this instanceof Home) {
-            // Exit the app
-            finishAffinity(); // Close all activities in the task
-            System.exit(0); // Exit the app completely
+            // Show confirmation dialog
+            new android.app.AlertDialog.Builder(this)
+                    .setTitle("Exit App")
+                    .setMessage("Do you want to exit the app?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        // Exit the app
+                        finishAffinity(); // Close all activities in the task
+                        System.exit(0); // Exit the app completely
+                    })
+                    .setNegativeButton("No", (dialog, which) -> {
+                        // Stay in the app
+                        dialog.dismiss(); // Dismiss the dialog
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert) // Optional: Set an icon
+                    .show(); // Show the dialog
         } else {
             // Default behavior for other activities
             super.onBackPressed();
