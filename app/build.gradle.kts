@@ -39,6 +39,7 @@ android {
 dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
     implementation("com.google.firebase:firebase-auth")
+    implementation ("com.cloudinary:cloudinary-android:2.3.1")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation ("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-analytics")
@@ -49,6 +50,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.firebase.database)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

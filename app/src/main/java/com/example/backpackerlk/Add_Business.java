@@ -24,12 +24,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.cloudinary.android.MediaManager;
+import com.cloudinary.android.callback.ErrorInfo;
+import com.cloudinary.android.callback.UploadCallback;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class Add_Business extends AppCompatActivity {
 
@@ -46,6 +53,10 @@ public class Add_Business extends AppCompatActivity {
 
     // Form fields
     private TextInputEditText etYourName, etBusinessName, etBusinessAddress, etTelephone, etPricePerPerson, etDescription;
+
+    // Firebase
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
 
     // Activity Result Launcher for picking image
     private final ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
@@ -72,8 +83,14 @@ public class Add_Business extends AppCompatActivity {
         // Set layout
         setContentView(R.layout.activity_add_business);
 
+        // Initialize Firebase
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+
+        // Initialize Cloudinary
+        initCloudinary();
+
         // Initialize views
-        TextInputLayout textInputLayout = findViewById(R.id.addbusiness_category);
         autoCompleteTextView = findViewById(R.id.addbusiness_category_autocomplete);
         businessImageView = findViewById(R.id.addbusiness_business_image);
         chooseImageButton = findViewById(R.id.addbusiness_choose_image);
@@ -81,9 +98,12 @@ public class Add_Business extends AppCompatActivity {
         etBusinessName = findViewById(R.id.addbusiness_business_name);
         etBusinessAddress = findViewById(R.id.addbusiness_business_address);
         etTelephone = findViewById(R.id.addbusiness_telephone);
-        etPricePerPerson = findViewById(R.id.addbusiness_price_per_person); // New field
+        etPricePerPerson = findViewById(R.id.addbusiness_price_per_person);
         etDescription = findViewById(R.id.addbusiness_description);
         Button submitButton = findViewById(R.id.addbusiness_btn_submit);
+
+        // Fetch and auto-fill seller's name
+        fetchSellerName();
 
         // Dropdown setup
         adapterItems = new ArrayAdapter<>(this, R.layout.list_item, item);
@@ -100,31 +120,133 @@ public class Add_Business extends AppCompatActivity {
         // Image picker setup
         chooseImageButton.setOnClickListener(v -> checkPermissionAndPickImage());
 
-        // Handle insets
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.scrollView), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
         // Submit button setup
         submitButton.setOnClickListener(v -> {
-            // Save or update the event
+            // Validate and save event
             String yourName = etYourName.getText().toString();
             String businessName = etBusinessName.getText().toString();
             String businessAddress = etBusinessAddress.getText().toString();
             String telephone = etTelephone.getText().toString();
-            String pricePerPerson = etPricePerPerson.getText().toString(); // New field
+            String pricePerPerson = etPricePerPerson.getText().toString();
             String description = etDescription.getText().toString();
 
             if (yourName.isEmpty() || businessName.isEmpty() || businessAddress.isEmpty() || telephone.isEmpty() || pricePerPerson.isEmpty() || description.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
+            } else if (imageUri == null) {
+                Toast.makeText(this, "Please select an image!", Toast.LENGTH_SHORT).show();
             } else {
-                // Save or update logic here
-                Toast.makeText(this, "Event saved!", Toast.LENGTH_SHORT).show();
-                navigateToDashboard();
+                // Upload image to Cloudinary and save event
+                uploadImageToCloudinary(yourName, businessName, businessAddress, telephone, pricePerPerson, description);
             }
         });
+    }
+
+    // Fetch seller's name from Firestore and auto-fill the "Your Name" field
+    private void fetchSellerName() {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            String sellerId = currentUser.getUid();
+
+            db.collection("sellers").document(sellerId)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            String sellerName = documentSnapshot.getString("name");
+                            etYourName.setText(sellerName); // Auto-fill the "Your Name" field
+                        } else {
+                            Toast.makeText(this, "Seller data not found!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Failed to fetch seller data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            Toast.makeText(this, "User not logged in!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Initialize Cloudinary
+    private void initCloudinary() {
+        Map<String, String> config = new HashMap<>();
+        config.put("cloud_name", "dx5i5qp4a"); // Replace with your Cloudinary cloud name
+        config.put("api_key", "916958589511948"); // Replace with your Cloudinary API key
+        config.put("api_secret", "N9KYfyS4Ol7JIz_QLXj1zfi7K2w"); // Replace with your Cloudinary API secret
+        MediaManager.init(this, config);
+    }
+
+    // Upload image to Cloudinary and save event details to Firestore
+    private void uploadImageToCloudinary(String yourName, String businessName, String businessAddress, String telephone, String pricePerPerson, String description) {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(this, "User not logged in!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Generate a unique public ID for the image
+        String publicId = "event_image_" + UUID.randomUUID().toString();
+
+        // Upload image to Cloudinary
+        MediaManager.get().upload(imageUri)
+                .option("public_id", publicId)
+                .callback(new UploadCallback() {
+                    @Override
+                    public void onStart(String requestId) {
+                        // Upload started
+                        Toast.makeText(Add_Business.this, "Uploading image...", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onProgress(String requestId, long bytes, long totalBytes) {
+                        // Upload progress
+                    }
+
+                    @Override
+                    public void onSuccess(String requestId, Map resultData) {
+                        // Upload successful
+                        String imageUrl = (String) resultData.get("url");
+                        Toast.makeText(Add_Business.this, "Image uploaded successfully!", Toast.LENGTH_SHORT).show();
+
+                        // Save event details to Firestore
+                        saveEventToFirestore(currentUser.getUid(), yourName, businessName, businessAddress, telephone, pricePerPerson, description, imageUrl);
+                    }
+
+                    @Override
+                    public void onError(String requestId, ErrorInfo error) {
+                        // Upload failed
+                        Toast.makeText(Add_Business.this, "Failed to upload image: " + error.getDescription(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onReschedule(String requestId, ErrorInfo error) {
+                        // Upload rescheduled
+                    }
+                })
+                .dispatch();
+    }
+
+    // Save event details to Firestore
+    private void saveEventToFirestore(String sellerId, String yourName, String businessName, String businessAddress, String telephone, String pricePerPerson, String description, String imageUrl) {
+        Map<String, Object> event = new HashMap<>();
+        event.put("sellerId", sellerId);
+        event.put("yourName", yourName);
+        event.put("businessName", businessName);
+        event.put("businessAddress", businessAddress);
+        event.put("category", autoCompleteTextView.getText().toString());
+        event.put("telephone", telephone);
+        event.put("pricePerPerson", pricePerPerson);
+        event.put("description", description);
+        event.put("imageUrl", imageUrl);
+
+        // Add event to Firestore
+        db.collection("events")
+                .add(event)
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(this, "Event saved successfully!", Toast.LENGTH_SHORT).show();
+                    navigateToDashboard();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Failed to save event: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     // Check permission and pick image
@@ -161,12 +283,6 @@ public class Add_Business extends AppCompatActivity {
                 Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     // Navigate back to Dashboard

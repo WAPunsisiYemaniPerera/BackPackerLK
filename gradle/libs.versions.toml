@@ -9,6 +9,7 @@ activity = "1.9.3"
 constraintlayout = "2.2.0"
 firebaseDatabase = "21.0.0"
 firebaseFirestore = "25.1.2"
+firebaseStorage = "21.0.1"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -22,6 +23,7 @@ glide = "com.github.bumptech.glide:glide:4.15.1"
 glide_compiler = "com.github.bumptech.glide:compiler:4.15.1"
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
