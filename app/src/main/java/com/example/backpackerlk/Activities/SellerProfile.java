@@ -74,6 +74,32 @@ public class SellerProfile extends AppCompatActivity {
 
         // Initialize the back icon and set an OnClickListener
         backIcon.setOnClickListener(view -> navigateToUserProfile());
+
+        // Navigation bar logic
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(getApplicationContext(), Home.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_categories) {
+                startActivity(new Intent(getApplicationContext(), Categories.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_bookings) {
+                startActivity(new Intent(getApplicationContext(), com.example.backpackerlk.BookingsHistoryActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                return true;
+            }
+
+            return false;
+        });
     }
 
     private void fetchSellerData() {

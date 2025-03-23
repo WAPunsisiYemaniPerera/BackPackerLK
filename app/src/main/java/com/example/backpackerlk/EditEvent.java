@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -20,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
+import com.example.backpackerlk.Dashboard;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,10 +40,17 @@ public class EditEvent extends AppCompatActivity {
     String[] categories = {"Safari", "Water Activities", "Air Activities", "Rope Activities"};
     AutoCompleteTextView categoryDropdown;
     ArrayAdapter<String> adapterItems;
+    private ImageView backIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Hide the name bar
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
+
         setContentView(R.layout.activity_edit_event);
 
         // Initialize Firebase
@@ -55,7 +62,11 @@ public class EditEvent extends AppCompatActivity {
 
         // Get event ID from intent
         eventId = getIntent().getStringExtra("eventId");
-        System.out.println("Event ID received in EditEvent: " + eventId); // Log the event ID
+        if (eventId == null) {
+            Toast.makeText(this, "Event ID is missing!", Toast.LENGTH_SHORT).show();
+            finish(); // Close the activity if eventId is not provided
+            return;
+        }
 
         // Initialize views
         TextInputEditText businessName = findViewById(R.id.editevent_business_name);
@@ -67,44 +78,40 @@ public class EditEvent extends AppCompatActivity {
         ImageView eventImage = findViewById(R.id.editevent_image);
         Button chooseImageButton = findViewById(R.id.editevent_choose_image);
         Button updateButton = findViewById(R.id.editevent_btn_update);
+        backIcon = findViewById(R.id.icback); // Initialize the back icon
 
         // Set up the dropdown for categories
         adapterItems = new ArrayAdapter<>(this, R.layout.list_item, categories);
         categoryDropdown.setAdapter(adapterItems);
 
         // Fetch event details from Firestore
-        if (eventId != null) {
-            db.collection("events").document(eventId)
-                    .get()
-                    .addOnSuccessListener(documentSnapshot -> {
-                        if (documentSnapshot.exists()) {
-                            // Set values for all fields
-                            businessName.setText(documentSnapshot.getString("businessName"));
-                            address.setText(documentSnapshot.getString("businessAddress"));
-                            telephone.setText(documentSnapshot.getString("telephone"));
-                            price.setText(documentSnapshot.getString("pricePerPerson"));
-                            description.setText(documentSnapshot.getString("description"));
+        db.collection("events").document(eventId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Set values for all fields
+                        businessName.setText(documentSnapshot.getString("businessName"));
+                        address.setText(documentSnapshot.getString("businessAddress"));
+                        telephone.setText(documentSnapshot.getString("telephone"));
+                        price.setText(documentSnapshot.getString("pricePerPerson"));
+                        description.setText(documentSnapshot.getString("description"));
 
-                            // Pre-select the category in the dropdown
-                            String category = documentSnapshot.getString("category");
-                            if (category != null) {
-                                categoryDropdown.setText(category, false); // Pre-select the category
-                            }
-
-                            // Load image using Glide
-                            String imageUrl = documentSnapshot.getString("imageUrl");
-                            if (imageUrl != null && !imageUrl.isEmpty()) {
-                                Glide.with(this).load(imageUrl).into(eventImage);
-                            }
+                        // Pre-select the category in the dropdown
+                        String category = documentSnapshot.getString("category");
+                        if (category != null) {
+                            categoryDropdown.setText(category, false); // Pre-select the category
                         }
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Failed to fetch event details: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
-        } else {
-            Toast.makeText(this, "Event ID is missing!", Toast.LENGTH_SHORT).show();
-            finish(); // Close the activity if eventId is not provided
-        }
+
+                        // Load image using Glide
+                        String imageUrl = documentSnapshot.getString("imageUrl");
+                        if (imageUrl != null && !imageUrl.isEmpty()) {
+                            Glide.with(this).load(imageUrl).into(eventImage);
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Failed to fetch event details: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
 
         // Handle image selection
         chooseImageButton.setOnClickListener(v -> openImagePicker());
@@ -135,6 +142,9 @@ public class EditEvent extends AppCompatActivity {
                 updateEventInFirestore(updatedBusinessName, updatedCategory, updatedAddress, updatedTelephone, updatedPrice, updatedDescription, null);
             }
         });
+
+        // Set click listener for the back icon
+        backIcon.setOnClickListener(view -> navigateToDashboard());
     }
 
     // Initialize Cloudinary
@@ -159,7 +169,6 @@ public class EditEvent extends AppCompatActivity {
             imageUri = data.getData();
             ImageView eventImage = findViewById(R.id.editevent_image);
             eventImage.setImageURI(imageUri);
-            System.out.println("Image URI selected: " + imageUri); // Log the image URI
         }
     }
 
@@ -167,8 +176,6 @@ public class EditEvent extends AppCompatActivity {
     private void uploadImageToCloudinary(String businessName, String category, String address, String telephone, String price, String description) {
         // Generate a unique public ID for the image
         String publicId = "event_image_" + UUID.randomUUID().toString();
-
-        System.out.println("Uploading image to Cloudinary..."); // Log the upload start
 
         // Upload image to Cloudinary
         MediaManager.get().upload(imageUri)
@@ -189,7 +196,6 @@ public class EditEvent extends AppCompatActivity {
                     public void onSuccess(String requestId, Map resultData) {
                         // Upload successful
                         String imageUrl = (String) resultData.get("secure_url");
-                        System.out.println("Image uploaded successfully. URL: " + imageUrl); // Log the image URL
                         Toast.makeText(EditEvent.this, "Image uploaded successfully!", Toast.LENGTH_SHORT).show();
 
                         // Update event in Firestore with the new image URL
@@ -200,7 +206,6 @@ public class EditEvent extends AppCompatActivity {
                     public void onError(String requestId, ErrorInfo error) {
                         // Upload failed
                         Toast.makeText(EditEvent.this, "Failed to upload image: " + error.getDescription(), Toast.LENGTH_SHORT).show();
-                        System.out.println("Cloudinary upload error: " + error.getDescription()); // Log the error
                     }
 
                     @Override
@@ -226,9 +231,6 @@ public class EditEvent extends AppCompatActivity {
             updates.put("imageUrl", imageUrl);
         }
 
-        System.out.println("Updating event in Firestore with ID: " + eventId); // Log the event ID
-        System.out.println("Updates: " + updates); // Log the updates
-
         // Update event in Firestore
         db.collection("events").document(eventId)
                 .update(updates)
@@ -239,7 +241,19 @@ public class EditEvent extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Failed to update event: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    System.out.println("Firestore update error: " + e.getMessage()); // Log the error
                 });
+    }
+
+    private void navigateToDashboard() {
+        Intent intent = new Intent(EditEvent.this, Dashboard.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        navigateToDashboard();
     }
 }
