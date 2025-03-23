@@ -33,7 +33,7 @@
 
             <!-- Business Name -->
             <TextView
-                android:id="@+id/sellercard_sellerName"
+                android:id="@+id/sellercard_eventName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Safari Name"
