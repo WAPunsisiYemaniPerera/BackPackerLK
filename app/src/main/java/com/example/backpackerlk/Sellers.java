@@ -1,37 +1,37 @@
 package com.example.backpackerlk;
 
 public class Sellers {
-    private String name;
-    private String location;
-    private String phoneNumber;
-    private String price;
-    private int imageResId; // Resource ID for seller image
+    private String businessName;
+    private String businessAddress;
+    private String telephone;
+    private String pricePerPerson;
+    private String imageUrl;
 
-    public Sellers(String name, String location, String phoneNumber, String price, int imageResId) {
-        this.name = name;
-        this.location = location;
-        this.phoneNumber = phoneNumber;
-        this.price = price;
-        this.imageResId = imageResId;
+    public Sellers(String businessName, String businessAddress, String telephone, String pricePerPerson, String imageUrl) {
+        this.businessName = businessName;
+        this.businessAddress = businessAddress;
+        this.telephone = telephone;
+        this.pricePerPerson = pricePerPerson;
+        this.imageUrl = imageUrl;
     }
 
-    public String getName() {
-        return name;
+    public String getBusinessName() {
+        return businessName;
     }
 
-    public String getLocation() {
-        return location;
+    public String getBusinessAddress() {
+        return businessAddress;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public String getPrice() {
-        return price;
+    public String getPricePerPerson() {
+        return pricePerPerson;
     }
 
-    public int getImageResId() {
-        return imageResId;
+    public String getImageUrl() {
+        return imageUrl;
     }
 }
