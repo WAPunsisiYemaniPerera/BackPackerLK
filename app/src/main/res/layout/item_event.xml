@@ -55,6 +55,14 @@
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
+            <TextView
+                android:id="@+id/eventCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Category"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
             <!-- Button Container (Edit and Delete Buttons) -->
             <LinearLayout
                 android:layout_width="wrap_content"

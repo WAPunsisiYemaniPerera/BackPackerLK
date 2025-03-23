@@ -226,6 +226,10 @@ public class Add_Business extends AppCompatActivity {
 
     // Save event details to Firestore
     private void saveEventToFirestore(String sellerId, String yourName, String businessName, String businessAddress, String telephone, String pricePerPerson, String description, String imageUrl) {
+        // Get the selected category from the dropdown
+        String selectedCategory = autoCompleteTextView.getText().toString();
+
+        // Create a map to store event details
         Map<String, Object> event = new HashMap<>();
         event.put("sellerId", sellerId);
         event.put("yourName", yourName);
@@ -235,6 +239,7 @@ public class Add_Business extends AppCompatActivity {
         event.put("pricePerPerson", pricePerPerson);
         event.put("description", description);
         event.put("imageUrl", imageUrl);
+        event.put("category", selectedCategory); // Add the selected category
 
         // Add event to Firestore
         db.collection("events")
