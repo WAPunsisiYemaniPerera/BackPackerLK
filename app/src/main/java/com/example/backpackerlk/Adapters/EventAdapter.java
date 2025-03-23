@@ -1,6 +1,10 @@
 package com.example.backpackerlk.Adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,15 +22,20 @@ import com.bumptech.glide.Glide;
 import com.example.backpackerlk.EditEvent;
 import com.example.backpackerlk.Events;
 import com.example.backpackerlk.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
 
     private List<Events> eventList;
+    private FirebaseFirestore db;
+    private Context context; // Add context variable
 
-    public EventAdapter(List<Events> eventList) {
+    public EventAdapter(List<Events> eventList, Context context) {
         this.eventList = eventList;
+        this.db = FirebaseFirestore.getInstance(); // Initialize Firestore
+        this.context = context; // Initialize context
     }
 
     @NonNull
@@ -36,7 +46,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull EventViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Events event = eventList.get(position);
         holder.eventTitle.setText(event.getTitle());
         holder.eventLocation.setText("Location: " + event.getLocation());
@@ -65,13 +75,41 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
         // Handle Delete Event Button Click
         holder.deleteEvent.setOnClickListener(v -> {
-            // Handle delete event button click
+            // Show confirmation dialog
+            new AlertDialog.Builder(v.getContext())
+                    .setTitle("Delete Event")
+                    .setMessage("Are you sure you want to delete this event?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Delete event from Firestore
+                            deleteEventFromFirestore(event.getEventId(), position);
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
         });
     }
 
     @Override
     public int getItemCount() {
         return eventList.size();
+    }
+
+    // Delete event from Firestore
+    private void deleteEventFromFirestore(String eventId, int position) {
+        db.collection("events").document(eventId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    // Remove the event from the list
+                    eventList.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, eventList.size());
+                    Toast.makeText(context, "Event deleted successfully!", Toast.LENGTH_SHORT).show(); // Use context
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(context, "Failed to delete event: " + e.getMessage(), Toast.LENGTH_SHORT).show(); // Use context
+                });
     }
 
     public static class EventViewHolder extends RecyclerView.ViewHolder {
