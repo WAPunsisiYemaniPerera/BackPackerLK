@@ -46,6 +46,9 @@
             android:name=".Activities.WhoAreYou"
             android:exported="true" />
         <activity
+            android:name=".EditEvent"
+            android:exported="true" />
+        <activity
             android:name=".Activities.EditSellerProfile"
             android:exported="true" />
         <activity

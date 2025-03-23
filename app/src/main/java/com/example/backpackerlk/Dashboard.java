@@ -2,18 +2,19 @@ package com.example.backpackerlk;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.backpackerlk.Activities.Categories;
 import com.example.backpackerlk.Activities.Home;
+import com.example.backpackerlk.Activities.SellerProfile;
 import com.example.backpackerlk.Adapters.EventAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -93,6 +94,15 @@ public class Dashboard extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            // Refresh the event list
+            fetchEvents();
+        }
+    }
+
     // Fetch events from Firestore
     private void fetchEvents() {
         FirebaseUser currentUser = auth.getCurrentUser();
@@ -104,19 +114,21 @@ public class Dashboard extends AppCompatActivity {
         String sellerId = currentUser.getUid();
 
         db.collection("events")
-                .whereEqualTo("sellerId", sellerId) // Fetch events for the current seller
+                .whereEqualTo("sellerId", sellerId)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     List<Events> eventList = new ArrayList<>();
                     for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                        String eventId = document.getId(); // Get the document ID
                         String title = document.getString("businessName");
                         String location = document.getString("businessAddress");
                         String price = document.getString("pricePerPerson");
                         String telephone = document.getString("telephone");
                         String imageUrl = document.getString("imageUrl");
+                        String category = document.getString("category"); // Fetch the category
 
-                        // Create an Events object
-                        Events event = new Events(title, location, price, telephone, imageUrl);
+                        // Create an Events object with eventId and category
+                        Events event = new Events(eventId, title, location, price, telephone, imageUrl, category);
                         eventList.add(event);
                     }
 
@@ -127,5 +139,15 @@ public class Dashboard extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Failed to fetch events: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    // **BACK BUTTON IN PHONE**
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(Dashboard.this, SellerProfile.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
     }
 }
