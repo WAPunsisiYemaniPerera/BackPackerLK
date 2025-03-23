@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.backpackerlk.Activities.Categories;
 import com.example.backpackerlk.Activities.Home;
-import com.example.backpackerlk.Activities.WhoAreYou;
 import com.example.backpackerlk.Adapters.SellerAdapter;
+import com.example.backpackerlk.Sellers;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public class RopeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SellerAdapter sellerAdapter;
     private List<Sellers> sellerList;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,28 +40,22 @@ public class RopeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_rope);
 
-        // Initialize the back icon and set an OnClickListener
-        ImageView backIcon = findViewById(R.id.icback);
-        backIcon.setOnClickListener(view -> navigateToCategories());
+        // Initialize Firestore
+        db = FirebaseFirestore.getInstance();
 
         // Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Populate seller list
+        // Initialize seller list
         sellerList = new ArrayList<>();
-        sellerList.add(new Sellers("Flying Rawana", "Ella, Sri Lanka", "0771246987","$20", R.drawable.rawana));
-        sellerList.add(new Sellers("Sun Diving - Unawatuna", "Unawatuna, Sri Lanka", "0758657380","$19", R.drawable.wateractivite3));
-        sellerList.add(new Sellers("Amaya Beach", "Pasikudah, Sri Lanka", "0714999801","$18", R.drawable.wateractivitye4));
-        sellerList.add(new Sellers("River Adventure", "Aluthgama Bentota, Sri Lanka", "0775769769","$16", R.drawable.wateractivite1));
-        sellerList.add(new Sellers("Sun Diving - Unawatuna", "Unawatuna, Sri Lanka", "0758657380","$20", R.drawable.wateractivite3));
-        sellerList.add(new Sellers("Amaya Beach", "Pasikudah, Sri Lanka", "0714999801","$10", R.drawable.wateractivitye4));
-
-        // Set up adapter
         sellerAdapter = new SellerAdapter(sellerList);
         recyclerView.setAdapter(sellerAdapter);
 
-        // Bottom navigation
+        // Fetch Rope Activities events from Firestore
+        fetchRopeActivities();
+
+        // Set up Bottom Navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_categories);
 
@@ -80,7 +77,7 @@ public class RopeActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
-            }else if (itemId == R.id.nav_bookings) {
+            } else if (itemId == R.id.nav_bookings) {
                 startActivity(new Intent(getApplicationContext(), com.example.backpackerlk.BookingsHistoryActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -101,6 +98,35 @@ public class RopeActivity extends AppCompatActivity {
                 bottomNavigationView.animate().alpha(1f).setDuration(200).start();
             }
         });
+
+        // Handle back icon click
+        ImageView backIcon = findViewById(R.id.icback);
+        backIcon.setOnClickListener(view -> navigateToCategories());
+    }
+
+    private void fetchRopeActivities() {
+        db.collection("events")
+                .whereEqualTo("category", "Rope Activities") // Filter by category
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        sellerList.clear(); // Clear existing data
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // Parse Firestore document into Sellers object
+                            String businessName = document.getString("businessName");
+                            String businessAddress = document.getString("businessAddress");
+                            String telephone = document.getString("telephone");
+                            String pricePerPerson = document.getString("pricePerPerson");
+                            String imageUrl = document.getString("imageUrl");
+
+                            Sellers seller = new Sellers(businessName, businessAddress, telephone, pricePerPerson, imageUrl);
+                            sellerList.add(seller);
+                        }
+                        sellerAdapter.notifyDataSetChanged(); // Notify adapter of data change
+                    } else {
+                        // Handle errors
+                    }
+                });
     }
 
     private void navigateToCategories() {
@@ -109,6 +135,7 @@ public class RopeActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         finish();
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

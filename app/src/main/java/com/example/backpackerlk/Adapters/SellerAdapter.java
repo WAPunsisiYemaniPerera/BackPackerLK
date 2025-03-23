@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.backpackerlk.Booking;
 import com.example.backpackerlk.R;
 import com.example.backpackerlk.Sellers;
@@ -34,28 +35,26 @@ public class SellerAdapter extends RecyclerView.Adapter<SellerAdapter.SellerView
     @Override
     public void onBindViewHolder(@NonNull SellerViewHolder holder, int position) {
         Sellers seller = sellerList.get(position);
-        holder.name.setText(seller.getName());
-        holder.location.setText(seller.getLocation());
-        holder.phoneNumber.setText(seller.getPhoneNumber());
-        holder.price.setText(seller.getPrice());
-        holder.image.setImageResource(seller.getImageResId());
+        holder.name.setText(seller.getBusinessName());
+        holder.location.setText(seller.getBusinessAddress());
+        holder.phoneNumber.setText(seller.getTelephone());
+        holder.price.setText(seller.getPricePerPerson());
+
+        // Load image using Glide with error handling
+        Glide.with(holder.itemView.getContext())
+                .load(seller.getImageUrl())
+                .placeholder(R.drawable.placeholder_image) // Placeholder while loading
+                .error(R.drawable.error_image) // Error image if loading fails
+                .into(holder.image);
 
         // Set click listener for the "Book Now" button
-        holder.bookNowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to the Booking activity
-                Intent intent = new Intent(v.getContext(), Booking.class);
-
-                // Pass seller details to the Booking activity (optional)
-                intent.putExtra("SELLER_NAME", seller.getName());
-                intent.putExtra("SELLER_PRICE", seller.getPrice());
-
-                v.getContext().startActivity(intent);
-            }
+        holder.bookNowButton.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), Booking.class);
+            intent.putExtra("SELLER_NAME", seller.getBusinessName());
+            intent.putExtra("SELLER_PRICE", seller.getPricePerPerson());
+            v.getContext().startActivity(intent);
         });
     }
-
     @Override
     public int getItemCount() {
         return sellerList.size();
@@ -64,7 +63,7 @@ public class SellerAdapter extends RecyclerView.Adapter<SellerAdapter.SellerView
     static class SellerViewHolder extends RecyclerView.ViewHolder {
         TextView name, location, phoneNumber, price;
         ImageView image;
-        Button bookNowButton; // Add this line
+        Button bookNowButton;
 
         public SellerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,7 +72,7 @@ public class SellerAdapter extends RecyclerView.Adapter<SellerAdapter.SellerView
             phoneNumber = itemView.findViewById(R.id.sellercard_sellerPhone);
             price = itemView.findViewById(R.id.sellercard_sellerPrice);
             image = itemView.findViewById(R.id.sellerImage);
-            bookNowButton = itemView.findViewById(R.id.sellercard_bookNowButton); // Initialize the Book Now button
+            bookNowButton = itemView.findViewById(R.id.sellercard_bookNowButton);
         }
     }
 }
