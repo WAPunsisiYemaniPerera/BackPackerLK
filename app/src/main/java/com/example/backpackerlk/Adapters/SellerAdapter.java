@@ -68,7 +68,7 @@ public class SellerAdapter extends RecyclerView.Adapter<SellerAdapter.SellerView
 
         public SellerViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.sellercard_sellerName);
+            name = itemView.findViewById(R.id.sellercard_eventName);
             location = itemView.findViewById(R.id.sellercard_sellerLocation);
             phoneNumber = itemView.findViewById(R.id.sellercard_sellerPhone);
             price = itemView.findViewById(R.id.sellercard_sellerPrice);
