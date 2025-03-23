@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:text="Safari Adventure"
                 android:textSize="18sp"
+                android:textColor="@color/orange"
                 android:textStyle="bold" />
 
             <TextView

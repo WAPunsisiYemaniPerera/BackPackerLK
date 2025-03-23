@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -32,6 +33,7 @@ public class Dashboard extends AppCompatActivity {
     private Button addEventButton;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
+    private ImageView backIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,7 @@ public class Dashboard extends AppCompatActivity {
 
         // Initialize event list and adapter
         List<Events> eventList = new ArrayList<>();
-        eventAdapter = new EventAdapter(eventList);
+        eventAdapter = new EventAdapter(eventList, this); // Pass 'this' as the context
         recyclerView.setAdapter(eventAdapter);
 
         // Fetch events from Firestore
@@ -92,6 +94,10 @@ public class Dashboard extends AppCompatActivity {
             }
             return false;
         });
+
+        // Initialize the back icon and set an OnClickListener
+        backIcon = findViewById(R.id.icback); // Initialize the back icon
+        backIcon.setOnClickListener(view -> navigateToSellerProfile());
     }
 
     @Override
@@ -133,7 +139,7 @@ public class Dashboard extends AppCompatActivity {
                     }
 
                     // Update the adapter with the fetched events
-                    eventAdapter = new EventAdapter(eventList);
+                    eventAdapter = new EventAdapter(eventList, this); // Pass 'this' as the context
                     recyclerView.setAdapter(eventAdapter);
                 })
                 .addOnFailureListener(e -> {
@@ -141,7 +147,15 @@ public class Dashboard extends AppCompatActivity {
                 });
     }
 
-    // **BACK BUTTON IN PHONE**
+    // Navigate to SellerProfile activity
+    private void navigateToSellerProfile() {
+        Intent intent = new Intent(Dashboard.this, SellerProfile.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
+    }
+
+    // Handle back button press
     @Override
     public void onBackPressed() {
         super.onBackPressed();
