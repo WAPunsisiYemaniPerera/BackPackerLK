@@ -1,6 +1,7 @@
 package com.example.backpackerlk;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -44,8 +45,8 @@ public class Loging extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         // Initialize views
-        login_username = findViewById(R.id.login_username); // Username input
-        login_password = findViewById(R.id.login_password); // Password input
+        login_username = findViewById(R.id.login_username);
+        login_password = findViewById(R.id.login_password);
         loginButton = findViewById(R.id.loginButton);
         createAccountButton = findViewById(R.id.createAccountButton);
 
@@ -64,21 +65,26 @@ public class Loging extends AppCompatActivity {
 
                 // Fetch user data from Firestore using the username
                 db.collection("users")
-                        .whereEqualTo("username", username) // Query Firestore for the username
+                        .whereEqualTo("username", username)
                         .get()
                         .addOnSuccessListener(queryDocumentSnapshots -> {
                             if (!queryDocumentSnapshots.isEmpty()) {
-                                // Get the first document (username should be unique)
                                 DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
-                                String email = document.getString("email"); // Fetch the email
-                                String role = document.getString("role"); // Fetch the role
+                                String email = document.getString("email");
+                                String role = document.getString("role");
 
-                                // Authenticate the user using the fetched email and password
+                                // Authenticate the user
                                 auth.signInWithEmailAndPassword(email, password)
                                         .addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {
                                                 FirebaseUser user = auth.getCurrentUser();
                                                 if (user != null) {
+                                                    // Save username to SharedPreferences
+                                                    SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                    editor.putString("username", username);
+                                                    editor.apply();
+
                                                     // Redirect based on role
                                                     Intent intent;
                                                     if ("Seller".equals(role)) {
@@ -87,7 +93,7 @@ public class Loging extends AppCompatActivity {
                                                         intent = new Intent(Loging.this, Home.class);
                                                     }
                                                     startActivity(intent);
-                                                    finish(); // Close the Loging activity
+                                                    finish();
                                                 }
                                             } else {
                                                 Toast.makeText(Loging.this, "Login Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
