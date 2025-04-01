@@ -2,6 +2,7 @@ package com.example.backpackerlk.Activities;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -9,7 +10,6 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,9 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.backpackerlk.Adapters.PopularAdapter;
-import com.example.backpackerlk.Booking;
 import com.example.backpackerlk.BookingsHistoryActivity;
-import com.example.backpackerlk.Domains.PopularDomain;
 import com.example.backpackerlk.Loging;
 import com.example.backpackerlk.PopularItem;
 import com.example.backpackerlk.R;
@@ -37,7 +35,7 @@ public class Home extends AppCompatActivity {
     private TextView seeall1;
     private RecyclerView popularRecyclerView;
     private List<PopularItem> popularItemList;
-    private boolean countersAnimated = false; // Prevent multiple animations
+    private boolean countersAnimated = false;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -60,39 +58,26 @@ public class Home extends AppCompatActivity {
         // Setup popular items
         setupPopularItems();
 
-        // Find and set click listener for the "See All" button
+        // "See All" button click listener
         seeall1 = findViewById(R.id.home_seeall);
         seeall1.setOnClickListener(view -> {
-            Intent intent = new Intent(Home.this, Categories.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+            String username = sharedPreferences.getString("username", null);
+
+            if (username != null) {
+                Intent intent = new Intent(Home.this, Categories.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            } else {
+                Toast.makeText(this, "User not identified", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, Loging.class));
+                finish();
+            }
         });
 
-        // **Social Media Click Listeners**
-        ImageView facebook = findViewById(R.id.facebookIcon);
-        facebook.setOnClickListener(v -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/yourpage"));
-            startActivity(browserIntent);
-        });
-
-        ImageView instagram = findViewById(R.id.instagramIcon);
-        instagram.setOnClickListener(v -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/yourpage"));
-            startActivity(browserIntent);
-        });
-
-        ImageView twitter = findViewById(R.id.twitterIcon);
-        twitter.setOnClickListener(v -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.twitter.com/yourpage"));
-            startActivity(browserIntent);
-        });
-
-        ImageView tiktok = findViewById(R.id.tiktokIcon);
-        tiktok.setOnClickListener(v -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.tiktok.com/@yourpage"));
-            startActivity(browserIntent);
-        });
-
+        // Social media click listeners
+        setupSocialMediaButtons();
     }
 
     private void setupBottomNavigation() {
@@ -101,46 +86,54 @@ public class Home extends AppCompatActivity {
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-
-            // Retrieve username from SharedPreferences
             SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
             String username = sharedPreferences.getString("username", null);
 
             if (username == null) {
                 Toast.makeText(Home.this, "User not identified", Toast.LENGTH_SHORT).show();
-                Intent loginIntent = new Intent(Home.this, Loging.class);
-                startActivity(loginIntent);
+                startActivity(new Intent(Home.this, Loging.class));
                 finish();
                 return false;
             }
 
+            Intent intent;
             if (itemId == R.id.nav_home) {
                 return true;
             } else if (itemId == R.id.nav_categories) {
-                Intent intent = new Intent(Home.this, Categories.class);
-                intent.putExtra("username", username); // Pass the username
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                return true;
+                intent = new Intent(Home.this, Categories.class);
             } else if (itemId == R.id.nav_profile) {
-                Intent intent = new Intent(Home.this, UserProfile.class);
-                intent.putExtra("username", username); // Pass the username
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                return true;
+                intent = new Intent(Home.this, UserProfile.class);
             } else if (itemId == R.id.nav_bookings) {
-                Intent intent = new Intent(Home.this, BookingsHistoryActivity.class);
-                intent.putExtra("username", username); // Pass the username
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                return true;
+                intent = new Intent(Home.this, BookingsHistoryActivity.class);
+            } else {
+                return false;
             }
 
-            return false;
+            intent.putExtra("username", username);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
+            return true;
         });
+    }
+
+    private void setupSocialMediaButtons() {
+        ImageView facebook = findViewById(R.id.facebookIcon);
+        facebook.setOnClickListener(v -> openUrl("https://www.facebook.com/yourpage"));
+
+        ImageView instagram = findViewById(R.id.instagramIcon);
+        instagram.setOnClickListener(v -> openUrl("https://www.instagram.com/yourpage"));
+
+        ImageView twitter = findViewById(R.id.twitterIcon);
+        twitter.setOnClickListener(v -> openUrl("https://www.twitter.com/yourpage"));
+
+        ImageView tiktok = findViewById(R.id.tiktokIcon);
+        tiktok.setOnClickListener(v -> openUrl("https://www.tiktok.com/@yourpage"));
+    }
+
+    private void openUrl(String url) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
     }
 
     private void initCounterAnimationOnScroll() {
@@ -183,35 +176,23 @@ public class Home extends AppCompatActivity {
         popularItemList.add(new PopularItem(R.drawable.safari, "Safari Tour", "Explore the wildlife"));
         popularItemList.add(new PopularItem(R.drawable.kithulgala, "Day out", "Enjoy with activities"));
         popularItemList.add(new PopularItem(R.drawable.h1, "Surfing", "Step into sea"));
-        popularItemList.add(new PopularItem(R.drawable.para, "Paramotoring", "Breathtaking views "));
+        popularItemList.add(new PopularItem(R.drawable.para, "Paramotoring", "Breathtaking views"));
 
         popularRecyclerView.setAdapter(new PopularAdapter(popularItemList));
     }
 
-    // **BACK BUTTON IN PHONE**
     @Override
     public void onBackPressed() {
-        // Check if the current activity is Home
-        if (this instanceof Home) {
-            // Show confirmation dialog
-            new android.app.AlertDialog.Builder(this)
-                    .setTitle("Exit App")
-                    .setMessage("Do you want to exit the app?")
-                    .setPositiveButton("Yes", (dialog, which) -> {
-                        // Exit the app
-                        finishAffinity(); // Close all activities in the task
-                        System.exit(0); // Exit the app completely
-                    })
-                    .setNegativeButton("No", (dialog, which) -> {
-                        // Stay in the app
-                        dialog.dismiss(); // Dismiss the dialog
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert) // Optional: Set an icon
-                    .show(); // Show the dialog
-        } else {
-            // Default behavior for other activities
-            super.onBackPressed();
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-        }
+        super.onBackPressed();
+        new AlertDialog.Builder(this)
+                .setTitle("Exit App")
+                .setMessage("Do you want to exit the app?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    finishAffinity();
+                    System.exit(0);
+                })
+                .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }
