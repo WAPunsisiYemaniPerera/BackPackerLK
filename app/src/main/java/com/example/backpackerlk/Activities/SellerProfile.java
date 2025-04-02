@@ -1,13 +1,13 @@
 package com.example.backpackerlk.Activities;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +26,8 @@ public class SellerProfile extends AppCompatActivity {
 
     private Button editProfileButton, goToDashboardButton;
     private ImageView backIcon;
-    private TextView sellerProfileName1, sellerProfileEmail1, sellerProfileName2, sellerProfileEmail2, sellerProfileTelephone, sellerProfileLocation;
+    private TextView sellerProfileName1, sellerProfileEmail1, sellerProfileName2, sellerProfileEmail2,
+            sellerProfileTelephone, sellerProfileLocation;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
 
@@ -72,8 +73,8 @@ public class SellerProfile extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Initialize the back icon and set an OnClickListener
-        backIcon.setOnClickListener(view -> navigateToUserProfile());
+        // Set back button click listener with confirmation dialog
+        backIcon.setOnClickListener(view -> showSwitchConfirmationDialog());
 
         // Navigation bar logic
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -97,7 +98,6 @@ public class SellerProfile extends AppCompatActivity {
                 finish();
                 return true;
             }
-
             return false;
         });
     }
@@ -115,9 +115,6 @@ public class SellerProfile extends AppCompatActivity {
                             String email = documentSnapshot.getString("email");
                             String phone = documentSnapshot.getString("mobile");
                             String location = documentSnapshot.getString("location");
-                            String username = documentSnapshot.getString("username");
-                            String password = documentSnapshot.getString("password");
-                            String confirmPassword = documentSnapshot.getString("confirmPassword");
 
                             // Update UI with fetched data
                             sellerProfileName1.setText(name);
@@ -126,7 +123,6 @@ public class SellerProfile extends AppCompatActivity {
                             sellerProfileEmail2.setText(email);
                             sellerProfileTelephone.setText(phone);
                             sellerProfileLocation.setText(location);
-
                         } else {
                             Toast.makeText(SellerProfile.this, "Seller data not found", Toast.LENGTH_SHORT).show();
                         }
@@ -139,6 +135,23 @@ public class SellerProfile extends AppCompatActivity {
         }
     }
 
+    private void showSwitchConfirmationDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Switch Profile")
+                .setMessage("Do you want to switch to traveler profile?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    // Navigate to UserProfile if user confirms
+                    navigateToUserProfile();
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    // Stay on current profile if user declines
+                    dialog.dismiss();
+                })
+                .setCancelable(false) // Prevent dismissing by tapping outside
+                .setIcon(R.drawable.error_image) // Use your own icon here
+                .show();
+    }
+
     private void navigateToUserProfile() {
         Intent intent = new Intent(SellerProfile.this, UserProfile.class);
         startActivity(intent);
@@ -146,9 +159,10 @@ public class SellerProfile extends AppCompatActivity {
         finish();
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        navigateToUserProfile();
+        // Show confirmation dialog when back button is pressed
+        showSwitchConfirmationDialog();
     }
 }

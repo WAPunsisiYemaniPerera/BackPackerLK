@@ -60,13 +60,35 @@
                 android:textColor="@android:color/black"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/sellercard_sellerPrice"
+            <!-- Price with LKR prefix -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$12"
-                android:textColor="@android:color/black"
-                android:textSize="14sp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LKR "
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/sellercard_sellerPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:id="@+id/sellercard_sellerPrice2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=".00"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
 
             <!-- Ratings -->
             <LinearLayout
