@@ -1,59 +1,83 @@
 package com.example.backpackerlk.Adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.backpackerlk.Booking;
 import com.example.backpackerlk.BookingItem;
 import com.example.backpackerlk.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHolder> {
+public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.BookingViewHolder> {
 
     private List<BookingItem> bookingsList;
+    private FirebaseFirestore db;
     private Context context;
 
-    public BookingsAdapter(List<BookingItem> bookingsList) {
+    public BookingsAdapter(List<BookingItem> bookingsList, Context context) {
         this.bookingsList = bookingsList;
+        this.db = FirebaseFirestore.getInstance();
+        this.context = context;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context = parent.getContext();
-        View view = LayoutInflater.from(context).inflate(R.layout.booking_item, parent, false);
-        return new ViewHolder(view);
+    public BookingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.booking_item, parent, false);
+        return new BookingViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BookingViewHolder holder, int position) {
         BookingItem booking = bookingsList.get(position);
+
         holder.activityName.setText(booking.getActivityName());
         holder.bookingDate.setText("Date: " + booking.getBookingDate());
         holder.totalAmount.setText("Total: " + booking.getTotalAmount());
         holder.bookingStatus.setText("Status: " + booking.getBookingStatus());
 
-        // Handle Update Button Click
-        holder.updateButton.setOnClickListener(v -> {
-            Intent intent = new Intent(context, Booking.class);
-            intent.putExtra("SOURCE_ACTIVITY", "BookingsHistoryActivity"); // Pass source activity
-            context.startActivity(intent);
+        // Cancel button - updates status in Firestore
+        holder.cancelButton.setOnClickListener(v -> {
+            if (booking.getBookingStatus().equals("Pending")) {
+                updateBookingStatus(booking.getBookingId(), "Cancelled", position);
+            } else {
+                Toast.makeText(context, "Only pending bookings can be cancelled", Toast.LENGTH_SHORT).show();
+            }
         });
 
-        // Handle Delete Button Click
+        // Delete button - only removes from UI
         holder.deleteButton.setOnClickListener(v -> {
-            showDeleteConfirmationDialog(position);
+            removeBookingFromUI(position);
         });
+    }
+
+    private void updateBookingStatus(String bookingId, String newStatus, int position) {
+        db.collection("bookings").document(bookingId)
+                .update("status", newStatus)
+                .addOnSuccessListener(aVoid -> {
+                    bookingsList.get(position).setBookingStatus(newStatus);
+                    notifyItemChanged(position);
+                    Toast.makeText(context, "Booking cancelled successfully", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(context, "Failed to cancel booking: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void removeBookingFromUI(int position) {
+        bookingsList.remove(position);
+        notifyItemRemoved(position);
+        Toast.makeText(context, "Removed from view", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -61,40 +85,18 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
         return bookingsList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class BookingViewHolder extends RecyclerView.ViewHolder {
         TextView activityName, bookingDate, totalAmount, bookingStatus;
-        Button updateButton, deleteButton;
+        Button cancelButton, deleteButton;
 
-        public ViewHolder(@NonNull View itemView) {
+        public BookingViewHolder(@NonNull View itemView) {
             super(itemView);
             activityName = itemView.findViewById(R.id.activityName);
             bookingDate = itemView.findViewById(R.id.bookingDate);
             totalAmount = itemView.findViewById(R.id.totalAmount);
             bookingStatus = itemView.findViewById(R.id.bookingStatus);
-            updateButton = itemView.findViewById(R.id.bookingitem_updateButton);
+            cancelButton = itemView.findViewById(R.id.bookingitem_cancelButton);
             deleteButton = itemView.findViewById(R.id.bookingitem_deleteButton);
         }
-    }
-
-    private void showDeleteConfirmationDialog(int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Delete Booking");
-        builder.setMessage("Are you sure you want to delete this booking?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Remove the item from the list
-                bookingsList.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, bookingsList.size());
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.create().show();
     }
 }

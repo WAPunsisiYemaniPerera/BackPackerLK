@@ -1,11 +1,13 @@
 package com.example.backpackerlk;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,47 +15,92 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.backpackerlk.Activities.Home;
 import com.example.backpackerlk.Adapters.BookingsAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookingsHistoryActivity extends AppCompatActivity {
 
+    private RecyclerView bookingsRecyclerView;
+    private BookingsAdapter adapter;
+    private List<BookingItem> bookingsList;
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //hide the name bar
+        // Hide the name bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide(); //This line hides the action bar
+        getSupportActionBar().hide();
 
         setContentView(R.layout.activity_bookings_history);
 
-        // Initialize the back icon
-        ImageView backIcon = findViewById(R.id.icback);
-        backIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate back to the Home activity
-                Intent intent = new Intent(BookingsHistoryActivity.this, Home.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Add transition animation
-                finish(); // Close the current activity
-            }
-        });
+        // Initialize Firebase
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
 
-        // Initialize RecyclerView
-        RecyclerView bookingsRecyclerView = findViewById(R.id.bookingsRecyclerView);
+        // Initialize views
+        ImageView backIcon = findViewById(R.id.icback);
+        bookingsRecyclerView = findViewById(R.id.bookingsRecyclerView);
         bookingsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Sample data for bookings
-        List<BookingItem> bookingsList = new ArrayList<>();
-        bookingsList.add(new BookingItem("Safari Adventure", "2023-10-15", "LKR 5000.00", "Completed"));
-        bookingsList.add(new BookingItem("Water Sports", "2023-10-20", "LKR 3000.00", "Pending"));
-        bookingsList.add(new BookingItem("Rope Activities", "2023-10-25", "LKR 4000.00", "Completed"));
-
-        // Set up adapter
-        BookingsAdapter adapter = new BookingsAdapter(bookingsList);
+        // Initialize bookings list
+        bookingsList = new ArrayList<>();
+        adapter = new BookingsAdapter(bookingsList, this);
         bookingsRecyclerView.setAdapter(adapter);
+
+        // Back button click listener
+        backIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(BookingsHistoryActivity.this, Home.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            finish();
+        });
+
+        // Fetch bookings for the current user
+        fetchUserBookings();
+    }
+
+    private void fetchUserBookings() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "");
+        String userEmail = auth.getCurrentUser() != null ? auth.getCurrentUser().getEmail() : "";
+
+        if (username.isEmpty() || userEmail.isEmpty()) {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        db.collection("bookings")
+                .whereEqualTo("userEmail", userEmail)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        bookingsList.clear();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            BookingItem booking = new BookingItem(
+                                    document.getString("activityName"),
+                                    document.getString("arrivalDate"),
+                                    document.getString("totalAmount"),
+                                    document.getString("status"),
+                                    document.getId() // Store the Firestore document ID
+                            );
+                            bookingsList.add(booking);
+                        }
+                        adapter.notifyDataSetChanged();
+
+                        if (bookingsList.isEmpty()) {
+                            Toast.makeText(this, "No bookings found", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(this, "Error fetching bookings: " + task.getException(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
