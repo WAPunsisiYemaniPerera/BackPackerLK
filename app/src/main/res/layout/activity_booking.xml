@@ -8,23 +8,40 @@
     android:background="@color/white"
     tools:context=".Booking">
 
-    <!-- Centered Topic TextView -->
+    <!-- Back Button - Positioned at top left -->
+    <ImageView
+        android:id="@+id/icback"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/back"
+        android:contentDescription="Back Button"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <!-- Centered Topic TextView - Positioned to the right of back button -->
+
     <TextView
         android:id="@+id/booking_topic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Activity Booking"
-        android:textColor="@color/orange"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
         android:shadowColor="@color/black"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="4"
+        android:text="Event Booking"
+        android:textColor="@color/orange"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp"/>
+        app:layout_constraintHorizontal_bias="0.242"
+        app:layout_constraintStart_toEndOf="@id/icback"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -39,17 +56,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp">
-
-            <!-- Back Button -->
-            <ImageView
-                android:id="@+id/icback"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginBottom="16dp"
-                android:src="@drawable/back"
-                android:contentDescription="Back Button"
-                android:clickable="true"
-                android:focusable="true"/>
 
             <!-- Activity Image -->
             <ImageView

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -181,18 +182,35 @@ public class Home extends AppCompatActivity {
         popularRecyclerView.setAdapter(new PopularAdapter(popularItemList));
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        new AlertDialog.Builder(this)
+        AlertDialog exitDialog = new AlertDialog.Builder(this)
                 .setTitle("Exit App")
                 .setMessage("Do you want to exit the app?")
                 .setPositiveButton("Yes", (dialog, which) -> {
+                    // Close all activities and exit process
                     finishAffinity();
                     System.exit(0);
                 })
-                .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                .setNegativeButton("No", (dialog, which) -> {
+                    dialog.dismiss(); // Just close the dialog
+                })
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                .create();
+
+        // Prevent all dismissal methods except button clicks
+        exitDialog.setCancelable(false);
+        exitDialog.setCanceledOnTouchOutside(false);
+
+        // Block back button while dialog is showing
+        exitDialog.setOnKeyListener((dialog, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+                return true; // Consume the back button press
+            }
+            return false;
+        });
+
+        exitDialog.show();
     }
 }
