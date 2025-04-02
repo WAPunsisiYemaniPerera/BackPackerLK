@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main"
-    android:background="@drawable/background_gradient_3"
+    android:background="@drawable/background_gradint_user"
     tools:context=".Feedbacks">
 
     <!-- Back Icon Image -->

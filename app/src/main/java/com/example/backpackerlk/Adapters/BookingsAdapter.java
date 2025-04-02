@@ -1,5 +1,6 @@
 package com.example.backpackerlk.Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,10 +47,10 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.Bookin
         holder.totalAmount.setText("Total: " + booking.getTotalAmount());
         holder.bookingStatus.setText("Status: " + booking.getBookingStatus());
 
-        // Cancel button - updates status in Firestore
+        // Cancel button - shows confirmation dialog
         holder.cancelButton.setOnClickListener(v -> {
             if (booking.getBookingStatus().equals("Pending")) {
-                updateBookingStatus(booking.getBookingId(), "Cancelled", position);
+                showCancelConfirmationDialog(booking.getBookingId(), position);
             } else {
                 Toast.makeText(context, "Only pending bookings can be cancelled", Toast.LENGTH_SHORT).show();
             }
@@ -59,6 +60,21 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.Bookin
         holder.deleteButton.setOnClickListener(v -> {
             removeBookingFromUI(position);
         });
+    }
+
+    private void showCancelConfirmationDialog(String bookingId, int position) {
+        new AlertDialog.Builder(context)
+                .setTitle("Confirm Cancellation")
+                .setMessage("Do you want to cancel this booking?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    updateBookingStatus(bookingId, "Cancelled", position);
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    // Keep status as "Pending"
+                    dialog.dismiss();
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     private void updateBookingStatus(String bookingId, String newStatus, int position) {

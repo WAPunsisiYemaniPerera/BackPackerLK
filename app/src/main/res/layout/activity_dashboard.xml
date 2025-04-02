@@ -39,7 +39,7 @@
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="4"
-            android:text="My Seller Profile"
+            android:text="My Dashboard"
             android:textColor="@color/bluegreen"
             android:textSize="32dp"
             android:textStyle="bold"
