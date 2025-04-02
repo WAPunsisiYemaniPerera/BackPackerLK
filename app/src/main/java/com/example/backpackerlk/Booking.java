@@ -25,7 +25,7 @@ public class Booking extends AppCompatActivity {
 
     private ImageView activityImage;
     private EditText activityName, arrivalDate;
-    private TextView totalAmount;
+    private TextView totalAmount, quantityText;
     private Button decreaseQuantity, increaseQuantity, bookNowButton;
     private int quantity = 1;
     private double pricePerPerson = 0;
@@ -39,7 +39,6 @@ public class Booking extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-
         setContentView(R.layout.activity_booking);
 
         // Initialize views
@@ -47,6 +46,7 @@ public class Booking extends AppCompatActivity {
         activityName = findViewById(R.id.booking_activityname);
         arrivalDate = findViewById(R.id.booking_arrivaldate);
         totalAmount = findViewById(R.id.booking_totalamount);
+        quantityText = findViewById(R.id.booking_quantity);
         decreaseQuantity = findViewById(R.id.decreaseQuantityButton);
         increaseQuantity = findViewById(R.id.increaseQuantityButton);
         bookNowButton = findViewById(R.id.booking_bookNowButton);
@@ -87,12 +87,14 @@ public class Booking extends AppCompatActivity {
         decreaseQuantity.setOnClickListener(v -> {
             if (quantity > 1) {
                 quantity--;
+                quantityText.setText(String.valueOf(quantity));
                 updateTotalAmount();
             }
         });
 
         increaseQuantity.setOnClickListener(v -> {
             quantity++;
+            quantityText.setText(String.valueOf(quantity));
             updateTotalAmount();
         });
 
@@ -129,7 +131,8 @@ public class Booking extends AppCompatActivity {
 
     private void updateTotalAmount() {
         double total = quantity * pricePerPerson;
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
-        totalAmount.setText(format.format(total));
+        // Create a custom format for Sri Lankan Rupees
+        String formattedAmount = String.format("LKR %,.2f", total);
+        totalAmount.setText(formattedAmount);
     }
 }
