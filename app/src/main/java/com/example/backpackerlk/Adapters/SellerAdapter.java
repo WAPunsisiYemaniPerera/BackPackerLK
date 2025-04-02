@@ -40,21 +40,24 @@ public class SellerAdapter extends RecyclerView.Adapter<SellerAdapter.SellerView
         holder.phoneNumber.setText(seller.getTelephone());
         holder.price.setText(seller.getPricePerPerson());
 
-        // Load image using Glide with error handling
+        // Load image using Glide
         Glide.with(holder.itemView.getContext())
                 .load(seller.getImageUrl())
-                .placeholder(R.drawable.placeholder_image) // Placeholder while loading
-                .error(R.drawable.error_image) // Error image if loading fails
+                .placeholder(R.drawable.placeholder_image)
+                .error(R.drawable.error_image)
                 .into(holder.image);
 
         // Set click listener for the "Book Now" button
         holder.bookNowButton.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), Booking.class);
-            intent.putExtra("SELLER_NAME", seller.getBusinessName());
-            intent.putExtra("SELLER_PRICE", seller.getPricePerPerson());
+            // Pass all necessary data to Booking activity
+            intent.putExtra("IMAGE_URL", seller.getImageUrl());
+            intent.putExtra("ACTIVITY_NAME", seller.getBusinessName());
+            intent.putExtra("PRICE", seller.getPricePerPerson());
             v.getContext().startActivity(intent);
         });
     }
+
     @Override
     public int getItemCount() {
         return sellerList.size();

@@ -6,9 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".BookingActivity">
+    tools:context=".Booking">
 
-    <!-- ScrollView to handle small screens -->
+    <!-- Centered Topic TextView -->
+    <TextView
+        android:id="@+id/booking_topic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activity Booking"
+        android:textColor="@color/orange"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="30dp"/>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -21,8 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp"
-            tools:ignore="ExtraText">
+            android:padding="24dp">
 
             <!-- Back Button -->
             <ImageView
@@ -33,21 +49,18 @@
                 android:src="@drawable/back"
                 android:contentDescription="Back Button"
                 android:clickable="true"
-                android:focusable="true"
-                android:padding="8dp"
-                tools:ignore="SpeakableTextPresentCheck" />
+                android:focusable="true"/>
 
-            <!-- Header Image -->
+            <!-- Rest of your content remains the same -->
             <ImageView
-                android:layout_width="223dp"
-                android:layout_height="198dp"
-                android:layout_marginStart="70dp"
+                android:id="@+id/booking_activityImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
                 android:layout_marginBottom="24dp"
-                android:contentDescription="Booking Header Image"
+                android:contentDescription="Activity Image"
                 android:scaleType="centerCrop"
-                android:src="@drawable/backpacker" />
+                android:src="@drawable/placeholder_image"/>
 
-            <!-- Name Field -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,14 +74,14 @@
                 android:id="@+id/booking_activityname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Your Activity"
-                android:inputType="textPersonName"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
+                android:layout_marginBottom="16dp"
+                android:background="@android:color/transparent"
+                android:enabled="false"
+                android:inputType="text"
                 android:padding="12dp"
-                android:layout_marginBottom="16dp"/>
+                android:textColor="@color/black"
+                tools:ignore="SpeakableTextPresentCheck" />
 
-            <!-- Quantity Picker -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -92,9 +105,7 @@
                     android:text="-"
                     android:textSize="18sp"
                     android:backgroundTint="@color/orange"
-                    android:textColor="@color/white"
-                    android:stateListAnimator="@null"
-                    android:elevation="0dp"/>
+                    android:textColor="@color/white"/>
 
                 <TextView
                     android:id="@+id/booking_quantity"
@@ -103,8 +114,7 @@
                     android:text="1"
                     android:textSize="18sp"
                     android:textColor="@color/black"
-                    android:layout_marginHorizontal="16dp"
-                    android:gravity="center"/>
+                    android:layout_marginHorizontal="16dp"/>
 
                 <Button
                     android:id="@+id/increaseQuantityButton"
@@ -113,12 +123,9 @@
                     android:text="+"
                     android:textSize="18sp"
                     android:backgroundTint="@color/orange"
-                    android:textColor="@color/white"
-                    android:stateListAnimator="@null"
-                    android:elevation="0dp"/>
+                    android:textColor="@color/white"/>
             </LinearLayout>
 
-            <!-- Arrival Date Picker -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -133,15 +140,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Select arrival date"
-                android:inputType="date"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:padding="12dp"
                 android:layout_marginBottom="16dp"
-                android:focusable="false"
-                android:clickable="true"/>
+                android:focusable="false"/>
 
-            <!-- Total Amount -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -161,7 +165,6 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="24dp"/>
 
-            <!-- Book Now Button -->
             <Button
                 android:id="@+id/booking_bookNowButton"
                 android:layout_width="match_parent"
@@ -170,10 +173,7 @@
                 android:textSize="18sp"
                 android:backgroundTint="@color/orange"
                 android:textColor="@color/white"
-                android:paddingVertical="12dp"
-                android:layout_marginTop="16dp"
-                android:stateListAnimator="@null"
-                android:elevation="0dp"/>
+                android:paddingVertical="12dp"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
