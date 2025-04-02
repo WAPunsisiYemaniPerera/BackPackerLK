@@ -1,6 +1,8 @@
 package com.example.backpackerlk;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -12,14 +14,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.backpackerlk.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class Booking extends AppCompatActivity {
 
@@ -29,6 +41,12 @@ public class Booking extends AppCompatActivity {
     private Button decreaseQuantity, increaseQuantity, bookNowButton;
     private int quantity = 1;
     private double pricePerPerson = 0;
+    private String sellerName = "";
+
+    // Firebase
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +58,11 @@ public class Booking extends AppCompatActivity {
         getSupportActionBar().hide();
 
         setContentView(R.layout.activity_booking);
+
+        // Initialize Firebase
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        currentUser = auth.getCurrentUser();
 
         // Initialize views
         activityImage = findViewById(R.id.booking_activityImage);
@@ -55,6 +78,7 @@ public class Booking extends AppCompatActivity {
         String imageUrl = getIntent().getStringExtra("IMAGE_URL");
         String activityNameText = getIntent().getStringExtra("ACTIVITY_NAME");
         String priceText = getIntent().getStringExtra("PRICE");
+        sellerName = getIntent().getStringExtra("SELLER_NAME");
 
         // Set data to views
         if (imageUrl != null) {
@@ -103,8 +127,7 @@ public class Booking extends AppCompatActivity {
             if (arrivalDate.getText().toString().isEmpty()) {
                 Toast.makeText(this, "Please select arrival date", Toast.LENGTH_SHORT).show();
             } else {
-                // Handle booking logic here
-                Toast.makeText(this, "Booking confirmed!", Toast.LENGTH_SHORT).show();
+                saveBookingToFirestore();
             }
         });
 
@@ -131,8 +154,72 @@ public class Booking extends AppCompatActivity {
 
     private void updateTotalAmount() {
         double total = quantity * pricePerPerson;
-        // Create a custom format for Sri Lankan Rupees
         String formattedAmount = String.format("LKR %,.2f", total);
         totalAmount.setText(formattedAmount);
+    }
+
+    private void showSuccessDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Booking Confirmed!");
+        builder.setMessage("Enjoy your booking!");
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            // Redirect to BookingHistoryActivity
+            startActivity(new Intent(Booking.this, com.example.backpackerlk.BookingsHistoryActivity.class));
+            finish(); // Close the current activity
+        });
+        builder.setCancelable(false); // Prevent dismissing by tapping outside
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void saveBookingToFirestore() {
+        if (currentUser == null) {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Get current timestamp
+        String bookingDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                .format(new Date());
+
+        // Get username from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "");
+
+        // Get seller ID and name from Intent
+        String sellerId = getIntent().getStringExtra("SELLER_ID");
+        String sellerName = getIntent().getStringExtra("SELLER_NAME");
+
+        // Create booking data
+        Map<String, Object> booking = new HashMap<>();
+        booking.put("bookingId", "");
+        booking.put("activityName", activityName.getText().toString());
+        booking.put("userName", username);
+        booking.put("userEmail", currentUser.getEmail());
+        booking.put("userId", currentUser.getUid());
+        booking.put("quantity", quantity);
+        booking.put("arrivalDate", arrivalDate.getText().toString());
+        booking.put("totalAmount", totalAmount.getText().toString());
+        booking.put("sellerName", sellerName);
+        booking.put("sellerId", sellerId);
+        booking.put("bookingDate", bookingDate);
+        booking.put("status", "Pending");
+
+        // Save to Firestore
+        db.collection("bookings")
+                .add(booking)
+                .addOnSuccessListener(documentReference -> {
+                    db.collection("bookings").document(documentReference.getId())
+                            .update("bookingId", documentReference.getId())
+                            .addOnSuccessListener(aVoid -> {
+                                showSuccessDialog(); // Show success dialog
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(this, "Error updating booking ID", Toast.LENGTH_SHORT).show();
+                            });
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Error saving booking: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 }
