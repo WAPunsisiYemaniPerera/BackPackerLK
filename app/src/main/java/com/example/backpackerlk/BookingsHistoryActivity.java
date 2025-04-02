@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.backpackerlk.Activities.Categories;
 import com.example.backpackerlk.Activities.Home;
 import com.example.backpackerlk.Adapters.BookingsAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -102,5 +103,14 @@ public class BookingsHistoryActivity extends AppCompatActivity {
                         Toast.makeText(this, "Error fetching bookings: " + task.getException(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(BookingsHistoryActivity.this, Home.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
     }
 }
