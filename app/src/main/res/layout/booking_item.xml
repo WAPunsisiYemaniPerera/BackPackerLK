@@ -72,10 +72,10 @@
 
             <!-- Update Button -->
             <Button
-                android:id="@+id/bookingitem_updateButton"
+                android:id="@+id/bookingitem_cancelButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Update"
+                android:text="Cancel Booking"
                 android:backgroundTint="@color/bluegreen"
                 android:textColor="@color/white"
                 android:layout_marginBottom="8dp" />

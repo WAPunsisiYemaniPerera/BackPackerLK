@@ -5,14 +5,17 @@ public class BookingItem {
     private String bookingDate;
     private String totalAmount;
     private String bookingStatus;
+    private String bookingId; // Added bookingId field
 
-    public BookingItem(String activityName, String bookingDate, String totalAmount, String bookingStatus) {
+    public BookingItem(String activityName, String bookingDate, String totalAmount, String bookingStatus, String bookingId) {
         this.activityName = activityName;
         this.bookingDate = bookingDate;
         this.totalAmount = totalAmount;
         this.bookingStatus = bookingStatus;
+        this.bookingId = bookingId;
     }
 
+    // Getters and Setters
     public String getActivityName() {
         return activityName;
     }
@@ -27,5 +30,13 @@ public class BookingItem {
 
     public String getBookingStatus() {
         return bookingStatus;
+    }
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingStatus(String bookingStatus) {
+        this.bookingStatus = bookingStatus;
     }
 }
