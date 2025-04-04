@@ -50,7 +50,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         Events event = eventList.get(position);
         holder.eventTitle.setText(event.getTitle());
         holder.eventLocation.setText("Location: " + event.getLocation());
-        holder.eventPrice.setText("Price: " + event.getPrice());
+        holder.eventPrice.setText("Price: LKR." + event.getPrice());
         holder.eventTelephone.setText("Telephone: " + event.getTelephone());
         holder.eventCategory.setText("Category: " + event.getCategory()); // Display category
 
