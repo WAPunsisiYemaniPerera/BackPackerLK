@@ -37,9 +37,6 @@ Sri Lanka is a tropical paradise, famous for its golden beaches, lush forests, m
 - `app/build.gradle.kts` — App-level Gradle config
 - `gradle/wrapper/` — Gradle wrapper files
 
-## ✨ Screenshots
-
-*Add screenshots here to showcase the app’s UI and features.*
 
 ## 💡 Technologies
 
